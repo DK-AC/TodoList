@@ -66,6 +66,13 @@ function App() {
                 <li>2</li>
                 <li>3</li>
             </ul>
+            <hr/>
+            <ul>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+
         </div>
     );
 }
