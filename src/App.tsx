@@ -13,6 +13,7 @@ function App() {
         {id: v1(), title: 'React', isDone: false},
         {id: v1(), title: 'Rest Api', isDone: false},
         {id: v1(), title: 'Graph QL', isDone: false},
+        {id: v1(), title: 'Material UI', isDone: false},
     ])
 
     let [filter, setFilter] = useState<filterTasksType>('all')
