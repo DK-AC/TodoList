@@ -9,23 +9,32 @@ export function AddItemForm(props: AddItemFormPropsType) {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addTask = () => {
-        if (title.trim() !== '') {
-            props.addItem(title)
+    const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
+        const VALUE = e.currentTarget.value
+
+        if (VALUE.length > 0) {
+            setTitle(VALUE)
+            setError(null)
+        }
+    }
+    const onKeyPressTasks = (e: KeyboardEvent<HTMLInputElement>) => {
+        setError(null)
+
+        if (title.trim() && e.charCode === 13) {
+            props.addItem(title.trim())
             setTitle('')
         } else {
             setError('Title is required')
         }
     }
 
-    const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-    const onKeyPressTasks = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            props.addItem(title)
+    const addTask = () => {
+        if (title.trim() !== '') {
+            props.addItem(title.trim())
+            setTitle('')
+        } else {
+            setError('Title is required')
         }
-        setError(null)
     }
 
     return (
