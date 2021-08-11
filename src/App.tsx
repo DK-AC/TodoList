@@ -74,6 +74,14 @@ function App() {
         setTasks({...tasks, [newTodolistId]: []})
 
     }
+    const changeTaskTitle = (id: string, newTitle: string, todolistId: string) => {
+        setTasks({
+            ...tasks,
+            [todolistId]: tasks[todolistId]
+                .map(t => t.id === id ? {...t, title:newTitle} : t)
+        })
+    }
+
 
 
     return (
@@ -103,6 +111,7 @@ function App() {
                                      changeStatusTasks={changeStatusTasks}
                                      filter={tl.filter}
                                      removeTodolist={removeTodolist}
+                                     changeTaskTitle={changeTaskTitle}
                     />
                 })
             }

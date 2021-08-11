@@ -1,6 +1,7 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterTasksType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 type TodolistPropsType = {
     title: string
@@ -12,6 +13,7 @@ type TodolistPropsType = {
     filter: string
     id: string
     removeTodolist: (id: string) => void
+    changeTaskTitle:(id: string, newTitle: string, todolistId: string) => void
 }
 
 export type TasksPropsType = {
@@ -33,11 +35,18 @@ export function Todolist(props: TodolistPropsType) {
     const filterActiveHandler = () => props.changeFilter('active', props.id)
     const filterCompletedHandler = () => props.changeFilter('completed', props.id)
 
+    // const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
+    //     props.onChange(e.currentTarget.value)
+    // }
+
     const tasksJSXElements = props.tasks.map(t => {
         const removeTask = () => props.removeTask(t.id, props.id)
         const onChangeStatusTask = (e: ChangeEvent<HTMLInputElement>) => {
             let newChangeValueTask = e.currentTarget.checked;
             props.changeStatusTasks(t.id, newChangeValueTask, props.id)
+        }
+        const onChangeTitle = (newValue:string) => {
+            props.changeTaskTitle(t.id, newValue, props.id)
         }
 
         return (
@@ -49,7 +58,9 @@ export function Todolist(props: TodolistPropsType) {
                     checked={t.isDone}
                     onChange={onChangeStatusTask}
                 />
-                <span>{t.title}</span>
+                <EditableSpan title={t.title}
+                              onChange={onChangeTitle}
+                />
                 <button
                     onClick={removeTask}
                 >X
