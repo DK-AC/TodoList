@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterTasksType} from "./App";
+import {AddItemForm} from "./AddItemForm";
 
 type TodolistPropsType = {
     title: string
@@ -21,26 +22,13 @@ export type TasksPropsType = {
 
 export function Todolist(props: TodolistPropsType) {
 
-    const [title, setTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
+    }
 
-    const addTask = () => {
-        if (title.trim() !== '') {
-            props.addTask(title, props.id)
-            setTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
-    const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-    const onKeyPressTasks = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'enter') {
-            addTask()
-        }
-        setError(null)
-    }
+    const removeTodolist = () => props.removeTodolist(props.id)
+
+
     const filterAllHandler = () => props.changeFilter('all', props.id)
     const filterActiveHandler = () => props.changeFilter('active', props.id)
     const filterCompletedHandler = () => props.changeFilter('completed', props.id)
@@ -74,21 +62,12 @@ export function Todolist(props: TodolistPropsType) {
     return (
         <div>
             <h3>{props.title}
-                <button onClick={() => {
-                    props.removeTodolist(props.id)
-                }}>x
+                <button onClick={removeTodolist}>x
                 </button>
             </h3>
 
             <div>
-                <input
-                    value={title}
-                    onChange={onChangeValueTasks}
-                    onKeyPress={onKeyPressTasks}
-                    className={error ? 'error' : ''}
-                />
-                <button onClick={addTask}>+</button>
-                {error && < div className={'errorMessage'}> {error}</div>}
+                <AddItemForm addItem={addTask}/>
             </div>
             <ul>
                 {tasksJSXElements}
