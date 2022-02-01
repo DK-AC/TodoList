@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
@@ -12,10 +12,10 @@ export function AddItemForm(props: AddItemFormPropsType) {
     const [error, setError] = useState<string | null>(null)
 
     const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
-        const VALUE = e.currentTarget.value
+        const value = e.currentTarget.value
 
-        if (VALUE.length > 0) {
-            setTitle(VALUE)
+        if (value.length > 0) {
+            setTitle(value)
             setError(null)
         }
     }

@@ -15,10 +15,7 @@ export type TodolistType = {
     filter: FilterTasksType
 }
 
-type TasksStateType = {
-    [key: string]: Array<TasksPropsType>
-}
-
+type TasksStateType = { [key: string]: Array<TasksPropsType> }
 
 function App() {
 
@@ -54,8 +51,6 @@ function App() {
     }
     const addTask = (title: string, todolistId: string) => {
         let task = {id: v1(), title, isDone: true}
-        /* let todolistTasks = tasks[todolistId]
-         tasks[todolistId] = [task, ...todolistTasks]*/
         setTasks({...tasks, [todolistId]: [...tasks[todolistId], task]})
 
     }
@@ -81,8 +76,7 @@ function App() {
     const changeTaskTitle = (id: string, newTitle: string, todolistId: string) => {
         setTasks({
             ...tasks,
-            [todolistId]: tasks[todolistId]
-                .map(t => t.id === id ? {...t, title: newTitle} : t)
+            [todolistId]: tasks[todolistId].map(t => t.id === id ? {...t, title: newTitle} : t)
         })
     }
     const changeTodolistTitle = (id: string, title: string) => {
