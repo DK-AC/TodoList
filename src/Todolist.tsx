@@ -4,6 +4,8 @@ import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import {Delete} from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
 
 
 type TodolistPropsType = {
@@ -72,9 +74,10 @@ export function Todolist(props: TodolistPropsType) {
     return (
         <div>
             <h3>
-                <EditableSpan title={props.title}
-                              onChange={changeTodolistTitle}/>
-                <button onClick={removeTodolist}>x</button>
+                <EditableSpan title={props.title} onChange={changeTodolistTitle}/>
+                <IconButton onClick={removeTodolist} >
+                    <Delete/>
+                </IconButton>
             </h3>
             <div>
                 <AddItemForm addItem={addTask}/>
