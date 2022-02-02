@@ -1,13 +1,7 @@
-import {FilterTasksType, TodolistType} from "../app/App";
+import {TodolistType} from "../app/App";
 import {v1} from "uuid";
+import {GeneralType} from "../store/types/todolistTypes";
 
-/*type StateType = {
-    age: number
-    childrenCount: number
-    name: string
-}*/
-
-type GeneralType = RemoveTodolistACType | AddTodolistACType | ChangeTodolistTitleACType | ChangeTodolistFilterACType
 
 export const todolistsReducer = (state: Array<TodolistType>, action: GeneralType) => {
     switch (action.type) {
@@ -24,22 +18,3 @@ export const todolistsReducer = (state: Array<TodolistType>, action: GeneralType
     }
 }
 
-type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
-export const removeTodolistAC = (id: string) => {
-    return {type: 'REMOVE-TODOLIST', id} as const
-}
-
-type AddTodolistACType = ReturnType<typeof addTodolistAC>
-export const addTodolistAC = (title: string) => {
-    return {type: 'ADD-TODOLIST', title} as const
-}
-
-type ChangeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
-export const changeTodolistTitleAC = (id: string, title: string) => {
-    return {type: 'CHANGE-TODOLIST-TITLE', id, title} as const
-}
-
-type ChangeTodolistFilterACType = ReturnType<typeof changeTodolistFilterAC>
-export const changeTodolistFilterAC = (id: string, filter: FilterTasksType) => {
-    return {type: 'CHANGE-TODOLIST-FILTER', id, filter} as const
-}

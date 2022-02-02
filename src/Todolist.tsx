@@ -54,19 +54,15 @@ export function Todolist(props: TodolistPropsType) {
         }
 
         return (
-            <div key={t.id}
-                 className={t.isDone ? 'isDone' : ''}
-            >
+            <div key={t.id} className={t.isDone ? 'isDone' : ''}>
                 <Checkbox
                     color="primary"
                     checked={t.isDone}
                     onChange={onChangeStatusTask}
                     size={"small"}
                 />
-                <EditableSpan title={t.title}
-                              onChange={onChangeTitle}
-                />
-                <button onClick={removeTask}>X</button>
+                <EditableSpan title={t.title} onChange={onChangeTitle}/>
+                <IconButton onClick={removeTask}><Delete/></IconButton>
             </div>
         )
     })
@@ -75,7 +71,7 @@ export function Todolist(props: TodolistPropsType) {
         <div>
             <h3>
                 <EditableSpan title={props.title} onChange={changeTodolistTitle}/>
-                <IconButton onClick={removeTodolist} >
+                <IconButton onClick={removeTodolist}>
                     <Delete/>
                 </IconButton>
             </h3>
