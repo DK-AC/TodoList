@@ -2,7 +2,8 @@ import React, {ChangeEvent} from "react";
 import {FilterTasksType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox} from "@material-ui/core";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
 
 
 type TodolistPropsType = {
