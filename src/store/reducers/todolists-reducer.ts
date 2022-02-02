@@ -1,6 +1,6 @@
-import {TodolistType} from "../app/App";
+import {TodolistType} from "../../app/App";
 import {v1} from "uuid";
-import {GeneralType} from "../store/types/todolistTypes";
+import {GeneralType} from "../types/todolistTypes";
 
 
 export const todolistsReducer = (state: Array<TodolistType>, action: GeneralType) => {
