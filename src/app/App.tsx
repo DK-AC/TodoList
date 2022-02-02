@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TasksPropsType, Todolist} from "./Todolist";
+import {TasksPropsType, Todolist} from "../Todolist";
 import {v1} from 'uuid';
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';

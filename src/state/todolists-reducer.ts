@@ -1,4 +1,4 @@
-import {FilterTasksType, TodolistType} from "../App";
+import {FilterTasksType, TodolistType} from "../app/App";
 import {v1} from "uuid";
 
 /*type StateType = {
