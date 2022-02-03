@@ -55,7 +55,7 @@ function App() {
             [todolistId]: [{id: v1(), title, isDone: false}, ...tasks[todolistId]]
         })
     }
-    const changeStatusTasks = (todoId: string ,taskId: string, isDone: boolean ) => {
+    const changeStatusTasks = (todoId: string, taskId: string, isDone: boolean) => {
         setTasks({
             ...tasks,
             [todoId]: tasks[todoId].map(task => task.id === taskId ? {...task, isDone} : task)
@@ -111,7 +111,7 @@ function App() {
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}}>
                                     <Todolist
-                                        id={tl.id}
+                                        todoId={tl.id}
                                         title={tl.title}
                                         tasks={allTodolistTasks}
                                         removeTask={removeTask}
