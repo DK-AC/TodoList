@@ -68,8 +68,7 @@ function App() {
     }
     const addTodolist = (title: string) => {
         let newTodolistId = v1()
-        let newTodolist: TodolistType = {id: newTodolistId, title, filter: 'all'}
-        setTodolists([newTodolist, ...todolists])
+        setTodolists([{id: newTodolistId, title: title, filter: 'all'}, ...todolists])
         setTasks({...tasks, [newTodolistId]: []})
 
     }
