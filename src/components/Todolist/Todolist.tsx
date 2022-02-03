@@ -14,7 +14,7 @@ type TodolistPropsType = {
     removeTask: (id: string, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
     changeStatusTasks: (todoId: string, taskId: string, isDone: boolean) => void
-    filter: string
+    filter: FilterTodolistType
     todoId: string
     removeTodolist: (id: string) => void
     changeTodolistTitle: (id: string, title: string) => void
@@ -54,7 +54,10 @@ export function Todolist(props: TodolistPropsType) {
     }
 
     const filterAllHandler = () => changeTodolistFilter(todoId, 'all')
-    const filterActiveHandler = () => changeTodolistFilter(todoId, 'active')
+    const filterActiveHandler = () => {
+        debugger
+        changeTodolistFilter(todoId, 'active')
+    }
     const filterCompletedHandler = () => changeTodolistFilter(todoId, 'completed')
 
     const tasksJSXElements = tasks.map(task => {

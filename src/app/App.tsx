@@ -106,6 +106,14 @@ function App() {
                     {
                         todolists.map(tl => {
                             let allTodolistTasks = tasks[tl.id]
+                            let filteredTask = allTodolistTasks
+
+                            if (tl.filter === 'active') {
+                                allTodolistTasks = filteredTask.filter(task => !task.isDone)
+                            }
+                            if (tl.filter === 'completed') {
+                                allTodolistTasks = filteredTask.filter(task => task.isDone)
+                            }
 
                             return <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}}>
@@ -113,8 +121,7 @@ function App() {
                                         todoId={tl.id}
                                         title={tl.title}
                                         tasks={allTodolistTasks}
-                                        removeTask={removeTask}
-                                        addTask={addTask}
+                                        removeTask={removeTask} addTask={addTask}
                                         changeStatusTasks={changeStatusTasks}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}

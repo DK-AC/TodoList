@@ -24,10 +24,11 @@ export function EditableSpan({title, onChange}: EditableSpanPropsType) {
     }
 
 
-    return editMode ? <input value={titleValue}
-                             onChange={ChangeTitle}
-                             autoFocus={true}
-                             onBlur={activeViewMode}/>
+    return editMode
+        ? <input value={titleValue}
+                 onChange={ChangeTitle}
+                 autoFocus={true}
+                 onBlur={activeViewMode}/>
         : <span onDoubleClick={activeEditMode}>{title}</span>
 
 }
