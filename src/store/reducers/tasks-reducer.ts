@@ -10,7 +10,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             debugger
             return {
                 ...state,
-                [action.payload.todoId]: state[action.payload.todoId].filter(task => task.id === action.payload.taskId)
+                [action.payload.todoId]: state[action.payload.todoId].filter(task => task.id !== action.payload.taskId)
             }
         default:
             return state
