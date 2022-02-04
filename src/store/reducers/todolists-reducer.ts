@@ -2,8 +2,9 @@ import {TodolistType} from "../../app/App";
 import {v1} from "uuid";
 import {GeneralType} from "../types/todolistTypes";
 
+const initialState: Array<TodolistType> = []
 
-export const todolistsReducer = (state: Array<TodolistType>, action: GeneralType) => {
+export const todolistsReducer = (state = initialState, action: GeneralType) => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return [...state.filter(tl => tl.id != action.params.id)]
@@ -14,7 +15,7 @@ export const todolistsReducer = (state: Array<TodolistType>, action: GeneralType
         case 'CHANGE-TODOLIST-FILTER':
             return [...state.map(m => m.id === action.params.id ? {...m, filter: action.params.filter} : m)]
         default:
-            throw new Error("I don't understand this type")
+            return state
     }
 }
 
