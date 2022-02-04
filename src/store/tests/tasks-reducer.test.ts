@@ -1,6 +1,6 @@
 import {tasksReducer} from "../reducers/tasks-reducer";
 import {TasksStateType} from "../../app/App";
-import {removeTaskAC} from "../actions/taskActions";
+import {addTaskAC, removeTaskAC} from "../actions/taskActions";
 
 let startState: TasksStateType = {}
 
@@ -31,4 +31,24 @@ test('correct task should be removed', () => {
     expect(startState['todolistId2'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(3)
 
+})
+
+test('add task with the correct title', () => {
+
+    let endState = tasksReducer(startState, addTaskAC({todoId: 'todolistId2', taskId: '1', title: 'newTaskTitle'}))
+
+    expect(startState['todolistId2']).toEqual(
+        [
+            {id: '1', title: 'Rest Api', isDone: false},
+            {id: '2', title: 'Graph QL', isDone: false},
+            {id: '3', title: 'Material UI', isDone: false}
+        ])
+    expect(startState['todolistId2'][0].title).toBe('Rest Api')
+    expect(endState['todolistId2'][0].title).toBe('newTaskTitle')
+    expect(endState['todolistId2']).toEqual(
+        [
+            {id: '1', title: 'newTaskTitle', isDone: false},
+            {id: '2', title: 'Graph QL', isDone: false},
+            {id: '3', title: 'Material UI', isDone: false}
+        ])
 })
