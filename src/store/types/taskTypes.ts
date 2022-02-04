@@ -1,3 +1,6 @@
-export const REMOVETASK = 'REMOVE-TASK'
+import {removeTaskAC} from "../actions/taskActions";
 
-export type ActionsTaskType = {}
+export const REMOVE_TASK = 'REMOVE_TASK'
+
+export type ActionsTaskType =
+    ReturnType<typeof removeTaskAC>

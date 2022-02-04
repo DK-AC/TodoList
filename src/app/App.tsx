@@ -21,7 +21,7 @@ export type TodolistType = {
     filter: FilterTodolistType
 }
 
-type TasksStateType = { [key: string]: Array<TasksPropsType> }
+export type TasksStateType = { [key: string]: Array<TasksPropsType> }
 
 function App() {
 

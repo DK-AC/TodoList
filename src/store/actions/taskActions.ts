@@ -1,5 +1,5 @@
-import {REMOVETASK} from "../types/taskTypes";
+import {REMOVE_TASK} from "../types/taskTypes";
 
 export const removeTaskAC = (params: { todoId: string, taskId: string }) => {
-    return {type: REMOVETASK, params}
+    return {type: REMOVE_TASK, params}
 }

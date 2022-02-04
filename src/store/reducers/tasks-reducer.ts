@@ -1,9 +1,15 @@
 import {ActionsTaskType} from "../types/taskTypes";
+import {TasksStateType} from "../../app/App";
 
-const initialState = {}
+const initialState = {
+}
 
-export const tasksReducer = (state = initialState, action: ActionsTaskType) => {
-    switch (action) {
+
+
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType) => {
+    switch (action.type) {
+        case "REMOVE_TASK":
+            return
         default:
             return state
     }
