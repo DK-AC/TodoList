@@ -19,6 +19,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                     ? {...task, title: action.payload.title}
                     : task)
             }
+        case "CHANGE_TASK_TITLE":
+            return {
+                ...state,
+                [action.payload.todoId]: state[action.payload.todoId].map(task => task.id === task.id
+                    ? {...task, title: action.payload.title}
+                    : task)
+            }
         default:
             return state
     }
