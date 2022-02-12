@@ -13,13 +13,13 @@ const initialState: Array<TodolistType> = []
 export const todolistsReducer = (state = initialState, action: GeneralType) => {
     switch (action.type) {
         case REMOVE_TODOLIST:
-            return [...state.filter(todo => todo.id != action.params.id)]
+            return [...state.filter(todo => todo.id != action.payload.id)]
         case ADD_TODOLIST:
-            return [...state, {id: v1(), title: action.params.title, filter: 'all'}]
+            return [...state, {id: v1(), title: action.payload.title, filter: 'all'}]
         case CHANGE_TODOLIST_TITLE:
-            return [...state.map(todo => todo.id === action.params.id ? {...todo, title: action.params.title} : todo)]
+            return [...state.map(todo => todo.id === action.payload.id ? {...todo, title: action.payload.title} : todo)]
         case CHANGE_TODOLIST_FILTER:
-            return [...state.map(todo => todo.id === action.params.id ? {...todo, filter: action.params.filter} : todo)]
+            return [...state.map(todo => todo.id === action.payload.id ? {...todo, filter: action.payload.filter} : todo)]
         default:
             return state
     }
