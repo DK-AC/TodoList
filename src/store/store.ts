@@ -1,6 +1,6 @@
 import {combineReducers, createStore} from "redux";
-import {todolistsReducer} from "./reducers/todolists-reducer";
-import {tasksReducer} from "./reducers/tasks-reducer";
+import {todolistsReducer} from "./reducers/todolistsReducer";
+import {tasksReducer} from "./reducers/tasksReducer";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 
 const appRootState = combineReducers({

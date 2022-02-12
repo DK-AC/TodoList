@@ -1,4 +1,4 @@
-import {todolistsReducer} from '../reducers/todolists-reducer';
+import {todolistsReducer} from '../reducers/todolistsReducer';
 import {v1} from 'uuid';
 import {TodolistType} from '../../app/App';
 import {
