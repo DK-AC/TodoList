@@ -52,3 +52,4 @@ test('add task with the correct title', () => {
             {id: '3', title: 'Material UI', isDone: false}
         ])
 })
+
