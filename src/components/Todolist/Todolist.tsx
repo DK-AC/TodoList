@@ -23,8 +23,17 @@ export function Todolist({todoId}: PropsType) {
 
     const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
     const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))
-    const changeTodolistFilterHandler = () => dispatch(changeTodolistFilterAC({todoId: todo.id, filter: todo.filter}))
+
     const addTaskHandler = (title: string) => dispatch(addTaskAC({todoId, title}))
+    const changeTodolistAllFilterHandler = () => {
+        dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'all'}))
+    }
+    const changeTodolistActiveFilterHandler = () => {
+        dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'active'}))
+    }
+    const changeTodolistCompletedFilterHandler = () => {
+        dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'completed'}))
+    }
 
     let tasksForTodolist = tasks
 
@@ -52,16 +61,16 @@ export function Todolist({todoId}: PropsType) {
             </div>
             <div style={{paddingTop: '10px'}}>
                 <Button variant={todo.filter === 'all' ? 'outlined' : 'text'}
-                        onClick={changeTodolistFilterHandler}
+                        onClick={changeTodolistAllFilterHandler}
                         color={'inherit'}
                 >All
                 </Button>
                 <Button variant={todo.filter === 'active' ? 'outlined' : 'text'}
-                        onClick={changeTodolistFilterHandler}
+                        onClick={changeTodolistActiveFilterHandler}
                         color={'primary'}>Active
                 </Button>
                 <Button variant={todo.filter === 'completed' ? 'outlined' : 'text'}
-                        onClick={changeTodolistFilterHandler}
+                        onClick={changeTodolistCompletedFilterHandler}
                         color={'secondary'}>Completed
                 </Button>
             </div>
