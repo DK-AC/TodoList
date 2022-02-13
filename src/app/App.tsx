@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {TasksPropsType, Todolist} from "../components/Todolist/Todolist";
+import {Todolist} from "../components/Todolist/Todolist";
 import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,9 +17,9 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC
 } from "../store/actions/todolistActions";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../store/actions/taskActions";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../store/store";
+import { TasksStateType } from '../components/Task/Task';
 
 
 export type FilterTodolistType = 'all' | 'active' | 'completed'
@@ -29,7 +29,6 @@ export type TodolistType = {
     filter: FilterTodolistType
 }
 
-export type TasksStateType = { [key: string]: Array<TasksPropsType> }
 
 function App() {
 
@@ -38,23 +37,11 @@ function App() {
     const tasks = useAppSelector<TasksStateType>(state => state.tasks)
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
 
-    const removeTask = (todoId: string, taskId: string) => {
-        dispatch(removeTaskAC({taskId, todoId}))
-    }
-    const addTask = (todoId: string, title: string) => {
-        debugger
-        dispatch(addTaskAC({todoId, title}))
-    }
-    const changeStatusTasks = (todoId: string, taskId: string, isDone: boolean) => {
-        dispatch(changeTaskStatusAC({taskId, todoId, isDone}))
-    }
     const removeTodolist = (todoId: string) => {
         dispatch(removeTodolistAC({todoId}))
         dispatch(removeTodolistAC({todoId}));
     }
-    const changeTaskTitle = (todoId: string, taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC({taskId, todoId, title}))
-    }
+
     const addTodolist = (title: string) => {
         dispatch(addTodolistAC({title}))
 
@@ -103,11 +90,8 @@ function App() {
                                         todoId={tl.id}
                                         title={tl.title}
                                         tasks={allTodolistTasks}
-                                        removeTask={removeTask} addTask={addTask}
-                                        changeStatusTasks={changeStatusTasks}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
-                                        changeTaskTitle={changeTaskTitle}
                                         changeTodolistTitle={changeTodolistTitle}
                                         changeTodolistFilter={changeTodolistFilter}
                                     />
