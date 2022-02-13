@@ -3,7 +3,7 @@ import {ADD_TODOLIST, REMOVE_TODOLIST} from "../types/todolistTypes";
 import {v1} from "uuid";
 import {TasksStateType} from "../../components/Task/Task";
 
-const initialState = {}
+const initialState: TasksStateType = {}
 
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType) => {

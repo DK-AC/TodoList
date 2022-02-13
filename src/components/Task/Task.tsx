@@ -8,19 +8,19 @@ import {useAppSelector} from "../../store/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../store/actions/taskActions";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 
-type TaskPropsType = { todoId: string }
+type TaskPropsType = { todoId: string, filteredTask: TasksType }
 export type TasksType = { id: string, title: string, isDone: boolean }
 export type TasksStateType = { [key: string]: Array<TasksType> }
 
 
-export const Task = ({todoId}: TaskPropsType) => {
+export const Task = ({todoId, filteredTask}: TaskPropsType) => {
 
     const dispatch = useDispatch()
 
-    const task = useAppSelector<TasksType>(state => state.tasks[todoId].filter(task => task.id === todoId)[0])
+    const task = useAppSelector<TasksType>(state => state.tasks[todoId].filter(task => task.id === filteredTask.id)[0])
     const {id, title, isDone} = task
 
-    const addTaskHandler = (title: string) => dispatch(addTaskAC({todoId, title}))
+
     const removeTaskHandler = () => dispatch(removeTaskAC({todoId, taskId: id}))
     const onChangeTaskTitle = (title: string) => dispatch(changeTaskTitleAC({todoId, taskId: id, title}))
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,18 +28,20 @@ export const Task = ({todoId}: TaskPropsType) => {
             todoId, taskId: id, isDone: e.currentTarget.checked
         }))
     }
+    console.log(task)
+    console.log(filteredTask.title)
 
     return (
         <>
-            <AddItemForm addItem={addTaskHandler}/>
-            <div key={id} className={isDone ? 'isDone' : ''}>
+
+            <div key={id} className={filteredTask.isDone ? 'isDone' : ''}>
                 <Checkbox
                     color="primary"
-                    checked={isDone}
+                    checked={filteredTask.isDone}
                     onChange={onChangeTaskStatus}
                     size={"small"}
                 />
-                <EditableSpan title={title} onChange={onChangeTaskTitle}/>
+                <EditableSpan title={filteredTask.title} onChange={onChangeTaskTitle}/>
                 <IconButton onClick={removeTaskHandler}><Delete/></IconButton>
             </div>
         </>

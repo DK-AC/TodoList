@@ -1,6 +1,6 @@
-import {FilterTodolistType} from "../../app/App";
 import {ADD_TODOLIST, CHANGE_TODOLIST_FILTER, CHANGE_TODOLIST_TITLE, REMOVE_TODOLIST} from "../types/todolistTypes";
 import {v1} from "uuid";
+import {FilterTodolistType} from "../../components/Todolist/Todolist";
 
 export const removeTodolistAC = (payload: { todoId: string }) => {
     return {type: REMOVE_TODOLIST, payload} as const
