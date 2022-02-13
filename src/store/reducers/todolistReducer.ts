@@ -7,18 +7,21 @@ import {
     REMOVE_TODOLIST
 } from "../types/todolistTypes";
 
-const initialState: Array<TodolistType> = []
+const initialState: TodolistType[] = []
 
-export const todolistsReducer = (state = initialState, action: GeneralType) => {
+export const todolistReducer = (state: TodolistType[] = initialState, action: GeneralType) => {
     switch (action.type) {
         case REMOVE_TODOLIST:
-            return [...state.filter(todo => todo.id != action.payload.id)]
+            return [...state.filter(todo => todo.id != action.payload.todoId)]
         case ADD_TODOLIST:
             return [...state, {id: action.todoId, title: action.payload.title, filter: 'all'}]
         case CHANGE_TODOLIST_TITLE:
-            return [...state.map(todo => todo.id === action.payload.id ? {...todo, title: action.payload.title} : todo)]
+            return [...state.map(todo => todo.id === action.payload.todoId ? {
+                ...todo,
+                title: action.payload.title
+            } : todo)]
         case CHANGE_TODOLIST_FILTER:
-            return [...state.map(todo => todo.id === action.payload.id ? {
+            return [...state.map(todo => todo.id === action.payload.todoId ? {
                 ...todo,
                 filter: action.payload.filter
             } : todo)]

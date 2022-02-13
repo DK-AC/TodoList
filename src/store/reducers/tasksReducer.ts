@@ -1,24 +1,22 @@
 import {ActionsTaskType, ADD_TASK, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE, REMOVE_TASK} from "../types/taskTypes";
 import {TasksStateType} from "../../app/App";
-import {ADD_TODOLIST} from "../types/todolistTypes";
+import {ADD_TODOLIST, REMOVE_TODOLIST} from "../types/todolistTypes";
+import {v1} from "uuid";
 
-const initialState: TasksStateType = {}
+const initialState = {}
 
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType) => {
     switch (action.type) {
         case REMOVE_TASK:
-            debugger
             return {
                 ...state,
                 [action.payload.todoId]: state[action.payload.todoId].filter(task => task.id !== action.payload.taskId)
             }
         case ADD_TASK:
             return {
-                ...state,
-                [action.payload.todoId]: state[action.payload.todoId].map(task => task.id === action.payload.taskId
-                    ? {...task, title: action.payload.title}
-                    : task)
+                [action.payload.todoId]:
+                    [{id: v1(), title: action.payload.title, isDone: false}, ...state[action.payload.todoId]]
             }
         case CHANGE_TASK_TITLE:
             return {
@@ -39,6 +37,11 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 ...state,
                 [action.todoId]: []
             }
+        case REMOVE_TODOLIST: {
+            const stateCopy = {...state};
+            delete stateCopy[action.payload.todoId]
+            return stateCopy
+        }
         default:
             return state
     }

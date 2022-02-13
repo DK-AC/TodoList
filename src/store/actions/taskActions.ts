@@ -3,7 +3,7 @@ import {ADD_TASK, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE, REMOVE_TASK} from "../t
 export const removeTaskAC = (payload: { todoId: string, taskId: string }) => {
     return {type: REMOVE_TASK, payload} as const
 }
-export const addTaskAC = (payload: { todoId: string, taskId: string, title: string }) => {
+export const addTaskAC = (payload: { todoId: string, title: string }) => {
     return {type: ADD_TASK, payload} as const
 }
 export const changeTaskTitleAC = (payload: { todoId: string, taskId: string, title: string }) => {

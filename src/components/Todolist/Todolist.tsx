@@ -11,14 +11,14 @@ import IconButton from '@mui/material/IconButton';
 type TodolistPropsType = {
     title: string
     tasks: Array<TasksPropsType>
-    removeTask: (id: string, todolistId: string) => void
-    addTask: (title: string, todolistId: string) => void
+    removeTask: (todoId: string, taskId: string) => void
+    addTask: (todoId: string, title: string,) => void
     changeStatusTasks: (todoId: string, taskId: string, isDone: boolean) => void
     filter: FilterTodolistType
     todoId: string
-    removeTodolist: (id: string) => void
-    changeTodolistTitle: (id: string, title: string) => void
-    changeTaskTitle: (id: string, newTitle: string, todolistId: string) => void
+    removeTodolist: (todoId: string) => void
+    changeTodolistTitle: (todoId: string, title: string) => void
+    changeTaskTitle: (todoId: string, taskId: string, title: string) => void
     changeTodolistFilter: (todoId: string, filter: FilterTodolistType) => void
 }
 
@@ -45,7 +45,7 @@ export function Todolist(props: TodolistPropsType) {
     } = props;
 
     const addTaskHandler = (title: string) => {
-        addTask(title, todoId)
+        addTask(todoId, title)
     }
 
     const removeTodolistHandler = () => removeTodolist(todoId)

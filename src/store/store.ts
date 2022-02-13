@@ -1,10 +1,10 @@
 import {combineReducers, createStore} from "redux";
-import {todolistsReducer} from "./reducers/todolistsReducer";
+import {todolistReducer} from "./reducers/todolistReducer";
 import {tasksReducer} from "./reducers/tasksReducer";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
 
 const appRootState = combineReducers({
-    todolists: todolistsReducer,
+    todolists: todolistReducer,
     tasks: tasksReducer
 })
 
