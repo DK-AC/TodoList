@@ -20,8 +20,6 @@ export function Todolist({todoId}: PropsType) {
 
     let todo = useAppSelector<TodolistType>(state => state.todolists.filter(todo => todo.id === todoId)[0])
     let tasks = useAppSelector<TasksType[]>(state => state.tasks[todoId])
-    console.log(tasks)
-
 
     const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
     const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))
