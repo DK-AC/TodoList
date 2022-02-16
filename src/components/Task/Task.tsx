@@ -5,8 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../store/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../store/actions/taskActions";
-import {AddItemForm} from "../AddItemForm/AddItemForm";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../store/actions/taskActions";
 
 type TaskPropsType = { todoId: string, filteredTask: TasksType }
 export type TasksType = { id: string, title: string, isDone: boolean }
@@ -28,8 +27,6 @@ export const Task = ({todoId, filteredTask}: TaskPropsType) => {
             todoId, taskId: id, isDone: e.currentTarget.checked
         }))
     }
-    console.log(task)
-    console.log(filteredTask.title)
 
     return (
         <>
