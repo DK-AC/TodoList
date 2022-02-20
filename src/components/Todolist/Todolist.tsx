@@ -23,7 +23,6 @@ export function Todolist({todoId}: PropsType) {
 
     const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
     const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))
-
     const addTaskHandler = (title: string) => dispatch(addTaskAC({todoId, title}))
     const changeTodolistAllFilterHandler = () => {
         dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'all'}))
