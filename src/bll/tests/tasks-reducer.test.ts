@@ -46,12 +46,8 @@ test('add task with the correct title', () => {
         ])
     expect(startState['todolistId2'][0].title).toBe('Rest Api')
     expect(endState['todolistId2'][0].title).toBe('newTaskTitle')
-    expect(endState['todolistId2']).toEqual(
-        [
-            {id: '1', title: 'newTaskTitle', isDone: false},
-            {id: '2', title: 'Graph QL', isDone: true},
-            {id: '3', title: 'Material UI', isDone: false}
-        ])
+    expect(endState["todolistId2"][0].id).toBeDefined();
+
 })
 
 test('status of specified task should be changed', () => {
