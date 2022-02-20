@@ -4,7 +4,6 @@ import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
