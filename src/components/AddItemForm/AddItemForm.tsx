@@ -12,6 +12,15 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
+    const addTask = () => {
+        if (title.trim() !== '') {
+            callback(title)
+            setTitle('')
+        } else {
+            setError('Title is required')
+        }
+    }
+
     const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
 
@@ -23,23 +32,12 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
     const onKeyPressTasks = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
             setError(null)
-            if (title.trim() && e.key === 'Enter') {
-                callback(title.trim())
-                setTitle('')
-            } else {
-                setError('Title is required')
-            }
+        }
+        if (e.key === 'Enter') {
+            addTask()
         }
     }
 
-    const addTask = () => {
-        if (title.trim() !== '') {
-            callback(title.trim())
-            setTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
 
     return (
         <div>
