@@ -4,11 +4,10 @@ import TextField from "@mui/material/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    callback: (title: string) => void
 }
 
-export const AddItemForm = React.memo(({addItem}: AddItemFormPropsType) => {
-    console.log('AddItemForm')
+export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -25,7 +24,7 @@ export const AddItemForm = React.memo(({addItem}: AddItemFormPropsType) => {
         if (error !== null) {
             setError(null)
             if (title.trim() && e.key === 'Enter') {
-                addItem(title.trim())
+                callback(title.trim())
                 setTitle('')
             } else {
                 setError('Title is required')
@@ -35,7 +34,7 @@ export const AddItemForm = React.memo(({addItem}: AddItemFormPropsType) => {
 
     const addTask = () => {
         if (title.trim() !== '') {
-            addItem(title.trim())
+            callback(title.trim())
             setTitle('')
         } else {
             setError('Title is required')

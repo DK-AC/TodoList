@@ -12,7 +12,8 @@ export type TasksType = { id: string, title: string, isDone: boolean }
 export type TasksStateType = { [key: string]: Array<TasksType> }
 
 
-export const Task = ({todoId, filteredTask}: TaskPropsType) => {
+export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
+    console.log('Task')
 
     const dispatch = useDispatch()
 
@@ -30,7 +31,6 @@ export const Task = ({todoId, filteredTask}: TaskPropsType) => {
 
     return (
         <>
-
             <div key={id} className={filteredTask.isDone ? 'isDone' : ''}>
                 <Checkbox
                     color="primary"
@@ -43,5 +43,5 @@ export const Task = ({todoId, filteredTask}: TaskPropsType) => {
             </div>
         </>
     );
-};
+})
 

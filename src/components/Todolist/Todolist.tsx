@@ -14,7 +14,8 @@ type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
 export type TodolistType = { id: string, title: string, filter: FilterTodolistType }
 
-export function Todolist({todoId}: PropsType) {
+export const Todolist = React.memo(({todoId}: PropsType) => {
+    console.log('Todolist')
 
     const dispatch = useDispatch()
 
@@ -52,7 +53,7 @@ export function Todolist({todoId}: PropsType) {
             </h3>
 
             <div>
-                <AddItemForm addItem={addTaskHandler}/>
+                <AddItemForm callback={addTaskHandler}/>
                 {tasksForTodolist.map(task => {
                     return <Task key={task.id} todoId={todo.id} filteredTask={task}/>
                 })}
@@ -75,4 +76,4 @@ export function Todolist({todoId}: PropsType) {
             </div>
         </div>
     )
-}
+})

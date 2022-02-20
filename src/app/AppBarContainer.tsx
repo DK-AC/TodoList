@@ -16,6 +16,7 @@ import {useAppSelector} from "../store/store";
 import {addTodolistAC} from "../store/actions/todolistActions";
 
 export const AppBarContainer = () => {
+    console.log('AppBarContainer')
 
     const dispatch = useDispatch()
 
@@ -41,7 +42,7 @@ export const AppBarContainer = () => {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
-                    <AddItemForm addItem={addTodolist}/>
+                    <AddItemForm callback={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map(tl => {
