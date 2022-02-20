@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
@@ -24,7 +24,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
 
     const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
     const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))
-    const addTaskHandler = (title: string) => dispatch(addTaskAC({todoId, title}))
+    const addTaskHandler =useCallback( (title: string) => dispatch(addTaskAC({todoId, title})),[])
     const changeTodolistAllFilterHandler = () => {
         dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'all'}))
     }

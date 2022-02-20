@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
@@ -22,10 +22,10 @@ export const AppBarContainer = () => {
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
 
-    const addTodolist = (title: string) => {
+    const addTodolist = useCallback((title: string) => {
         const action = addTodolistAC({title})
         dispatch(action)
-    }
+    }, [])
 
     return (
         <div>
