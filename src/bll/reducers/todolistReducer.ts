@@ -5,7 +5,7 @@ import {
     GeneralType,
     REMOVE_TODOLIST
 } from "../types/todolistTypes";
-import {TodolistType} from "../../components/Todolist/Todolist";
+import {TodolistType} from "../../ui/Todolist/Todolist";
 
 const initialState: TodolistType[] = []
 

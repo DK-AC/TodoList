@@ -1,11 +1,11 @@
 import React, {ChangeEvent} from 'react';
 import Checkbox from "@mui/material/Checkbox";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../store/store";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../store/actions/taskActions";
+import {useAppSelector} from "../../bll/store";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../bll/actions/taskActions";
 
 type TaskPropsType = { todoId: string, filteredTask: TasksType }
 export type TasksType = { id: string, title: string, isDone: boolean }
@@ -13,7 +13,6 @@ export type TasksStateType = { [key: string]: Array<TasksType> }
 
 
 export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
-    console.log('Task')
 
     const dispatch = useDispatch()
 

@@ -6,7 +6,7 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC
 } from "../actions/todolistActions";
-import {TodolistType} from "../../components/Todolist/Todolist";
+import {TodolistType} from "../../ui/Todolist/Todolist";
 
 let todolistId1: string;
 let todolistId2: string

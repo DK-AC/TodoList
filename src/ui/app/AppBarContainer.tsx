@@ -8,15 +8,14 @@ import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
-import {Todolist, TodolistType} from "../components/Todolist/Todolist";
+import {Todolist, TodolistType} from "../Todolist/Todolist";
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../store/store";
-import {addTodolistAC} from "../store/actions/todolistActions";
+import {useAppSelector} from "../../bll/store";
+import {addTodolistAC} from "../../bll/actions/todolistActions";
 
 export const AppBarContainer = () => {
-    console.log('AppBarContainer')
 
     const dispatch = useDispatch()
 

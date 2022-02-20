@@ -1,7 +1,7 @@
 import {ActionsTaskType, ADD_TASK, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE, REMOVE_TASK} from "../types/taskTypes";
 import {ADD_TODOLIST, REMOVE_TODOLIST} from "../types/todolistTypes";
 import {v1} from "uuid";
-import {TasksStateType} from "../../components/Task/Task";
+import {TasksStateType} from "../../ui/Task/Task";
 
 const initialState: TasksStateType = {}
 

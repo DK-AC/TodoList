@@ -1,21 +1,20 @@
 import React, {useCallback} from "react";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import {Task, TasksType} from "../Task/Task";
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../store/store";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../../store/actions/todolistActions";
-import {AddItemForm} from "../AddItemForm/AddItemForm";
-import {addTaskAC} from "../../store/actions/taskActions";
+import {useAppSelector} from "../../bll/store";
+import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../../bll/actions/todolistActions";
+import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {addTaskAC} from "../../bll/actions/taskActions";
 
 type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
 export type TodolistType = { id: string, title: string, filter: FilterTodolistType }
 
 export const Todolist = React.memo(({todoId}: PropsType) => {
-    console.log('Todolist')
 
     const dispatch = useDispatch()
 
@@ -24,7 +23,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
 
     const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
     const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))
-    const addTaskHandler =useCallback( (title: string) => dispatch(addTaskAC({todoId, title})),[])
+    const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC({todoId, title})), [])
     const changeTodolistAllFilterHandler = () => {
         dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'all'}))
     }
