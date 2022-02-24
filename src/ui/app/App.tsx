@@ -4,6 +4,7 @@ import {AppBarContainer} from "./AppBarContainer";
 
 
 function App() {
+    console.log('App')
 
     return (
         <AppBarContainer/>
