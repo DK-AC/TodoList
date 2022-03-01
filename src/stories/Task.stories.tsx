@@ -8,10 +8,6 @@ export default {
     argTypes: {},
 } as ComponentMeta<typeof Task>;
 
-// const changeTaskStatusCallback = action('Status changed inside Task')
-// const changeTaskTitleCallback = action('Title changed inside Task')
-// const removeTaskCallback = action('Remove Button inside Task clicked')
-
 
 const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
