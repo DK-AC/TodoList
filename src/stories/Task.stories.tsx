@@ -7,5 +7,8 @@ export default {
 } as ComponentMeta<typeof Task>;
 
 
-const Template: ComponentStory<typeof Task> = (args) => <Task {...args } />;
+const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
+
+console.log(Template.args)
+
 
