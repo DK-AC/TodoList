@@ -9,6 +9,5 @@ export default {
 
 const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
-console.log(Template.args)
 
 
