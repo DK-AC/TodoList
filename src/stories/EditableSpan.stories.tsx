@@ -1,6 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {EditableSpan} from "../components/EditableSpan/EditableSpan";
+import {action} from "@storybook/addon-actions";
 
 export default {
     title: 'Todolist/EditableSpan',
@@ -9,7 +10,6 @@ export default {
         onChange: {
             description: 'form is added',
             title: 'new',
-
         }
     },
 } as ComponentMeta<typeof EditableSpan>;
@@ -18,4 +18,7 @@ export default {
 const Template: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {...args} />;
 
 export const EditableSpanStories = Template.bind({});
-EditableSpanStories.args = {};
+EditableSpanStories.args = {
+    title: 'test',
+    onChange: action('span')
+};
