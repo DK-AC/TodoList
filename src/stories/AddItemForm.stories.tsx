@@ -17,6 +17,8 @@ export default {
 
 const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
 
+console.log(AddItemForm)
+
 export const AddItemFormStories = Template.bind({});
 AddItemFormStories.args = {
     callback: action('form is added')
