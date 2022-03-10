@@ -18,6 +18,9 @@ export default {
 const Template: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {...args} />;
 
 export const EditableSpanStories = Template.bind({});
+
+console.log(EditableSpanStories)
+
 EditableSpanStories.args = {
     title: 'test',
     onChange: action('span')
