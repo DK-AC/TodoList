@@ -20,6 +20,7 @@ const Template: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {.
 export const EditableSpanStories = Template.bind({});
 
 console.log(EditableSpanStories)
+console.log(EditableSpanStories)
 
 EditableSpanStories.args = {
     title: 'test',
