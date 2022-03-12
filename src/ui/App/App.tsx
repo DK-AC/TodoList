@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {AppBarContainer} from "./AppBarContainer";
+import { AppBarContainer } from './AppBarContainer';
 
 
 function App() {
