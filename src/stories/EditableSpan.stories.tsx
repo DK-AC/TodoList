@@ -1,35 +1,22 @@
-import React, {useState} from 'react';
-import {ComponentMeta} from '@storybook/react';
+import React from 'react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {EditableSpan} from "../components/EditableSpan/EditableSpan";
-
+import {action} from "@storybook/addon-actions";
 
 export default {
     title: 'Todolist/EditableSpan',
     component: EditableSpan,
-    argTypes: {
-        onChange: {}
-    },
 } as ComponentMeta<typeof EditableSpan>;
 
-const Template = (args: any) => {
 
-    const [value, setValue] = useState(args.value ?? '');
-    return (
-        <>
-            <EditableSpan
-                {...args}
-                onChange={(...params) => {
-                    args.onChange(...params);
-                    setValue(...params);
-                }}
-                value={value}
-            />
-        </>
-    );
-};
-
+const Template: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {...args}/>
 
 export const EditableSpanStories = Template.bind({});
+
+EditableSpanStories.args = {
+    onChange: action('value changed'),
+};
+
 
 
 
