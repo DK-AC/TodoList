@@ -12,14 +12,13 @@ const initialState: TodolistType[] = []
 export const todolistReducer = (state: any[] = initialState, action: GeneralType) => {
     switch (action.type) {
         case REMOVE_TODOLIST:
-            return [...state.filter(todo => todo.id != action.payload.todoId)]
+            return [...state.filter(todo => todo.id !== action.payload.todoId)]
         case ADD_TODOLIST:
             return [...state, {id: action.todoId, title: action.payload.title, filter: 'all'}]
         case CHANGE_TODOLIST_TITLE:
-            return [...state.map(todo => todo.id === action.payload.todoId ? {
-                ...todo,
-                title: action.payload.title
-            } : todo)]
+            return [...state.map(todo => todo.id === action.payload.todoId
+                ? {...todo, title: action.payload.title}
+                : todo)]
         case CHANGE_TODOLIST_FILTER:
             return state.map(todo => todo.id === action.payload.todoId
                 ? {...todo, filter: action.payload.filter}
