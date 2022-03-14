@@ -12,7 +12,8 @@ export const tasksApi = {
     getTasks(todolistId: string) {
         return instance.get<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks`)
     },
-    createTask() {
+    createTask(todolistId: string, data: Pick<TaskFromServerType, 'title'>) {
+        return instance.post<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks`, data)
     },
     deleteTask() {
     },
@@ -39,5 +40,4 @@ export type ResponseDataType<T> = {
     fieldsErrors: string[]
     messages: string[]
     resultCode: number
-
 }
