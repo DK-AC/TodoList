@@ -24,7 +24,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        instance.post('', {title:'5'})
+        instance.post('', {title: '5'})
             .then(res => setState(res.data))
     }, [])
 
@@ -33,6 +33,9 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
+        let todolistId: string = 'd3cdff1c-0f96-474e-91bc-6b877abc8ee4'
+        instance.delete(`${todolistId}`)
+            .then(res => setState(res.data))
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
