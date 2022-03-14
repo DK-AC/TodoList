@@ -18,7 +18,8 @@ export const tasksApi = {
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`)
     },
-    updateTask() {
+    updateTask(todolistId: string, taskId: string, data: Pick<TaskFromServerType, 'title'>) {
+        return instance.put(`${todolistId}/tasks/${taskId}`, data)
     },
 }
 

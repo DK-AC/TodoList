@@ -46,8 +46,8 @@ export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         let todolistId: string = '418ab450-3836-48a6-b67a-127dc9ceb485'
-        let taskId: string = 'd59fa423-9bb4-404b-aa9c-3c3027743dad'
-        instance.put(`${todolistId}/tasks/${taskId}`, {title: 'Update Title'})
+        let taskId: string = 'f6005b69-9afd-43c8-a43e-7376b141cffe'
+        tasksApi.updateTask(todolistId, taskId,{title:'New Title 2'})
             .then(res => setState(res.data))
     }, [])
     return <div> {JSON.stringify(state)}</div>
