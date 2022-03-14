@@ -28,7 +28,6 @@ export const CreateTask = () => {
         let todolistId: string = '418ab450-3836-48a6-b67a-127dc9ceb485'
         instance.post(`${todolistId}/tasks`, {title: 'New Task 1'})
             .then(res => setState(res.data))
-
     }, [])
     return <div> {JSON.stringify(state)}</div>
 }
@@ -39,7 +38,16 @@ export const DeleteTask = () => {
         let taskId: string = '9df33976-5453-4428-a2df-a91b60455f29'
         instance.delete(`${todolistId}/tasks/${taskId}`)
             .then(res => setState(res.data))
-
+    }, [])
+    return <div> {JSON.stringify(state)}</div>
+}
+export const UpdateTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        let todolistId: string = '418ab450-3836-48a6-b67a-127dc9ceb485'
+        let taskId: string = 'd59fa423-9bb4-404b-aa9c-3c3027743dad'
+        instance.put(`${todolistId}/tasks/${taskId}`, {title: 'Update Title'})
+            .then(res => setState(res.data))
     }, [])
     return <div> {JSON.stringify(state)}</div>
 }
