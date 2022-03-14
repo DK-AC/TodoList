@@ -16,9 +16,19 @@ const instance = axios.create({
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let todolistId = 'b96a9ec9-56bf-4e57-a257-cfe791c0c797'
+        let todolistId = '418ab450-3836-48a6-b67a-127dc9ceb485'
         instance.get(`${todolistId}/tasks`)
             .then(res => setState(res.data))
-    })
+    }, [])
+    return <div> {JSON.stringify(state)}</div>
+}
+export const CreateTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        let todolistId = '418ab450-3836-48a6-b67a-127dc9ceb485'
+        instance.post(`${todolistId}/tasks`, {title: 'New Task 1'})
+            .then(res => setState(res.data))
+
+    }, [])
     return <div> {JSON.stringify(state)}</div>
 }
