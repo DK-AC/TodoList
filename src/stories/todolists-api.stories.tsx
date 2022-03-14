@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
+import {todolistApi} from "../dal/api/todolist-api";
 
 export default {
     title: 'API/Todolists'
@@ -16,7 +17,7 @@ const instance = axios.create({
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        instance.get('')
+        todolistApi.getTodolists()
             .then(res => setState(res.data))
     }, [])
     return <div> {JSON.stringify(state)}</div>
@@ -24,7 +25,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        instance.post('', {title: '5'})
+        todolistApi.createTodolist({title:'New Todolist'})
             .then(res => setState(res.data))
     }, [])
 
