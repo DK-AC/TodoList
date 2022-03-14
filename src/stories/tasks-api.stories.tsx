@@ -36,8 +36,8 @@ export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
         let todolistId: string = '418ab450-3836-48a6-b67a-127dc9ceb485'
-        let taskId: string = '9df33976-5453-4428-a2df-a91b60455f29'
-        instance.delete(`${todolistId}/tasks/${taskId}`)
+        let taskId: string = '95c4768a-882f-4e98-8726-96f80e46875f'
+        tasksApi.deleteTask(todolistId, taskId)
             .then(res => setState(res.data))
     }, [])
     return <div> {JSON.stringify(state)}</div>
