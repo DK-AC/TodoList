@@ -24,6 +24,8 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
+        instance.post('', {title:'5'})
+            .then(res => setState(res.data))
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
