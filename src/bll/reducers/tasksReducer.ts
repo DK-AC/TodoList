@@ -1,5 +1,5 @@
 import {ActionsTaskType, ADD_TASK, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE, REMOVE_TASK} from "../types/taskTypes";
-import {ADD_TODOLIST, REMOVE_TODOLIST} from "../types/todolistTypes";
+import {ADD_TODOLIST, REMOVE_TODOLIST, SET_TODOLISTS} from "../types/todolistTypes";
 import {v1} from "uuid";
 import {TasksStateType} from "../../ui/Task/Task";
 
@@ -40,10 +40,16 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {
                 ...state, [action.todoId]: []
             }
-        case REMOVE_TODOLIST: {
+        case REMOVE_TODOLIST:
             const stateCopy = {...state};
             delete stateCopy[action.payload.todoId]
             return stateCopy
+        case SET_TODOLISTS: {
+            const stateCopy = {...state}
+            action.payload.todolists.forEach((tl) => {
+                stateCopy[tl.id] = []
+            })
+            return stateCopy;
         }
         default:
             return state

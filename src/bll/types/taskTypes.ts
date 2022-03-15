@@ -1,5 +1,5 @@
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../actions/taskActions";
-import {addTodolistAC, removeTodolistAC} from "../actions/todolistActions";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const ADD_TASK = 'ADD_TASK'
@@ -13,4 +13,5 @@ export type ActionsTaskType =
     | ReturnType<typeof changeTaskStatusAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof removeTodolistAC>
+    | ReturnType<typeof setTodolistsAC>
 
