@@ -20,11 +20,11 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
     const {id, title, isDone} = task
 
 
-    const removeTaskHandler = () => dispatch(removeTaskAC({todoId, taskId: id}))
-    const onChangeTaskTitle = (title: string) => dispatch(changeTaskTitleAC({todoId, taskId: id, title}))
+    const removeTaskHandler = () => dispatch(removeTaskAC({todolistId:todoId, taskId: id}))
+    const onChangeTaskTitle = (title: string) => dispatch(changeTaskTitleAC({todolistId:todoId, taskId: id, title}))
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(changeTaskStatusAC({
-            todoId, taskId: id, isDone: e.currentTarget.checked
+            todolistId:todoId, taskId: id, isDone: e.currentTarget.checked
         }))
     }
 

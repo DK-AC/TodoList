@@ -11,19 +11,19 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case REMOVE_TASK:
             return {
                 ...state,
-                [action.payload.todoId]: state[action.payload.todoId]
+                [action.payload.todolistId]: state[action.payload.todolistId]
                     .filter(task => task.id !== action.payload.taskId)
             }
         case ADD_TASK:
             return {
                 ...state,
-                [action.payload.todoId]: [{id: v1(), title: action.payload.title, isDone: false},
-                    ...state[action.payload.todoId]]
+                [action.payload.todolistId]: [{id: v1(), title: action.payload.title, isDone: false},
+                    ...state[action.payload.todolistId]]
             }
         case CHANGE_TASK_TITLE:
             return {
                 ...state,
-                [action.payload.todoId]: state[action.payload.todoId]
+                [action.payload.todolistId]: state[action.payload.todolistId]
                     .map(task => task.id === task.id
                         ? {...task, title: action.payload.title}
                         : task)
@@ -31,18 +31,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case CHANGE_TASK_STATUS:
             return {
                 ...state,
-                [action.payload.todoId]: state[action.payload.todoId]
+                [action.payload.todolistId]: state[action.payload.todolistId]
                     .map(task => task.id === action.payload.taskId
                         ? {...task, isDone: action.payload.isDone}
                         : task)
             }
         case ADD_TODOLIST:
             return {
-                ...state, [action.todoId]: []
+                ...state, [action.todolistId]: []
             }
         case REMOVE_TODOLIST:
             const stateCopy = {...state};
-            delete stateCopy[action.payload.todoId]
+            delete stateCopy[action.payload.todolistId]
             return stateCopy
         case SET_TODOLISTS: {
             const stateCopy = {...state}

@@ -21,17 +21,17 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     let todo = useAppSelector<TodolistType>(state => state.todolists.filter(todo => todo.id === todoId)[0])
     let tasks = useAppSelector<TasksType[]>(state => state.tasks[todoId])
 
-    const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
-    const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))
-    const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC({todoId, title})), [])
+    const removeTodolistHandler = () => dispatch(removeTodolistAC({todolistId: todo.id}))
+    const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todolistId: todo.id, title: todo.title}))
+    const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC({todolistId: todo.id, title})), [])
     const changeTodolistAllFilterHandler = () => {
-        dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'all'}))
+        dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'all'}))
     }
     const changeTodolistActiveFilterHandler = () => {
-        dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'active'}))
+        dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'active'}))
     }
     const changeTodolistCompletedFilterHandler = () => {
-        dispatch(changeTodolistFilterAC({todoId: todo.id, filter: 'completed'}))
+        dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'completed'}))
     }
 
     let tasksForTodolist = tasks
