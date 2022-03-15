@@ -11,10 +11,9 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
-import {addTodolistAC} from "../../bll/actions/todolistActions";
 import {TodolistType} from "../../dal/api/todolists-api";
 import {Todolist} from '../Todolist/Todolist';
-import {setTodolistsTC} from "../../bll/thunk/todolistThunk";
+import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 
 export const AppBarContainer = () => {
 
@@ -27,8 +26,7 @@ export const AppBarContainer = () => {
     }, [])
 
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC({todolist: {title}})
-        dispatch(action)
+        dispatch(addTodolistTC({title}))
     }, [])
 
     return (
