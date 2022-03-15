@@ -1,27 +1,28 @@
-import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {tasksApi} from "../dal/api/tasks-api";
 
 export default {
     title: 'API/Tasks'
 }
 
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/todo-lists/',
-    withCredentials: true,
-    headers: {
-        'API-KEY': 'a32b35ae-c578-47f3-b8a9-0885cd248a9d'
-    }
-})
-
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todolistId: string = '418ab450-3836-48a6-b67a-127dc9ceb485'
+    const [todolistId, setTodolistId] = useState<string>('')
+
+    const getTasksHande = () => {
         tasksApi.getTasks(todolistId)
             .then(res => setState(res.data))
-    }, [])
-    return <div> {JSON.stringify(state)}</div>
+    }
+    const onChangeValueHandle = (e: ChangeEvent<HTMLInputElement>) => setTodolistId(e.currentTarget.value)
+
+    return (
+        <>
+            {JSON.stringify(state)}
+            <div>
+                <input placeholder={'todolistId'} value={todolistId} onChange={onChangeValueHandle}/>
+                <button onClick={getTasksHande}>Get Tasks</button>
+            </div>
+        </>)
 }
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
