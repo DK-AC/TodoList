@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
@@ -9,6 +9,7 @@ import {useAppSelector} from "../../bll/store";
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../../bll/actions/todolistActions";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {addTaskAC} from "../../bll/actions/taskActions";
+import {setTodolistsTC} from "../../bll/thunk/todolistThunk";
 
 type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
@@ -18,8 +19,14 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
 
     const dispatch = useDispatch()
 
+    let todolists = useAppSelector(state => state.todolists)
+
     let todo = useAppSelector<TodolistType>(state => state.todolists.filter(todo => todo.id === todoId)[0])
     let tasks = useAppSelector<TasksType[]>(state => state.tasks[todoId])
+
+    useEffect(() => {
+        dispatch(setTodolistsTC(todolists))
+    },[dispatch])
 
     const removeTodolistHandler = () => dispatch(removeTodolistAC({todoId: todo.id}))
     const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todoId: todo.id, title: todo.title}))

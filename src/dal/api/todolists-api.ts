@@ -1,4 +1,5 @@
 import axios from "axios";
+import {FilterTodolistType} from "../../ui/Todolist/Todolist";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -31,6 +32,8 @@ export type TodolistFromServerType = {
     title: string
     addedDate: string
     order: number
+} & {
+    filter: FilterTodolistType
 }
 
 export type TodolistResponseType<T = {}> = {
