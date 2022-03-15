@@ -10,10 +10,10 @@ import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from ".
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {addTaskAC} from "../../bll/actions/taskActions";
 import {setTodolistsTC} from "../../bll/thunk/todolistThunk";
+import { TodolistType } from "../../dal/api/todolists-api";
 
 type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
-export type TodolistType = { id: string, title: string, filter: FilterTodolistType }
 
 export const Todolist = React.memo(({todoId}: PropsType) => {
 

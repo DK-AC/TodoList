@@ -9,10 +9,11 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
-import {Todolist, TodolistType} from "../Todolist/Todolist";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
 import {addTodolistAC} from "../../bll/actions/todolistActions";
+import {TodolistType} from "../../dal/api/todolists-api";
+import { Todolist } from '../Todolist/Todolist';
 
 export const AppBarContainer = () => {
 
@@ -21,7 +22,7 @@ export const AppBarContainer = () => {
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
 
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC({title})
+        const action = addTodolistAC({todolist: {title}})
         dispatch(action)
     }, [])
 

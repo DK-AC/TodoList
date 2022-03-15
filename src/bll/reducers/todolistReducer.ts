@@ -6,10 +6,10 @@ import {
     REMOVE_TODOLIST,
     SET_TODOLISTS
 } from "../types/todolistTypes";
-import {TodolistFromServerType} from "../../dal/api/todolists-api";
+import {TodolistType} from "../../dal/api/todolists-api";
 
 
-const initialState: TodolistFromServerType[] = []
+const initialState: TodolistType[] = []
 
 type initialStateType = typeof initialState
 
@@ -34,7 +34,7 @@ export const todolistReducer = (state = initialState, action: GeneralType): init
                 ? {...todo, filter: action.payload.filter}
                 : todo)
         case SET_TODOLISTS:
-            return action.todolists.map(todo => ({...todo, filter: 'all'}
+            return action.payload.todolists.map(todo => ({...todo, filter: 'all'}
             ))
         default:
             return state

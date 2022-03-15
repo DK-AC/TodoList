@@ -7,12 +7,12 @@ import {
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
-import {TodolistFromServerType} from "../../dal/api/todolists-api";
+import {TodolistType} from "../../dal/api/todolists-api";
 
 let todolistId1: string;
 let todolistId2: string
 
-let startState: TodolistFromServerType[] = []
+let startState: TodolistType[] = []
 
 beforeEach(() => {
     todolistId1 = v1();
@@ -58,10 +58,12 @@ test('correct filter of todolist should be changed', () => {
 });
 
 test('todolist should be set to the state', () => {
-    const endState = todolistReducer(startState, setTodolistsAC([
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
-    ]))
+    const endState = todolistReducer(startState, setTodolistsAC({
+        todolists: [
+            {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
+            {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
+        ]
+    }))
 
     expect(endState.length).toBe(2)
 })
