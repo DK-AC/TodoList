@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -15,11 +15,11 @@ export const todolistsApi = {
     createTodolist(payload: { title: string }) {
         return instance.post<any, TodolistResponseType<{ todolists: TodolistFromServerType }>, { title: string }>('todo-lists', payload)
     },
-    deleteTodolist(todolistId: string) {
-        return instance.delete<TodolistFromServerType, AxiosResponse<TodolistFromServerType>>(`${todolistId}`)
+    deleteTodolist(payload: { todolistId: string }) {
+        return instance.delete <any, TodolistResponseType>(`todo-lists/${payload.todolistId}`)
     },
-    updateTodolist(todolistId: string, data: Partial<TodolistFromServerType>) {
-        return instance.put<TodolistFromServerType, AxiosResponse<TodolistFromServerType>>(`${todolistId}`, data)
+    updateTodolist(payload: { todolistId: string, title: string }) {
+        return instance.put<any, TodolistResponseType<{ todolist: TodolistFromServerType }>, { title: string }>(`todo-lists/${payload.todolistId}`, payload)
     }
 }
 
