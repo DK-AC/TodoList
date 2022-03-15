@@ -18,9 +18,7 @@ export const CreateTodolist = () => {
     useEffect(() => {
         todolistsApi.createTodolist({title: 'New Todolist'})
             .then(res => setState(res.data))
-
     }, [])
-
     return <div> {JSON.stringify(state)}</div>
 }
 export const DeleteTodolist = () => {
@@ -40,6 +38,5 @@ export const UpdateTodolistTitle = () => {
         todolistsApi.updateTodolist({todolistId, title: 'Update Title'})
             .then(res => setState(res.data))
     }, [])
-
     return <div> {JSON.stringify(state)}</div>
 }
