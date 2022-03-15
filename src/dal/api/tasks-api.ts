@@ -18,8 +18,8 @@ export const tasksApi = {
     deleteTask(payload: { todolistId: string, taskId: string }) {
         return instance.delete<any, TaskResponseType>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`)
     },
-    updateTask(payload: { todolistId: string, taskId: string, title: string }) {
-        return instance.put<any, RepeatTaskType, { title: string }>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, payload)
+    updateTask(payload: { todolistId: string, taskId: string, model: ModelTaskType }) {
+        return instance.put<any, RepeatTaskType, { title: string }>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, payload.model)
     },
 }
 
@@ -38,10 +38,17 @@ export type TaskFromServerType = {
     todoList: null
     todoListId: string
 }
-
 export type TaskResponseType<T = {}> = {
     data: T
     fieldsErrors: string[]
     messages: string[]
     resultCode: number
+}
+export type ModelTaskType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
 }
