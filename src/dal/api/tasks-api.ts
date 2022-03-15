@@ -1,7 +1,7 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/todo-lists',
+    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
         'API-KEY': 'a32b35ae-c578-47f3-b8a9-0885cd248a9d'
@@ -10,18 +10,20 @@ const instance = axios.create({
 
 export const tasksApi = {
     getTasks(todolistId: string) {
-        return instance.get<TaskFromServerType[], AxiosResponse<ResponseTaskType<TaskFromServerType[]>>>(`${todolistId}/tasks`)
+        return instance.get<TaskFromServerType[]>(`todo-lists/${todolistId}/tasks`)
     },
-    createTask(todolistId: string, data: Pick<TaskFromServerType, 'title'>) {
-        return instance.post<TaskFromServerType, AxiosResponse<ResponseTaskType<TaskFromServerType>>>(`${todolistId}/tasks`, data)
+    createTask(payload: { todolistId: string, title: string }) {
+        return instance.post<any, RepeatTaskType, { title: string }>(`todo-lists/${payload.todolistId}/tasks`, payload)
     },
-    deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<TaskFromServerType, AxiosResponse<ResponseTaskType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`)
+    deleteTask(payload: { todolistId: string, taskId: string }) {
+        return instance.delete<any, TaskResponseType>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`)
     },
-    updateTask(todolistId: string, taskId: string, data: Pick<TaskFromServerType, 'title'>) {
-        return instance.put<TaskFromServerType, AxiosResponse<ResponseTaskType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`, data)
+    updateTask(payload: { todolistId: string, taskId: string, title: string }) {
+        return instance.put<any, RepeatTaskType, { title: string }>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, payload)
     },
 }
+
+type RepeatTaskType = TaskResponseType<{ task: TaskFromServerType }>
 
 export type TaskFromServerType = {
     addedDate: string
@@ -37,7 +39,7 @@ export type TaskFromServerType = {
     todoListId: string
 }
 
-export type ResponseTaskType<T> = {
+export type TaskResponseType<T = {}> = {
     data: T
     fieldsErrors: string[]
     messages: string[]
