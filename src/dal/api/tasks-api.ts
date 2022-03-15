@@ -10,16 +10,16 @@ const instance = axios.create({
 
 export const tasksApi = {
     getTasks(todolistId: string) {
-        return instance.get<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks`)
+        return instance.get<TaskFromServerType[], AxiosResponse<ResponseTaskType<TaskFromServerType[]>>>(`${todolistId}/tasks`)
     },
     createTask(todolistId: string, data: Pick<TaskFromServerType, 'title'>) {
-        return instance.post<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks`, data)
+        return instance.post<TaskFromServerType, AxiosResponse<ResponseTaskType<TaskFromServerType>>>(`${todolistId}/tasks`, data)
     },
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`)
+        return instance.delete<TaskFromServerType, AxiosResponse<ResponseTaskType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, data: Pick<TaskFromServerType, 'title'>) {
-        return instance.put<TaskFromServerType, AxiosResponse<ResponseDataType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`, data)
+        return instance.put<TaskFromServerType, AxiosResponse<ResponseTaskType<TaskFromServerType>>>(`${todolistId}/tasks/${taskId}`, data)
     },
 }
 
@@ -37,7 +37,7 @@ export type TaskFromServerType = {
     todoListId: string
 }
 
-export type ResponseDataType<T> = {
+export type ResponseTaskType<T> = {
     data: T
     fieldsErrors: string[]
     messages: string[]
