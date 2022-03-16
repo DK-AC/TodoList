@@ -16,17 +16,29 @@ export const GetTodolists = () => {
     return <>
         {JSON.stringify(state)}
         <div>
-            <button onClick={getTodolistsHandle}>Get Tasks</button>
+            <button onClick={getTodolistsHandle}>Get Todolists</button>
         </div>
     </>
 }
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        todolistsApi.createTodolist({title: 'New Todolist'})
+    const [title, setTitle] = useState<string>('')
+
+    const createTodolistHandle = () => {
+        todolistsApi.createTodolist({title})
             .then(res => setState(res.data))
-    }, [])
-    return <div> {JSON.stringify(state)}</div>
+    }
+    const onChangeTitleHandle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+
+    return <>
+        {JSON.stringify(state)}
+        <div>
+            <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
+            <button onClick={createTodolistHandle}>Create Todolist</button>
+        </div>
+    </>
 }
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
