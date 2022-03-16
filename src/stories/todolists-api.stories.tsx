@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import {todolistsApi} from "../dal/api/todolists-api";
 
 export default {
@@ -62,10 +62,26 @@ export const DeleteTodolist = () => {
 }
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todolistId: string = '418ab450-3836-48a6-b67a-127dc9ceb485'
-        todolistsApi.updateTodolist({todolistId, title: 'Update Title'})
+    const [title, setTitle] = useState<string>('')
+    const [todolistId, setTodolistId] = useState<string>('')
+
+    const updateTodolistHandle = () => {
+        todolistsApi.updateTodolist({todolistId, title})
             .then(res => setState(res.data))
-    }, [])
-    return <div> {JSON.stringify(state)}</div>
+    }
+    const onChangeTitleHandle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+    const onChangeTodolistIdHandle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTodolistId(e.currentTarget.value)
+    }
+
+    return <>
+        {JSON.stringify(state)}
+        <div>
+            <input placeholder={'todolistId'} value={todolistId} onChange={onChangeTodolistIdHandle}/>
+            <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
+            <button onClick={updateTodolistHandle}>Update Todolist</button>
+        </div>
+    </>
 }
