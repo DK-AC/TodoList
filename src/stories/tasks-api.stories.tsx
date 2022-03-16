@@ -24,7 +24,8 @@ export const GetTasks = () => {
                 <input placeholder={'todolistId'} value={todolistId} onChange={onChangeValueHandle}/>
                 <button onClick={getTasksHandle}>Get Tasks</button>
             </div>
-        </>)
+        </>
+    )
 }
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
@@ -50,7 +51,8 @@ export const CreateTask = () => {
                 <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
                 <button onClick={createTaskHandle}>Create Task</button>
             </div>
-        </>)
+        </>
+    )
 }
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
@@ -76,7 +78,8 @@ export const DeleteTask = () => {
                 <input placeholder={'taskId'} value={taskId} onChange={onChangeTaskIdHandle}/>
                 <button onClick={deleteTaskHandle}>Delete Task</button>
             </div>
-        </>)
+        </>
+    )
 }
 export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
@@ -116,5 +119,6 @@ export const UpdateTask = () => {
                 <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
                 <button onClick={updateTaskHandle}>Update Task</button>
             </div>
-        </>)
+        </>
+    )
 }

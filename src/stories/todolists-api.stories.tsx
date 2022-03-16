@@ -13,12 +13,14 @@ export const GetTodolists = () => {
             .then(res => setState(res.data))
     }
 
-    return <>
-        {JSON.stringify(state)}
-        <div>
-            <button onClick={getTodolistsHandle}>Get Todolists</button>
-        </div>
-    </>
+    return (
+        <>
+            {JSON.stringify(state)}
+            <div>
+                <button onClick={getTodolistsHandle}>Get Todolists</button>
+            </div>
+        </>
+    )
 }
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
@@ -32,13 +34,15 @@ export const CreateTodolist = () => {
         setTitle(e.currentTarget.value)
     }
 
-    return <>
-        {JSON.stringify(state)}
-        <div>
-            <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
-            <button onClick={createTodolistHandle}>Create Todolist</button>
-        </div>
-    </>
+    return (
+        <>
+            {JSON.stringify(state)}
+            <div>
+                <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
+                <button onClick={createTodolistHandle}>Create Todolist</button>
+            </div>
+        </>
+    )
 }
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
@@ -52,13 +56,15 @@ export const DeleteTodolist = () => {
         setTodolistId(e.currentTarget.value)
     }
 
-    return <>
-        {JSON.stringify(state)}
-        <div>
-            <input placeholder={'todolistId'} value={todolistId} onChange={onChangeTodolistIdHandle}/>
-            <button onClick={deleteTodolistHandle}>Delete Todolist</button>
-        </div>
-    </>
+    return (
+        <>
+            {JSON.stringify(state)}
+            <div>
+                <input placeholder={'todolistId'} value={todolistId} onChange={onChangeTodolistIdHandle}/>
+                <button onClick={deleteTodolistHandle}>Delete Todolist</button>
+            </div>
+        </>
+    )
 }
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
@@ -76,12 +82,14 @@ export const UpdateTodolistTitle = () => {
         setTodolistId(e.currentTarget.value)
     }
 
-    return <>
-        {JSON.stringify(state)}
-        <div>
-            <input placeholder={'todolistId'} value={todolistId} onChange={onChangeTodolistIdHandle}/>
-            <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
-            <button onClick={updateTodolistHandle}>Update Todolist</button>
-        </div>
-    </>
+    return (
+        <>
+            {JSON.stringify(state)}
+            <div>
+                <input placeholder={'todolistId'} value={todolistId} onChange={onChangeTodolistIdHandle}/>
+                <input placeholder={'title'} value={title} onChange={onChangeTitleHandle}/>
+                <button onClick={updateTodolistHandle}>Update Todolist</button>
+            </div>
+        </>
+    )
 }
