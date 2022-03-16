@@ -1,6 +1,6 @@
 import {todolistsApi, TodolistType} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     todolistsApi.getTodolists()
@@ -23,6 +23,6 @@ export const deleteTodolistTC = (payload: { todolistId: string }) => (dispatch: 
 export const updateTodolistTC = (payload: { todolistId: string, title: string }) => (dispatch: Dispatch) => {
     todolistsApi.updateTodolist(payload)
         .then(res => {
-            console.log(res.data)
+            dispatch(changeTodolistTitleAC({todolistId: payload.todolistId, title: payload.title}))
         })
 }

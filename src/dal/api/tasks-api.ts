@@ -26,16 +26,16 @@ export const tasksApi = {
 type RepeatTaskType = TaskResponseType<{ task: TaskFromServerType }>
 
 export type TaskFromServerType = {
-    addedDate: string
-    deadline: string
-    description: string
+    addedDate?: string
+    deadline?: string
+    description?: string
     id: string
-    order: number
-    priority: number
-    startDate: string
+    order?: number
+    priority?: number
+    startDate?: string
     status: number
     title: string
-    todoList: null
+    todoList?: null
     todoListId: string
 }
 export type TaskResponseType<T = {}> = {
