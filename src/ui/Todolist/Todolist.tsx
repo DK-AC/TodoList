@@ -6,11 +6,11 @@ import IconButton from '@mui/material/IconButton';
 import {Task, TasksType} from "../Task/Task";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
-import {changeTodolistFilterAC, changeTodolistTitleAC} from "../../bll/actions/todolistActions";
+import {changeTodolistFilterAC} from "../../bll/actions/todolistActions";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {addTaskAC} from "../../bll/actions/taskActions";
 import {TodolistType} from "../../dal/api/todolists-api";
-import {deleteTodolistTC} from "../../bll/thunk/todolistThunk";
+import {deleteTodolistTC, updateTodolistTC} from "../../bll/thunk/todolistThunk";
 
 type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
@@ -23,7 +23,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     let tasks = useAppSelector<TasksType[]>(state => state.tasks[todoId])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC({todolistId: todo.id}))
-    const changeTodolistTitleHandler = () => dispatch(changeTodolistTitleAC({todolistId: todo.id, title: todo.title}))
+    const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC({todolistId: todo.id, title}))
     const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC({todolistId: todo.id, title})), [])
     const changeTodolistAllFilterHandler = () => {
         dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'all'}))
