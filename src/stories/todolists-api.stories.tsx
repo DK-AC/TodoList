@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import {todolistsApi} from "../dal/api/todolists-api";
 
 export default {
@@ -7,11 +7,18 @@ export default {
 
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
+
+    const getTodolistsHandle = () => {
         todolistsApi.getTodolists()
             .then(res => setState(res.data))
-    }, [])
-    return <div> {JSON.stringify(state)}</div>
+    }
+
+    return <>
+        {JSON.stringify(state)}
+        <div>
+            <button onClick={getTodolistsHandle}>Get Tasks</button>
+        </div>
+    </>
 }
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)

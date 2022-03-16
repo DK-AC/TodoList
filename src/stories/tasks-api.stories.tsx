@@ -9,7 +9,7 @@ export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     const [todolistId, setTodolistId] = useState<string>('')
 
-    const getTasksHande = () => {
+    const getTasksHandle = () => {
         tasksApi.getTasks(todolistId)
             .then(res => setState(res.data))
     }
@@ -22,7 +22,7 @@ export const GetTasks = () => {
             {JSON.stringify(state)}
             <div>
                 <input placeholder={'todolistId'} value={todolistId} onChange={onChangeValueHandle}/>
-                <button onClick={getTasksHande}>Get Tasks</button>
+                <button onClick={getTasksHandle}>Get Tasks</button>
             </div>
         </>)
 }
