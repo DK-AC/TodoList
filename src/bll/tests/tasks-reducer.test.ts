@@ -10,7 +10,7 @@ beforeEach(() => {
 
     startState = {
         ['todolistId1']: [
-            {id: '1', title: 'HTML', status: 0, todoListId: 'todolistId1'},
+            {id: '1', title: 'HTML', status: 0, todoListId: 'todolistId1',},
             {id: '2', title: 'JS', status: 0, todoListId: 'todolistId1'},
             {id: '3', title: 'React', status: 0, todoListId: 'todolistId1'},
         ],
@@ -41,9 +41,9 @@ test('add task with the correct title', () => {
 
     expect(startState['todolistId2']).toEqual(
         [
-            {id: '1', title: 'Rest Api', isDone: false},
-            {id: '2', title: 'Graph QL', isDone: true},
-            {id: '3', title: 'Material UI', isDone: false}
+            {id: '1', title: 'Rest Api', status: 0, todoListId: "todolistId2",},
+            {id: '2', title: 'Graph QL', status: 0, todoListId: "todolistId2",},
+            {id: '3', title: 'Material UI', status: 0, todoListId: "todolistId2",}
         ])
     expect(startState['todolistId2'][0].title).toBe('Rest Api')
     expect(endState['todolistId2'][0].title).toBe('newTaskTitle')
@@ -55,8 +55,8 @@ test('status of specified task should be changed', () => {
 
     const endState = tasksReducer(startState, changeTaskStatusAC("todolistId2", "2", 1))
 
-    expect(startState['todolistId2'][1].status).toBeTruthy();
-    // expect(endState['todolistId2'][1].status).toBeFalsy();
+    expect(startState['todolistId2'][1].status).toBe(0);
+    expect(endState['todolistId2'][1].status).toBe(1);
 });
 
 test('title of specified task should be changed', () => {

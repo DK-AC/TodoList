@@ -88,16 +88,17 @@ export const UpdateTask = () => {
     const [title, setTitle] = useState<string>('')
 
     const updateTaskHandle = () => {
-        tasksApi.updateTask({
-            todolistId, taskId, model: {
-                title,
-                deadline: '',
-                startDate: '',
-                status: 0,
-                priority: 0,
-                description: ''
-            }
-        })
+
+        const model = {
+            title,
+            deadline: '',
+            startDate: '',
+            status: 0,
+            priority: 0,
+            description: '',
+        }
+
+        tasksApi.updateTask(todolistId, taskId, model)
             .then(res => setState(res.data))
     }
     const onChangeTodolistIdHandle = (e: ChangeEvent<HTMLInputElement>) => {
