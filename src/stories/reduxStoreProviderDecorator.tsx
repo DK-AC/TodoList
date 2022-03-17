@@ -4,7 +4,6 @@ import {tasksReducer} from "../bll/reducers/tasksReducer";
 import {AppRootStateType} from "../bll/store";
 import {combineReducers, createStore} from "redux";
 import {todolistReducer} from "../bll/reducers/todolistReducer";
-import {v1} from "uuid";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -13,19 +12,19 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     todolists: [
-        {id: 'todolistId1', title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: 'todolistId2', title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: 'todoListId1', title: "What to learn", filter: "all", addedDate: '', order: 0},
+        {id: 'todoListId2', title: "What to buy", filter: "all", addedDate: '', order: 0}
     ],
     tasks: {
-        ['todolistId1']: [
-            {id: '1', title: 'HTML', status: 0, todolistId: 'todolistId1',},
-            {id: '2', title: 'JS', status: 0, todolistId: 'todolistId1'},
-            {id: '3', title: 'React', status: 0, todolistId: 'todolistId1'},
+        ['todoListId1']: [
+            {id: '1', title: 'HTML', status: 0, todoListId: 'todoListId1',},
+            {id: '2', title: 'JS', status: 0, todoListId: 'todoListId1'},
+            {id: '3', title: 'React', status: 0, todoListId: 'todoListId1'},
         ],
-        ['todolistId2']: [
-            {id: '1', title: 'Rest Api', status: 0, todolistId: 'todolistId2'},
-            {id: '2', title: 'Graph QL', status: 0, todolistId: 'todolistId2'},
-            {id: '3', title: 'Material UI', status: 0, todolistId: 'todolistId2'},
+        ['todoListId2']: [
+            {id: '1', title: 'Rest Api', status: 0, todoListId: 'todoListId2'},
+            {id: '2', title: 'Graph QL', status: 0, todoListId: 'todoListId2'},
+            {id: '3', title: 'Material UI', status: 0, todoListId: 'todoListId2'},
         ]
     }
 };

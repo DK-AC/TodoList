@@ -60,7 +60,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
             <div>
                 <AddItemForm callback={addTaskHandler}/>
                 {tasksForTodolist.map(task => {
-                    return <Task key={todo.id} todoId={todo.id} filteredTask={task}/>
+                    return <Task key={todo.id + task.id} todoId={todo.id} filteredTask={task}/>
                 })}
 
             </div>

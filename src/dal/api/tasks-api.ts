@@ -33,7 +33,7 @@ export type TaskType = {
     startDate?: string
     status: number
     title: string
-    todolistId: string
+    todoListId: string
 }
 export type TaskResponseType = {
     error: string | null

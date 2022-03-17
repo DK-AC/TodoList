@@ -8,8 +8,8 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
             dispatch(getTasksAC(todolistId, res.data.items))
         })
 }
-export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
-    tasksApi.createTask(todolistId, title)
+export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
+    tasksApi.createTask(todoListId, title)
         .then(res => {
             dispatch(addTaskAC(res.data.data.item))
         })
