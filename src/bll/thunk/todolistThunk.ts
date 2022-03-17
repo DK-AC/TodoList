@@ -14,10 +14,10 @@ export const addTodolistTC = (payload: { title: string }) => (dispatch: Dispatch
             dispatch(addTodolistAC({todolist: {title: payload.title}}))
         })
 }
-export const deleteTodolistTC = (payload: { todolistId: string }) => (dispatch: Dispatch) => {
-    todolistsApi.deleteTodolist({todolistId: payload.todolistId})
+export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
+    todolistsApi.deleteTodolist(todolistId)
         .then(res => {
-            dispatch(removeTodolistAC(payload))
+            dispatch(removeTodolistAC(todolistId))
         })
 }
 export const updateTodolistTC = (payload: { todolistId: string, title: string }) => (dispatch: Dispatch) => {

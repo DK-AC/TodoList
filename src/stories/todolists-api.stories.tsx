@@ -49,7 +49,7 @@ export const DeleteTodolist = () => {
     const [todolistId, setTodolistId] = useState<string>('')
 
     const deleteTodolistHandle = () => {
-        todolistsApi.deleteTodolist({todolistId})
+        todolistsApi.deleteTodolist(todolistId)
             .then(res => setState(res.data))
     }
     const onChangeTodolistIdHandle = (e: ChangeEvent<HTMLInputElement>) => {

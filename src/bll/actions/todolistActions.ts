@@ -9,8 +9,8 @@ import {v1} from "uuid";
 import {FilterTodolistType} from "../../ui/Todolist/Todolist";
 import {TodolistType} from "../../dal/api/todolists-api";
 
-export const removeTodolistAC = (payload: { todolistId: string }) => {
-    return {type: REMOVE_TODOLIST, payload} as const
+export const removeTodolistAC = ( todolistId: string ) => {
+    return {type: REMOVE_TODOLIST, todolistId} as const
 }
 export const addTodolistAC = (payload: { todolist: Pick<TodolistType, 'title'> }) => {
     return {type: ADD_TODOLIST, payload, todolistId: v1()} as const

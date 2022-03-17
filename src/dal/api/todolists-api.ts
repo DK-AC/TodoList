@@ -17,8 +17,8 @@ export const todolistsApi = {
     createTodolist(payload: { title: string }) {
         return instance.post<any, RepeatTodoType, { title: string }>('todo-lists', payload)
     },
-    deleteTodolist(payload: { todolistId: string }) {
-        return instance.delete <any, TodolistResponseType>(`todo-lists/${payload.todolistId}`)
+    deleteTodolist(todolistId: string ) {
+        return instance.delete <any, TodolistResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(payload: { todolistId: string, title: string }) {
         return instance.put<any, RepeatTodoType, { title: string }>(`todo-lists/${payload.todolistId}`, payload)

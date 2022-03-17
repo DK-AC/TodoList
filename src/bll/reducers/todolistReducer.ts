@@ -16,7 +16,7 @@ type initialStateType = typeof initialState
 export const todolistReducer = (state = initialState, action: GeneralType): initialStateType => {
     switch (action.type) {
         case REMOVE_TODOLIST:
-            return state.filter(todo => todo.id !== action.payload.todolistId)
+            return state.filter(todo => todo.id !== action.todolistId)
         case ADD_TODOLIST:
             return [{
                 id: action.todolistId,
