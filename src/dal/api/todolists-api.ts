@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, {AxiosResponse} from "axios";
 import {FilterTodolistType} from "../../ui/Todolist/Todolist";
 
 const instance = axios.create({
@@ -20,8 +20,8 @@ export const todolistsApi = {
     deleteTodolist(todolistId: string) {
         return instance.delete <any, TodolistResponseType>(`todo-lists/${todolistId}`)
     },
-    updateTodolist(payload: { todolistId: string, title: string }) {
-        return instance.put<any, RepeatTodoType, { title: string }>(`todo-lists/${payload.todolistId}`, payload)
+    updateTodolist(todolistId: string, title: string) {
+        return instance.put<any, RepeatTodoType, { title: string }>(`todo-lists/${todolistId}`, {title})
     }
 }
 
