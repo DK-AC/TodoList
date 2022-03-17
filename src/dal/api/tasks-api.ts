@@ -10,39 +10,35 @@ const instance = axios.create({
 
 export const tasksApi = {
     getTasks(todolistId: string) {
-        return instance.get<TaskFromServerType[]>(`todo-lists/${todolistId}/tasks`)
+        return instance.get<TaskResponseType>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<any, RepeatTaskType, { title: string }>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<any, ResponseType, { title: string }>(`todo-lists/${todolistId}/tasks`, {title})
     },
     deleteTask(payload: { todolistId: string, taskId: string }) {
-        return instance.delete<any, TaskResponseType>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`)
+        return instance.delete<any, ResponseType>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`)
     },
     updateTask(payload: { todolistId: string, taskId: string, model: ModelTaskType }) {
-        return instance.put<any, RepeatTaskType, { title: string }>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, payload.model)
+        return instance.put<any, ResponseType, { title: string }>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`, payload.model)
     },
 }
 
-type RepeatTaskType = TaskResponseType<{ task: TaskFromServerType }>
-
 export type TaskFromServerType = {
-    addedDate?: string
-    deadline?: string
-    description?: string
+    addedDate: string
+    deadline: string
+    description: string
     id: string
-    order?: number
-    priority?: number
-    startDate?: string
+    order: number
+    priority: number
+    startDate: string
     status: number
     title: string
-    todoList?: null
     todoListId: string
 }
-export type TaskResponseType<T = {}> = {
-    data: T
-    fieldsErrors: string[]
-    messages: string[]
-    resultCode: number
+export type TaskResponseType = {
+    error: string | null
+    totalCount: number
+    items: TaskFromServerType[]
 }
 export type ModelTaskType = {
     title: string
@@ -51,4 +47,11 @@ export type ModelTaskType = {
     priority: number
     startDate: string
     deadline: string
+}
+
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: string[]
+    fieldsErrors: string[]
+    data: D
 }

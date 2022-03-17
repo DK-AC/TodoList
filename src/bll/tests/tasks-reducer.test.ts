@@ -24,7 +24,7 @@ beforeEach(() => {
 
 test('correct task should be removed', () => {
 
-    let endState = tasksReducer(startState, removeTaskAC({todolistId: 'todolistId1', taskId: '2'}))
+    let endState = tasksReducer(startState, removeTaskAC( 'todolistId1', '2'))
 
     expect(startState['todolistId1'].length).toBe(3)
     expect(startState['todolistId1'][1].id).toBe('2')

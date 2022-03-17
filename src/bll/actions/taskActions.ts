@@ -1,8 +1,8 @@
 import {ADD_TASK, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE, GET_TASKS, REMOVE_TASK} from "../types/taskTypes";
 import {TaskFromServerType} from "../../dal/api/tasks-api";
 
-export const removeTaskAC = (payload: { todolistId: string, taskId: string }) => {
-    return {type: REMOVE_TASK, payload} as const
+export const removeTaskAC = (todolistId: string, taskId: string) => {
+    return {type: REMOVE_TASK, todolistId, taskId} as const
 }
 export const addTaskAC = (payload: { todolistId: string, title: string }) => {
     return {type: ADD_TASK, payload} as const

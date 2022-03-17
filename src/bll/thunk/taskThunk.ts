@@ -5,6 +5,6 @@ import {getTasksAC} from "../actions/taskActions";
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     tasksApi.getTasks(todolistId)
         .then(res => {
-            dispatch(getTasksAC(todolistId, res.data))
+            dispatch(getTasksAC(todolistId, res.data.items))
         })
 }

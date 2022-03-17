@@ -16,7 +16,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
     const dispatch = useDispatch()
 
     const removeTaskHandler = () => {
-        dispatch(removeTaskAC({todolistId: todoId, taskId: filteredTask.id}))
+        dispatch(removeTaskAC( todoId,  filteredTask.id))
     }
     const onChangeTaskTitle = (title: string) => {
         dispatch(changeTaskTitleAC({todolistId: todoId, taskId: filteredTask.id, title}))
