@@ -37,7 +37,7 @@ test('correct task should be removed', () => {
 
 test('add task with the correct title', () => {
 
-    let endState = tasksReducer(startState, addTaskAC({todolistId: 'todolistId2', title: 'newTaskTitle'}))
+    let endState = tasksReducer(startState, addTaskAC('todolistId2',  'newTaskTitle'))
 
     expect(startState['todolistId2']).toEqual(
         [

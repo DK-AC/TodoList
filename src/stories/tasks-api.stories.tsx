@@ -60,7 +60,7 @@ export const DeleteTask = () => {
     const [taskId, setTaskId] = useState<string>('')
 
     const deleteTaskHandle = () => {
-        tasksApi.deleteTask({todolistId, taskId})
+        tasksApi.deleteTask(todolistId, taskId)
             .then(res => setState(res.data))
     }
     const onChangeTodolistIdHandle = (e: ChangeEvent<HTMLInputElement>) => {

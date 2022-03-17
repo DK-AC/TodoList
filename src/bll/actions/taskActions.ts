@@ -4,8 +4,8 @@ import {TaskFromServerType} from "../../dal/api/tasks-api";
 export const removeTaskAC = (todolistId: string, taskId: string) => {
     return {type: REMOVE_TASK, todolistId, taskId} as const
 }
-export const addTaskAC = (payload: { todolistId: string, title: string }) => {
-    return {type: ADD_TASK, payload} as const
+export const addTaskAC = (todolistId: string, title: string) => {
+    return {type: ADD_TASK, todolistId, title} as const
 }
 export const changeTaskTitleAC = (payload: { todolistId: string, taskId: string, title: string }) => {
     return {type: CHANGE_TASK_TITLE, payload} as const
