@@ -8,10 +8,9 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
 import {changeTodolistFilterAC} from "../../bll/actions/todolistActions";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import {addTaskAC} from "../../bll/actions/taskActions";
 import {TodolistType} from "../../dal/api/todolists-api";
 import {deleteTodolistTC, updateTodolistTC} from "../../bll/thunk/todolistThunk";
-import {getTasksTC} from "../../bll/thunk/taskThunk";
+import {createTaskTC, getTasksTC} from "../../bll/thunk/taskThunk";
 import {TaskFromServerType} from "../../dal/api/tasks-api";
 
 type PropsType = { todoId: string }
@@ -25,20 +24,20 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     let tasks = useAppSelector<TaskFromServerType[]>(state => state.tasks[todoId])
 
     useEffect(() => {
-        dispatch(getTasksTC( todo.id))
+        dispatch(getTasksTC(todo.id))
     }, [])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))
     const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC(todo.id, title))
-    const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC( todo.id, title)), [])
+    const addTaskHandler = useCallback((title: string) => dispatch(createTaskTC(todo.id, title)), [])
     const changeTodolistAllFilterHandler = () => {
-        dispatch(changeTodolistFilterAC( todo.id,  'all'))
+        dispatch(changeTodolistFilterAC(todo.id, 'all'))
     }
     const changeTodolistActiveFilterHandler = () => {
-        dispatch(changeTodolistFilterAC(todo.id,  'active'))
+        dispatch(changeTodolistFilterAC(todo.id, 'active'))
     }
     const changeTodolistCompletedFilterHandler = () => {
-        dispatch(changeTodolistFilterAC( todo.id,  'completed'))
+        dispatch(changeTodolistFilterAC(todo.id, 'completed'))
     }
 
     let tasksForTodolist = tasks
