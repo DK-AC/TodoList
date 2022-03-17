@@ -32,13 +32,13 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC(todo.id, title))
     const addTaskHandler = useCallback((title: string) => dispatch(addTaskAC({todolistId: todo.id, title})), [])
     const changeTodolistAllFilterHandler = () => {
-        dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'all'}))
+        dispatch(changeTodolistFilterAC( todo.id,  'all'))
     }
     const changeTodolistActiveFilterHandler = () => {
-        dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'active'}))
+        dispatch(changeTodolistFilterAC(todo.id,  'active'))
     }
     const changeTodolistCompletedFilterHandler = () => {
-        dispatch(changeTodolistFilterAC({todolistId: todo.id, filter: 'completed'}))
+        dispatch(changeTodolistFilterAC( todo.id,  'completed'))
     }
 
     let tasksForTodolist = tasks

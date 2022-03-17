@@ -5,7 +5,7 @@ import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     todolistsApi.getTodolists()
         .then(res => {
-            dispatch(setTodolistsAC({todolists: res.data}))
+            dispatch(setTodolistsAC(res.data))
         })
 }
 export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
