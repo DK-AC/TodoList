@@ -3,12 +3,13 @@ import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../bll/actions/taskActions";
-import {TaskFromServerType} from "../../dal/api/tasks-api";
+import {changeTaskStatusAC, changeTaskTitleAC} from "../../bll/actions/taskActions";
+import {TaskType} from "../../dal/api/tasks-api";
 import Checkbox from '@mui/material/Checkbox';
+import {deleteTaskTC} from "../../bll/thunk/taskThunk";
 
-type TaskPropsType = { todoId: string, filteredTask: TaskFromServerType }
-export type TasksStateType = { [key: string]: Array<TaskFromServerType> }
+type TaskPropsType = { todoId: string, filteredTask: TaskType }
+export type TasksStateType = { [key: string]: Array<TaskType> }
 
 
 export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
@@ -16,7 +17,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
     const dispatch = useDispatch()
 
     const removeTaskHandler = () => {
-        dispatch(removeTaskAC(todoId, filteredTask.id))
+        dispatch(deleteTaskTC(todoId, filteredTask.id))
     }
     const onChangeTaskTitle = (title: string) => {
         dispatch(changeTaskTitleAC(todoId, filteredTask.id, title))

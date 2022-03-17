@@ -7,7 +7,6 @@ import {
     REMOVE_TASK
 } from "../types/taskTypes";
 import {ADD_TODOLIST, REMOVE_TODOLIST, SET_TODOLISTS} from "../types/todolistTypes";
-import {v1} from "uuid";
 import {TasksStateType} from "../../ui/Task/Task";
 
 const initialState: TasksStateType = {}
@@ -22,11 +21,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                     .filter(task => task.id !== action.taskId)
             }
         case ADD_TASK:
-            return {
-                ...state,
-                [action.todolistId]: [{id: v1(), title: action.title, status: 1},
-                    ...state[action.todolistId]]
-            }
+            return {...state, [action.task.todolistId]: [action.task, ...state[action.task.todolistId]]}
         case CHANGE_TASK_TITLE:
             return {
                 ...state,

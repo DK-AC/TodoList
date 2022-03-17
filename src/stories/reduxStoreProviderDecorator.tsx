@@ -17,13 +17,15 @@ const initialGlobalState = {
         {id: 'todolistId2', title: "What to buy", filter: "all", addedDate: '', order: 0}
     ],
     tasks: {
-        ["todolistId1"]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true}
+        ['todolistId1']: [
+            {id: '1', title: 'HTML', status: 0, todolistId: 'todolistId1',},
+            {id: '2', title: 'JS', status: 0, todolistId: 'todolistId1'},
+            {id: '3', title: 'React', status: 0, todolistId: 'todolistId1'},
         ],
-        ["todolistId2"]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true}
+        ['todolistId2']: [
+            {id: '1', title: 'Rest Api', status: 0, todolistId: 'todolistId2'},
+            {id: '2', title: 'Graph QL', status: 0, todolistId: 'todolistId2'},
+            {id: '3', title: 'Material UI', status: 0, todolistId: 'todolistId2'},
         ]
     }
 };

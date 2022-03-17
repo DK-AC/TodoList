@@ -11,7 +11,7 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {TodolistType} from "../../dal/api/todolists-api";
 import {deleteTodolistTC, updateTodolistTC} from "../../bll/thunk/todolistThunk";
 import {createTaskTC, getTasksTC} from "../../bll/thunk/taskThunk";
-import {TaskFromServerType} from "../../dal/api/tasks-api";
+import {TaskType} from "../../dal/api/tasks-api";
 
 type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
@@ -21,7 +21,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     const dispatch = useDispatch()
 
     let todo = useAppSelector<TodolistType>(state => state.todolists.filter(todo => todo.id === todoId)[0])
-    let tasks = useAppSelector<TaskFromServerType[]>(state => state.tasks[todoId])
+    let tasks = useAppSelector<TaskType[]>(state => state.tasks[todoId])
 
     useEffect(() => {
         dispatch(getTasksTC(todo.id))

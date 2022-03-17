@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {addTaskAC, getTasksAC} from "../actions/taskActions";
+import {addTaskAC, getTasksAC, removeTaskAC} from "../actions/taskActions";
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     tasksApi.getTasks(todolistId)
@@ -11,6 +11,12 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     tasksApi.createTask(todolistId, title)
         .then(res => {
-            dispatch(addTaskAC(todolistId, title))
+            dispatch(addTaskAC(res.data.data.item))
+        })
+}
+export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+    tasksApi.deleteTask(todolistId, taskId)
+        .then(res => {
+            dispatch(removeTaskAC(todolistId, taskId))
         })
 }
