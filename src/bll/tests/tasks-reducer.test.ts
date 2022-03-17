@@ -24,7 +24,7 @@ beforeEach(() => {
 
 test('correct task should be removed', () => {
 
-    let endState = tasksReducer(startState, removeTaskAC( 'todolistId1', '2'))
+    let endState = tasksReducer(startState, removeTaskAC('todolistId1', '2'))
 
     expect(startState['todolistId1'].length).toBe(3)
     expect(startState['todolistId1'][1].id).toBe('2')
@@ -37,7 +37,7 @@ test('correct task should be removed', () => {
 
 test('add task with the correct title', () => {
 
-    let endState = tasksReducer(startState, addTaskAC('todolistId2',  'newTaskTitle'))
+    let endState = tasksReducer(startState, addTaskAC('todolistId2', 'newTaskTitle'))
 
     expect(startState['todolistId2']).toEqual(
         [
@@ -66,8 +66,7 @@ test('status of specified task should be changed', () => {
 test('title of specified task should be changed', () => {
 
     const endState = tasksReducer(startState,
-        changeTaskTitleAC({todolistId: "todolistId1", taskId: "1", title: 'New Title'}
-        ))
+        changeTaskTitleAC("todolistId1", "1", 'New Title'))
 
     expect(startState['todolistId1'][0].title).toBe('HTML');
     expect(endState['todolistId1'][0].title).toBe('New Title');

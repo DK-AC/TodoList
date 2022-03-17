@@ -7,8 +7,8 @@ export const removeTaskAC = (todolistId: string, taskId: string) => {
 export const addTaskAC = (todolistId: string, title: string) => {
     return {type: ADD_TASK, todolistId, title} as const
 }
-export const changeTaskTitleAC = (payload: { todolistId: string, taskId: string, title: string }) => {
-    return {type: CHANGE_TASK_TITLE, payload} as const
+export const changeTaskTitleAC = (todolistId: string, taskId: string, title: string) => {
+    return {type: CHANGE_TASK_TITLE, todolistId, taskId, title} as const
 }
 export const changeTaskStatusAC = (payload: { todolistId: string, taskId: string, isDone: boolean }) => {
     return {type: CHANGE_TASK_STATUS, payload} as const
