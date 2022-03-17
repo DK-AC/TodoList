@@ -27,7 +27,7 @@ export const CreateTodolist = () => {
     const [title, setTitle] = useState<string>('')
 
     const createTodolistHandle = () => {
-        todolistsApi.createTodolist({title})
+        todolistsApi.createTodolist(title)
             .then(res => setState(res.data))
     }
     const onChangeTitleHandle = (e: ChangeEvent<HTMLInputElement>) => {

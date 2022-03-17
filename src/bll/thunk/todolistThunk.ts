@@ -8,10 +8,10 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
             dispatch(setTodolistsAC({todolists: res.data}))
         })
 }
-export const addTodolistTC = (payload: { title: string }) => (dispatch: Dispatch) => {
-    todolistsApi.createTodolist(payload)
+export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
+    todolistsApi.createTodolist(title)
         .then(res => {
-            dispatch(addTodolistAC({todolist: {title: payload.title}}))
+            dispatch(addTodolistAC(res.data.data.item))
         })
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {

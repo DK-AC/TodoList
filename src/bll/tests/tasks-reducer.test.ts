@@ -2,6 +2,7 @@ import {tasksReducer} from "../reducers/tasksReducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../actions/taskActions";
 import {addTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 import {TasksStateType} from "../../ui/Task/Task";
+import {TodolistType} from "../../dal/api/todolists-api";
 
 let startState: TasksStateType = {}
 
@@ -70,7 +71,15 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const endState = tasksReducer(startState, addTodolistAC({todolist: {title: "new todolist"}}))
+    let todolist: TodolistType = {
+        title: 'New Todolist',
+        id: 'any id',
+        addedDate: '',
+        order: 0,
+        filter: 'all'
+    }
+
+    const endState = tasksReducer(startState, addTodolistAC(todolist))
 
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");

@@ -5,15 +5,14 @@ import {
     REMOVE_TODOLIST,
     SET_TODOLISTS
 } from "../types/todolistTypes";
-import {v1} from "uuid";
 import {FilterTodolistType} from "../../ui/Todolist/Todolist";
 import {TodolistType} from "../../dal/api/todolists-api";
 
-export const removeTodolistAC = ( todolistId: string ) => {
+export const removeTodolistAC = (todolistId: string) => {
     return {type: REMOVE_TODOLIST, todolistId} as const
 }
-export const addTodolistAC = (payload: { todolist: Pick<TodolistType, 'title'> }) => {
-    return {type: ADD_TODOLIST, payload, todolistId: v1()} as const
+export const addTodolistAC = (todolist: TodolistType) => {
+    return {type: ADD_TODOLIST, todolist} as const
 }
 export const changeTodolistTitleAC = (payload: { todolistId: string, title: string }) => {
     return {type: CHANGE_TODOLIST_TITLE, payload} as const

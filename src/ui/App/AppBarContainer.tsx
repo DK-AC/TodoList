@@ -26,7 +26,7 @@ export const AppBarContainer = () => {
     }, [])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistTC({title}))
+        dispatch(addTodolistTC(title))
     }, [])
 
     return (

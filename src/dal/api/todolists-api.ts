@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import {FilterTodolistType} from "../../ui/Todolist/Todolist";
 
 const instance = axios.create({
@@ -14,10 +14,10 @@ export const todolistsApi = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists')
     },
-    createTodolist(payload: { title: string }) {
-        return instance.post<any, RepeatTodoType, { title: string }>('todo-lists', payload)
+    createTodolist(title: string) {
+        return instance.post<{ title: string }, AxiosResponse<TodolistResponseType<{ item: TodolistType }>>>('todo-lists', {title})
     },
-    deleteTodolist(todolistId: string ) {
+    deleteTodolist(todolistId: string) {
         return instance.delete <any, TodolistResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(payload: { todolistId: string, title: string }) {
@@ -25,7 +25,7 @@ export const todolistsApi = {
     }
 }
 
-type RepeatTodoType = TodolistResponseType<{ todolist: TodolistType }>
+type RepeatTodoType = TodolistResponseType<{ item: TodolistType }>
 
 export type TodolistType = {
     id: string
