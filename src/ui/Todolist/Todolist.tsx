@@ -25,7 +25,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     let tasks = useAppSelector<TaskFromServerType[]>(state => state.tasks[todoId])
 
     useEffect(() => {
-        dispatch(getTasksTC({todolistId: todo.id}))
+        dispatch(getTasksTC( todo.id))
     }, [])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))

@@ -33,7 +33,7 @@ export const CreateTask = () => {
     const [title, setTitle] = useState<string>('')
 
     const createTaskHandle = () => {
-        tasksApi.createTask({todolistId, title})
+        tasksApi.createTask(todolistId, title)
             .then(res => setState(res.data))
     }
     const onChangeTodolistIdHandle = (e: ChangeEvent<HTMLInputElement>) => {

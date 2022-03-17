@@ -12,8 +12,8 @@ export const tasksApi = {
     getTasks(todolistId: string) {
         return instance.get<TaskFromServerType[]>(`todo-lists/${todolistId}/tasks`)
     },
-    createTask(payload: { todolistId: string, title: string }) {
-        return instance.post<any, RepeatTaskType, { title: string }>(`todo-lists/${payload.todolistId}/tasks`, payload)
+    createTask(todolistId: string, title: string) {
+        return instance.post<any, RepeatTaskType, { title: string }>(`todo-lists/${todolistId}/tasks`, {title})
     },
     deleteTask(payload: { todolistId: string, taskId: string }) {
         return instance.delete<any, TaskResponseType>(`todo-lists/${payload.todolistId}/tasks/${payload.taskId}`)
