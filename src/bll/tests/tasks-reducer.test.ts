@@ -53,11 +53,7 @@ test('add task with the correct title', () => {
 
 test('status of specified task should be changed', () => {
 
-    const endState = tasksReducer(startState, changeTaskStatusAC({
-        todolistId: "todolistId2",
-        taskId: "2",
-        isDone: false
-    }))
+    const endState = tasksReducer(startState, changeTaskStatusAC("todolistId2", "2", 1))
 
     expect(startState['todolistId2'][1].status).toBeTruthy();
     // expect(endState['todolistId2'][1].status).toBeFalsy();

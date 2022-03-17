@@ -16,15 +16,13 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
     const dispatch = useDispatch()
 
     const removeTaskHandler = () => {
-        dispatch(removeTaskAC( todoId,  filteredTask.id))
+        dispatch(removeTaskAC(todoId, filteredTask.id))
     }
     const onChangeTaskTitle = (title: string) => {
-        dispatch(changeTaskTitleAC( todoId,  filteredTask.id, title))
+        dispatch(changeTaskTitleAC(todoId, filteredTask.id, title))
     }
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeTaskStatusAC({
-            todolistId: todoId, taskId: filteredTask.id, isDone: e.currentTarget.checked
-        }))
+        dispatch(changeTaskStatusAC(todoId, filteredTask.id, e.currentTarget.checked ? 2 : 0))
     }
 
     return (
