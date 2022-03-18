@@ -11,6 +11,7 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
     tasksApi.createTask(todoListId, title)
         .then(res => {
+            console.log(res.data)
             dispatch(addTaskAC(res.data.data.item))
         })
 }

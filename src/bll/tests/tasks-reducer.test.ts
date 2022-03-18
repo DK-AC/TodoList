@@ -9,15 +9,15 @@ let startState: TasksStateType = {}
 beforeEach(() => {
 
     startState = {
-        ['todolistId1']: [
-            {id: '1', title: 'HTML', status: 0, todoListId: 'todolistId1',},
-            {id: '2', title: 'JS', status: 0, todoListId: 'todolistId1'},
-            {id: '3', title: 'React', status: 0, todoListId: 'todolistId1'},
+        ['todoListId1']: [
+            {id: '1', title: 'HTML', status: 0, todoListId: 'todoListId1',},
+            {id: '2', title: 'JS', status: 0, todoListId: 'todoListId1'},
+            {id: '3', title: 'React', status: 0, todoListId: 'todoListId1'},
         ],
-        ['todolistId2']: [
-            {id: '1', title: 'Rest Api', status: 0, todoListId: 'todolistId2'},
-            {id: '2', title: 'Graph QL', status: 0, todoListId: 'todolistId2'},
-            {id: '3', title: 'Material UI', status: 0, todoListId: 'todolistId2'},
+        ['todoListId2']: [
+            {id: '1', title: 'Rest Api', status: 0, todoListId: 'todoListId2'},
+            {id: '2', title: 'Graph QL', status: 0, todoListId: 'todoListId2'},
+            {id: '3', title: 'Material UI', status: 0, todoListId: 'todoListId2'},
         ]
     }
 })
@@ -26,7 +26,7 @@ test('correct task should be removed', () => {
 
     let endState = tasksReducer(startState, removeTaskAC('todolistId1', '2'))
 
-    expect(startState['todolistId1'].length).toBe(3)
+    expect(startState['todoListId1'].length).toBe(3)
     expect(startState['todolistId1'][1].id).toBe('2')
     expect(endState['todolistId1'][1].id).toBe('3')
     expect(endState['todolistId1'].length).toBe(2)
@@ -37,16 +37,16 @@ test('correct task should be removed', () => {
 
 test('add task with the correct title', () => {
 
-    let endState = tasksReducer(startState, addTaskAC({id: '2', title: '2', status: 0, todoListId: '123'}))
+    let endState = tasksReducer(startState, addTaskAC({id: '2', title: '2', status: 0, todoListId: 'todoListId2'}))
 
-    expect(startState['todolistId2']).toEqual(
+    expect(startState['todoListId2']).toEqual(
         [
-            {id: '1', title: 'Rest Api', status: 0, todolistId: "todolistId2",},
-            {id: '2', title: 'Graph QL', status: 0, todolistId: "todolistId2",},
-            {id: '3', title: 'Material UI', status: 0, todolistId: "todolistId2",}
+            {id: '1', title: 'Rest Api', status: 0, todoListId: "todoListId2",},
+            {id: '2', title: 'Graph QL', status: 0, todoListId: "todoListId2",},
+            {id: '3', title: 'Material UI', status: 0, todoListId: "todoListId2",}
         ])
     expect(startState['todolistId2'][0].title).toBe('Rest Api')
-    expect(endState['todolistId2'][0].title).toBe('newTaskTitle')
+    expect(endState['todolistId2'][0].title).toBe('2')
     expect(endState["todolistId2"][0].id).toBeDefined();
 
 })
