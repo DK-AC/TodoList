@@ -49,7 +49,7 @@ export const AppBarContainer = () => {
                 <Grid container spacing={3}>
                     {todolists.map(tl => {
                         return (
-                            <Grid key={tl.id}>
+                            <Grid key={tl.id} style={{padding: '20px'}}>
                                 <Paper style={{padding: '10px'}}>
                                     <Todolist todoId={tl.id}/>
                                 </Paper>
