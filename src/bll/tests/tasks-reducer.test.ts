@@ -48,32 +48,19 @@ test('add task with the correct title', () => {
 
 test('status of specified task should be changed', () => {
 
-    // const endState = tasksReducer(startState, changeTaskStatusAC("todolistId2", "2", 1))
-    //
-    // expect(startState['todolistId2'][1].status).toBe(0);
-    // expect(endState['todolistId2'][1].status).toBe(1);
+    const endState = tasksReducer(startState, updateTaskAC("todoListId2", "2", {status: 1}))
+
+    expect(startState['todoListId2'][1].status).toBe(0);
+    expect(endState['todoListId2'][1].status).toBe(1);
 });
 
 test('title of specified task should be changed', () => {
 
-    const model = {
-        id: '1',
-        title: 'Rest Api',
-        status: 0,
-        todoListId: 'todoListId2',
-        addedDate: '',
-        deadline: '',
-        description: '',
-        order: 0,
-        priority: 1,
-        startDate: ''
-    }
-
     const endState = tasksReducer(startState,
-        updateTaskAC("todolistId1", "1", model))
+        updateTaskAC("todoListId1", "1", {title: 'New Title'}))
 
-    expect(startState['todolistId1'][0].title).toBe('HTML');
-    expect(endState['todolistId1'][0].title).toBe('New Title');
+    expect(startState['todoListId1'][0].title).toBe('HTML');
+    expect(endState['todoListId1'][0].title).toBe('New Title');
 });
 
 test('new array should be added when new todolist is added', () => {
@@ -89,7 +76,7 @@ test('new array should be added when new todolist is added', () => {
     const endState = tasksReducer(startState, addTodolistAC(todolist))
 
     const keys = Object.keys(endState);
-    const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");
+    const newKey = keys.find(k => k != "todoListId1" && k != "todoListId2");
     if (!newKey) {
         throw Error("new key should be added")
     }
