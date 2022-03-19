@@ -5,7 +5,6 @@ export const removeTaskAC = (todolistId: string, taskId: string) => {
     return {type: REMOVE_TASK, todolistId, taskId} as const
 }
 export const addTaskAC = (task: TaskType) => {
-    debugger
     return {type: ADD_TASK, task} as const
 }
 export const updateTaskAC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) => {
