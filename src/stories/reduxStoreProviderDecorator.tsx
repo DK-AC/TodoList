@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
     todolists: todolistReducer
 })
 
-const initialGlobalState = {
+export const initialGlobalState = {
     todolists: [
         {id: 'todoListId1', title: "What to learn", filter: "all", addedDate: '', order: 0},
         {id: 'todoListId2', title: "What to buy", filter: "all", addedDate: '', order: 0}

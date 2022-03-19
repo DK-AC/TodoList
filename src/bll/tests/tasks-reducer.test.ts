@@ -3,101 +3,24 @@ import {addTaskAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {addTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 import {TasksStateType} from "../../ui/Task/Task";
 import {TodolistType} from "../../dal/api/todolists-api";
+import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 
 let startState: TasksStateType = {}
 
 beforeEach(() => {
-
-    startState = {
-        ['todoListId1']: [
-            {
-                id: '1',
-                title: 'HTML',
-                status: 0,
-                todoListId: 'todoListId1',
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: 1,
-                startDate: ''
-            },
-            {
-                id: '2',
-                title: 'JS',
-                status: 0,
-                todoListId: 'todoListId1',
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: 1,
-                startDate: ''
-            },
-            {
-                id: '3',
-                title: 'React',
-                status: 0,
-                todoListId: 'todoListId1',
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: 1,
-                startDate: ''
-            },
-        ],
-        ['todoListId2']: [
-            {
-                id: '1',
-                title: 'Rest Api',
-                status: 0,
-                todoListId: 'todoListId2',
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: 1,
-                startDate: ''
-            },
-            {
-                id: '2',
-                title: 'Graph QL',
-                status: 0,
-                todoListId: 'todoListId2',
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: 1,
-                startDate: ''
-            },
-            {
-                id: '3',
-                title: 'Material UI',
-                status: 0,
-                todoListId: 'todoListId2',
-                addedDate: '',
-                deadline: '',
-                description: '',
-                order: 0,
-                priority: 1,
-                startDate: ''
-            },
-        ]
-    }
+    startState = initialGlobalState.tasks
 })
 
 test('correct task should be removed', () => {
 
-    let endState = tasksReducer(startState, removeTaskAC('todolistId1', '2'))
+    let endState = tasksReducer(startState, removeTaskAC('todoListId1', '2'))
 
     expect(startState['todoListId1'].length).toBe(3)
-    expect(startState['todolistId1'][1].id).toBe('2')
-    expect(endState['todolistId1'][1].id).toBe('3')
-    expect(endState['todolistId1'].length).toBe(2)
-    expect(startState['todolistId2'].length).toBe(3)
-    expect(endState['todolistId2'].length).toBe(3)
+    expect(startState['todoListId1'][1].id).toBe('2')
+    expect(endState['todoListId1'][1].id).toBe('3')
+    expect(endState['todoListId1'].length).toBe(2)
+    expect(startState['todoListId2'].length).toBe(3)
+    expect(endState['todoListId2'].length).toBe(3)
 
 })
 
@@ -116,15 +39,10 @@ test('add task with the correct title', () => {
         startDate: ''
     }))
 
-    expect(startState['todoListId2']).toEqual(
-        [
-            {id: '1', title: 'Rest Api', status: 0, todoListId: "todoListId2",},
-            {id: '2', title: 'Graph QL', status: 0, todoListId: "todoListId2",},
-            {id: '3', title: 'Material UI', status: 0, todoListId: "todoListId2",}
-        ])
-    expect(startState['todolistId2'][0].title).toBe('Rest Api')
-    expect(endState['todolistId2'][0].title).toBe('2')
-    expect(endState["todolistId2"][0].id).toBeDefined();
+    expect(startState['todoListId2']).toEqual(initialGlobalState.tasks.todoListId2)
+    expect(startState['todoListId2'][0].title).toBe('Rest Api')
+    expect(endState['todoListId2'][0].title).toBe('2')
+    expect(endState["todoListId2"][0].id).toBeDefined();
 
 })
 
