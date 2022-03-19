@@ -27,7 +27,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
 
     return (
         <>
-            <div key={filteredTask.id} className={filteredTask.status ? 'isDone' : ''}>
+            <div key={filteredTask.id} >
                 <Checkbox
                     color="primary"
                     checked={filteredTask.status !== 0}

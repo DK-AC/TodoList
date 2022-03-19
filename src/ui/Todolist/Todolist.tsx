@@ -24,12 +24,12 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     let tasks = useAppSelector<TaskType[]>(state => state.tasks[todoId])
 
     useEffect(() => {
-        dispatch(getTasksTC(todo.id))
+        dispatch(getTasksTC(todoId))
     }, [])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))
     const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC(todo.id, title))
-    const addTaskHandler = useCallback((title: string) => dispatch(createTaskTC(todo.id, title)), [])
+    const addTaskHandler = useCallback((title: string) => dispatch(createTaskTC(todo.id, title)), [dispatch, todo.id])
     const changeTodolistAllFilterHandler = () => {
         dispatch(changeTodolistFilterAC(todo.id, 'all'))
     }
@@ -48,6 +48,8 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
     if (todo.filter === 'completed') {
         tasksForTodolist = tasksForTodolist.filter(task => task.status)
     }
+
+
     return (
         <div>
             <h3>
