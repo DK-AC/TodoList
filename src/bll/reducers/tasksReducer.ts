@@ -1,18 +1,12 @@
-import {
-    ActionsTaskType,
-    ADD_TASK,
-    CHANGE_TASK_STATUS,
-    CHANGE_TASK_TITLE,
-    GET_TASKS,
-    REMOVE_TASK
-} from "../types/taskTypes";
+import {ActionsTaskType, ADD_TASK, GET_TASKS, REMOVE_TASK, UPDATE_TASK} from "../types/taskTypes";
 import {ADD_TODOLIST, REMOVE_TODOLIST, SET_TODOLISTS} from "../types/todolistTypes";
 import {TasksStateType} from "../../ui/Task/Task";
+import {TodolistType} from "../../dal/api/todolists-api";
 
 const initialState: TasksStateType = {}
 
 
-export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType) => {
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType): TasksStateType => {
     switch (action.type) {
         case REMOVE_TASK:
             return {
@@ -22,20 +16,12 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             }
         case ADD_TASK:
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
-        case CHANGE_TASK_TITLE:
-            return {
-                ...state,
-                [action.todolistId]: state[action.todolistId]
-                    .map(task => task.id === task.id
-                        ? {...task, title: action.title}
-                        : task)
-            }
-        case CHANGE_TASK_STATUS:
+        case UPDATE_TASK:
             return {
                 ...state,
                 [action.todolistId]: state[action.todolistId]
                     .map(task => task.id === action.taskId
-                        ? {...task, status: action.status}
+                        ? {...task, ...action.model}
                         : task)
             }
         case ADD_TODOLIST:
@@ -48,7 +34,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return stateCopy
         case SET_TODOLISTS: {
             const stateCopy = {...state}
-            action.todolists.forEach((tl) => {
+            action.todolists.forEach((tl: TodolistType) => {
                 stateCopy[tl.id] = []
             })
             return stateCopy;

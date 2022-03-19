@@ -17,14 +17,80 @@ const initialGlobalState = {
     ],
     tasks: {
         ['todoListId1']: [
-            {id: '1', title: 'HTML', status: 0, todoListId: 'todoListId1',},
-            {id: '2', title: 'JS', status: 0, todoListId: 'todoListId1'},
-            {id: '3', title: 'React', status: 0, todoListId: 'todoListId1'},
+            {
+                id: '1',
+                title: 'HTML',
+                status: 0,
+                todoListId: 'todoListId1',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 1,
+                startDate: ''
+            },
+            {
+                id: '2',
+                title: 'JS',
+                status: 0,
+                todoListId: 'todoListId1',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 1,
+                startDate: ''
+            },
+            {
+                id: '3',
+                title: 'React',
+                status: 0,
+                todoListId: 'todoListId1',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 1,
+                startDate: ''
+            },
         ],
         ['todoListId2']: [
-            {id: '1', title: 'Rest Api', status: 0, todoListId: 'todoListId2'},
-            {id: '2', title: 'Graph QL', status: 0, todoListId: 'todoListId2'},
-            {id: '3', title: 'Material UI', status: 0, todoListId: 'todoListId2'},
+            {
+                id: '1',
+                title: 'Rest Api',
+                status: 0,
+                todoListId: 'todoListId2',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 1,
+                startDate: ''
+            },
+            {
+                id: '2',
+                title: 'Graph QL',
+                status: 0,
+                todoListId: 'todoListId2',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 1,
+                startDate: ''
+            },
+            {
+                id: '3',
+                title: 'Material UI',
+                status: 0,
+                todoListId: 'todoListId2',
+                addedDate: '',
+                deadline: '',
+                description: '',
+                order: 0,
+                priority: 1,
+                startDate: ''
+            },
         ]
     }
 };

@@ -19,18 +19,18 @@ export const tasksApi = {
         return instance.delete<any, ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, model: ModelTaskType) {
-        return instance.put<any, ResponseType, { title: string }>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<ModelTaskType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
 }
 
 export type TaskType = {
-    addedDate?: string
-    deadline?: string
-    description?: string
+    addedDate: string
+    deadline: string
+    description: string
     id: string
-    order?: number
-    priority?: number
-    startDate?: string
+    order: number
+    priority: number
+    startDate: string
     status: number
     title: string
     todoListId: string
