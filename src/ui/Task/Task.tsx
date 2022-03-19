@@ -3,10 +3,9 @@ import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {updateTaskAC} from "../../bll/actions/taskActions";
 import {TaskType} from "../../dal/api/tasks-api";
 import Checkbox from '@mui/material/Checkbox';
-import {deleteTaskTC} from "../../bll/thunk/taskThunk";
+import {deleteTaskTC, updateTaskTC} from "../../bll/thunk/taskThunk";
 
 type TaskPropsType = { todoId: string, filteredTask: TaskType }
 export type TasksStateType = { [key: string]: Array<TaskType> }
@@ -20,10 +19,10 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
         dispatch(deleteTaskTC(todoId, filteredTask.id))
     }
     const onChangeTaskTitle = (title: string) => {
-        dispatch(updateTaskAC(todoId, filteredTask.id, {title}))
+        dispatch(updateTaskTC(todoId, filteredTask.id, {title}))
     }
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateTaskAC(todoId, filteredTask.id, {status: e.currentTarget.checked ? 2 : 0}))
+        dispatch(updateTaskTC(todoId, filteredTask.id, {status: e.currentTarget.checked ? 0 : 1}))
     }
 
     return (
