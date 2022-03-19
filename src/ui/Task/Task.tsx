@@ -22,7 +22,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
         dispatch(updateTaskTC(todoId, filteredTask.id, {title}))
     }
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateTaskTC(todoId, filteredTask.id, {status: e.currentTarget.checked ? 0 : 1}))
+        dispatch(updateTaskTC(todoId, filteredTask.id, {status: e.currentTarget.checked ? 1 : 0}))
     }
 
     return (
@@ -30,7 +30,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
             <div key={filteredTask.id} className={filteredTask.status ? 'isDone' : ''}>
                 <Checkbox
                     color="primary"
-                    checked={filteredTask.status === 0}
+                    checked={filteredTask.status !== 0}
                     onChange={onChangeTaskStatus}
                     size={"small"}
                 />

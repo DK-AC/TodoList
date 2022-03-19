@@ -4,7 +4,6 @@ import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todoli
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const ADD_TASK = 'ADD_TASK'
 export const UPDATE_TASK = 'CHANGE_TASK_TITLE'
-export const CHANGE_TASK_STATUS = 'CHANGE_TASK_STATUS'
 export const GET_TASKS = 'GET_TASKS'
 
 

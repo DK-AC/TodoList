@@ -15,7 +15,22 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                     .filter(task => task.id !== action.taskId)
             }
         case ADD_TASK:
-            return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
+            debugger
+            return {
+                ...state,
+                [action.task.todoListId]: [{
+                    status: action.task.status,
+                    todoListId: action.task.todoListId,
+                    title: action.task.title,
+                    id: action.task.id,
+                    addedDate: action.task.addedDate,
+                    deadline: action.task.deadline,
+                    description: action.task.description,
+                    priority: action.task.priority,
+                    startDate: action.task.startDate,
+                    order: action.task.order
+                }, ...state[action.task.todoListId]]
+            }
         case UPDATE_TASK:
             return {
                 ...state,
