@@ -12,7 +12,7 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addTask = () => {
+    const addItem = () => {
         if (title.trim() !== '') {
             callback(title)
             setTitle('')
@@ -24,7 +24,7 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
     const onChangeValueTasks = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
 
-        if (value.length > 0) {
+        if (value.length >= 0) {
             setTitle(value)
             setError(null)
         }
@@ -34,7 +34,7 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
             setError(null)
         }
         if (e.key === 'Enter') {
-            addTask()
+            addItem()
         }
     }
 
@@ -50,7 +50,7 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
                        label='Title'
                        helperText={error}
             />
-            <IconButton color="primary" onClick={addTask} size={"small"}>
+            <IconButton color="primary" onClick={addItem} size={"small"}>
                 <AddBox/>
             </IconButton>
         </div>
