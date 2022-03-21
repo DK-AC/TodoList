@@ -14,7 +14,7 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
             console.log(e)
         })
         .finally(() => {
-                dispatch(changeIsLoading('successful'))
+                dispatch(changeIsLoading('idle'))
             }
         )
 }

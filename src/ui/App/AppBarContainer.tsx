@@ -21,7 +21,7 @@ export const AppBarContainer = () => {
     const dispatch = useDispatch()
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
-    const isLoading = useAppSelector(state => state.app.isLoading)
+    const isLoading = useAppSelector(state => state.app.status)
     console.log(isLoading)
 
     useEffect(() => {
