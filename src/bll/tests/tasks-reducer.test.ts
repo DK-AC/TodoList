@@ -1,9 +1,9 @@
 import {tasksReducer} from "../reducers/tasksReducer";
 import {addTaskAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {addTodolistAC, setTodolistsAC} from "../actions/todolistActions";
-import {TodolistType} from "../../dal/api/todolists-api";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
+import {TodolistType} from "../types/todolistTypes";
 
 let startState: TasksStateType = {}
 

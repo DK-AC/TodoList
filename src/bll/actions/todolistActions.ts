@@ -1,12 +1,10 @@
 import {
     ADD_TODOLIST,
     CHANGE_TODOLIST_FILTER,
-    CHANGE_TODOLIST_TITLE,
+    CHANGE_TODOLIST_TITLE, FilterTodolistType,
     REMOVE_TODOLIST,
-    SET_TODOLISTS
+    SET_TODOLISTS, TodolistType
 } from "../types/todolistTypes";
-import {FilterTodolistType} from "../../ui/Todolist/Todolist";
-import {TodolistType} from "../../dal/api/todolists-api";
 
 export const removeTodolistAC = (todolistId: string) => ({type: REMOVE_TODOLIST, todolistId} as const)
 

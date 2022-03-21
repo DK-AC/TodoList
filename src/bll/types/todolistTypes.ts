@@ -19,3 +19,20 @@ export type GeneralType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof setTodolistsAC>
+
+export type RepeatTodoType = TodolistResponseType<{ item: TodolistType }>
+export type TodolistType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+} & {
+    filter: FilterTodolistType
+}
+export type FilterTodolistType = 'all' | 'active' | 'completed'
+export type TodolistResponseType<T = {}> = {
+    data: T
+    fieldsErrors: string[]
+    messages: string[]
+    resultCode: number
+}

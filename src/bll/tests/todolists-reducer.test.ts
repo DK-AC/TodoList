@@ -7,7 +7,7 @@ import {
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
-import {TodolistType} from "../../dal/api/todolists-api";
+import {TodolistType} from "../types/todolistTypes";
 
 let todolistId1: string;
 let todolistId2: string

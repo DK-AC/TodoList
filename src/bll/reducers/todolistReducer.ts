@@ -4,9 +4,8 @@ import {
     CHANGE_TODOLIST_TITLE,
     GeneralType,
     REMOVE_TODOLIST,
-    SET_TODOLISTS
+    SET_TODOLISTS, TodolistType
 } from "../types/todolistTypes";
-import {TodolistType} from "../../dal/api/todolists-api";
 
 const initialState: TodolistType[] = []
 

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {FilterTodolistType} from "../../ui/Todolist/Todolist";
+import {RepeatTodoType, TodolistResponseType, TodolistType} from "../../bll/types/todolistTypes";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -8,7 +8,6 @@ const instance = axios.create({
         'API-KEY': 'a32b35ae-c578-47f3-b8a9-0885cd248a9d'
     }
 });
-
 
 export const todolistsApi = {
     getTodolists() {
@@ -25,20 +24,3 @@ export const todolistsApi = {
     }
 }
 
-type RepeatTodoType = TodolistResponseType<{ item: TodolistType }>
-
-export type TodolistType = {
-    id: string
-    title: string
-    addedDate: string
-    order: number
-} & {
-    filter: FilterTodolistType
-}
-
-export type TodolistResponseType<T = {}> = {
-    data: T
-    fieldsErrors: string[]
-    messages: string[]
-    resultCode: number
-}

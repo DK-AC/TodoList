@@ -11,9 +11,9 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
-import {TodolistType} from "../../dal/api/todolists-api";
 import {Todolist} from '../Todolist/Todolist';
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
+import {TodolistType} from "../../bll/types/todolistTypes";
 
 export const AppBarContainer = () => {
 

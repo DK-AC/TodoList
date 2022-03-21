@@ -1,6 +1,7 @@
-import {todolistsApi, TodolistType} from "../../dal/api/todolists-api";
+import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
 import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {TodolistType} from "../types/todolistTypes";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     todolistsApi.getTodolists()

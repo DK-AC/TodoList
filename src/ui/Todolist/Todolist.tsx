@@ -8,13 +8,12 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
 import {changeTodolistFilterAC} from "../../bll/actions/todolistActions";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import {TodolistType} from "../../dal/api/todolists-api";
 import {deleteTodolistTC, updateTodolistTC} from "../../bll/thunk/todolistThunk";
 import {createTaskTC, getTasksTC} from "../../bll/thunk/taskThunk";
 import { TaskType } from "../../bll/types/taskTypes";
+import {TodolistType} from "../../bll/types/todolistTypes";
 
 type PropsType = { todoId: string }
-export type FilterTodolistType = 'all' | 'active' | 'completed'
 
 export const Todolist = React.memo(({todoId}: PropsType) => {
 
