@@ -1,5 +1,5 @@
-import {changeIsLoading} from "../actions/appActions";
+import {setStatus} from "../actions/appActions";
 
-export const CHANGE_IS_LOADING = 'APP/CHANGE_IS_LOADING'
+export const SET_STATUS = 'APP/SET_STATUS'
 
-export type ActionsAppType = ReturnType<typeof changeIsLoading>
+export type ActionsAppType = ReturnType<typeof setStatus>

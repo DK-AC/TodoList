@@ -1,4 +1,4 @@
-import {ActionsAppType, CHANGE_IS_LOADING} from "../types/appTypes";
+import {ActionsAppType, SET_STATUS} from "../types/appTypes";
 import {StatusType} from "../actions/appActions";
 
 const initialState = {
@@ -9,7 +9,7 @@ type InitialStateType = typeof initialState
 
 export const appReducer = (state = initialState, action: ActionsAppType): InitialStateType => {
     switch (action.type) {
-        case CHANGE_IS_LOADING:
+        case SET_STATUS:
             return {...state, status: action.status}
         default:
             return state
