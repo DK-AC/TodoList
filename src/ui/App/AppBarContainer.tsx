@@ -45,7 +45,7 @@ export const AppBarContainer = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-            {isLoading && <LinearProgress/>}
+            {isLoading === 'loading' && <LinearProgress/>}
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm callback={addTodolist}/>

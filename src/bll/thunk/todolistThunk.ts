@@ -2,12 +2,21 @@ import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
 import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
+import {changeIsLoading} from "../actions/appActions";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
+    dispatch(changeIsLoading("loading"))
     todolistsApi.getTodolists()
         .then(res => {
             dispatch(setTodolistsAC(res.data))
         })
+        .catch(e => {
+            console.log(e)
+        })
+        .finally(() => {
+                dispatch(changeIsLoading('successful'))
+            }
+        )
 }
 export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
     todolistsApi.createTodolist(title)
