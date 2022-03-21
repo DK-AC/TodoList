@@ -21,6 +21,8 @@ export const AppBarContainer = () => {
     const dispatch = useDispatch()
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
+    const isLoading = useAppSelector(state => state.app.isLoading)
+    console.log(isLoading)
 
     useEffect(() => {
         dispatch(setTodolistsTC(todolists))
@@ -43,7 +45,7 @@ export const AppBarContainer = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-            <LinearProgress/>
+            {isLoading && <LinearProgress/>}
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm callback={addTodolist}/>
