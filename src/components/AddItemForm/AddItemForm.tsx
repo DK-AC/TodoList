@@ -3,9 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
-type AddItemFormPropsType = {
-    callback: (title: string) => void
-}
+type AddItemFormPropsType = { callback: (title: string) => void }
 
 export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
 
