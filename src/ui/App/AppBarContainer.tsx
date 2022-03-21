@@ -5,6 +5,7 @@ import {Menu} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AppBar from '@mui/material/AppBar';
+import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
@@ -13,6 +14,7 @@ import {useAppSelector} from "../../bll/store";
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 import {TodolistType} from "../../bll/types/todolistTypes";
 import {TodolistsList} from '../TodolistsList';
+
 
 export const AppBarContainer = () => {
 
@@ -41,6 +43,7 @@ export const AppBarContainer = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
+            <LinearProgress/>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm callback={addTodolist}/>
