@@ -9,9 +9,9 @@ declare global {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     }
 }
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const appRootState = combineReducers({
+export const appRootState = combineReducers({
     todolists: todolistReducer,
     tasks: tasksReducer
 })
