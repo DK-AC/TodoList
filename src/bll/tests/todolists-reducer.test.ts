@@ -32,16 +32,8 @@ test('correct todolist should be removed', () => {
 });
 
 test('correct todolist should be added', () => {
-
-    let todolist: TodolistType = {
-        title: 'New Todolist',
-        id: 'any id',
-        addedDate: '',
-        order: 0,
-        filter: 'all'
-    }
-
-    const endState = todolistReducer(startState, addTodolistAC(todolist))
+    const endState = todolistReducer(startState,
+        addTodolistAC({title: 'New Todolist', id: 'any id', addedDate: '', order: 0, filter: 'all'}))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe('New Todolist');
@@ -49,18 +41,14 @@ test('correct todolist should be added', () => {
 });
 
 test('correct todolist should change its name', () => {
-
-    const endState = todolistReducer(startState,
-        changeTodolistTitleAC(todolistId2, "New Todolist"));
+    const endState = todolistReducer(startState, changeTodolistTitleAC(todolistId2, "New Todolist"));
 
     expect(endState[0].title).toBe("What to learn");
     expect(endState[1].title).toBe('New Todolist');
 });
 
 test('correct filter of todolist should be changed', () => {
-
-    const endState = todolistReducer(startState,
-        changeTodolistFilterAC(todolistId2, "active"))
+    const endState = todolistReducer(startState, changeTodolistFilterAC(todolistId2, "active"))
 
     expect(endState[0].filter).toBe("all");
     expect(endState[1].filter).toBe('active');

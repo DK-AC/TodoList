@@ -7,12 +7,9 @@ import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 
 let startState: TasksStateType = {}
 
-beforeEach(() => {
-    startState = initialGlobalState.tasks
-})
+beforeEach(() => startState = initialGlobalState.tasks)
 
 test('correct task should be removed', () => {
-
     let endState = tasksReducer(startState, removeTaskAC('todoListId1', '2'))
 
     expect(startState['todoListId1'].length).toBe(3)
@@ -25,7 +22,6 @@ test('correct task should be removed', () => {
 })
 
 test('add task with the correct title', () => {
-
     let endState = tasksReducer(startState, addTaskAC({
         id: '2',
         title: '2',
@@ -47,7 +43,6 @@ test('add task with the correct title', () => {
 })
 
 test('status of specified task should be changed', () => {
-
     const endState = tasksReducer(startState, updateTaskAC("todoListId2", "2", {status: 1}))
 
     expect(startState['todoListId2'][1].status).toBe(0);
@@ -55,23 +50,14 @@ test('status of specified task should be changed', () => {
 });
 
 test('title of specified task should be changed', () => {
-
-    const endState = tasksReducer(startState,
-        updateTaskAC("todoListId1", "1", {title: 'New Title'}))
+    const endState = tasksReducer(startState, updateTaskAC("todoListId1", "1", {title: 'New Title'}))
 
     expect(startState['todoListId1'][0].title).toBe('HTML');
     expect(endState['todoListId1'][0].title).toBe('New Title');
 });
 
 test('new array should be added when new todolist is added', () => {
-
-    let todolist: TodolistType = {
-        title: 'New Todolist',
-        id: 'any id',
-        addedDate: '',
-        order: 0,
-        filter: 'all'
-    }
+    let todolist: TodolistType = {title: 'New Todolist', id: 'any id', addedDate: '', order: 0, filter: 'all'}
 
     const endState = tasksReducer(startState, addTodolistAC(todolist))
 
@@ -86,7 +72,6 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('empty arrays should be added when we set todolists', () => {
-
     const endState = tasksReducer(startState, setTodolistsAC(
         [
             {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0},
