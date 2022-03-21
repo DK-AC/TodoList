@@ -8,12 +8,11 @@ import AppBar from '@mui/material/AppBar';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import Paper from "@mui/material/Paper";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
-import {Todolist} from '../Todolist/Todolist';
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 import {TodolistType} from "../../bll/types/todolistTypes";
+import {TodolistsList} from '../TodolistsList';
 
 export const AppBarContainer = () => {
 
@@ -23,11 +22,11 @@ export const AppBarContainer = () => {
 
     useEffect(() => {
         dispatch(setTodolistsTC(todolists))
-    }, [])
+    }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
-    }, [])
+    }, [dispatch])
 
     return (
         <div>
@@ -47,17 +46,12 @@ export const AppBarContainer = () => {
                     <AddItemForm callback={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    {todolists.map(tl => {
-                        return (
-                            <Grid key={tl.id} style={{padding: '20px'}}>
-                                <Paper style={{padding: '10px'}}>
-                                    <Todolist todoId={tl.id}/>
-                                </Paper>
-                            </Grid>)
-                    })}
+                    <TodolistsList/>
                 </Grid>
             </Container>
         </div>
     );
 };
+
+
 

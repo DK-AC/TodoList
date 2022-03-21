@@ -89,14 +89,7 @@ export const UpdateTask = () => {
 
     const updateTaskHandle = () => {
 
-        const model = {
-            title,
-            deadline: '',
-            startDate: '',
-            status: 0,
-            priority: 0,
-            description: '',
-        }
+        const model = {title, deadline: '', startDate: '', status: 0, priority: 0, description: '',}
 
         tasksApi.updateTask(todolistId, taskId, model)
             .then(res => setState(res.data))
