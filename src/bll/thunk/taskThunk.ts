@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ModelTaskType} from "../types/taskTypes";
+import {ActionsTaskType, ModelTaskType} from "../types/taskTypes";
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     tasksApi.getTasks(todolistId)
@@ -10,20 +10,20 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
             dispatch(getTasksAC(todolistId, res.data.items))
         })
 }
-export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
+export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsTaskType>) => {
     tasksApi.createTask(todoListId, title)
         .then(res => {
             dispatch(addTaskAC(res.data.data.item))
         })
 }
-export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsTaskType>) => {
     tasksApi.deleteTask(todolistId, taskId)
         .then(res => {
             dispatch(removeTaskAC(todolistId, taskId))
         })
 }
 export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) =>
-    (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    (dispatch: Dispatch<ActionsTaskType>, getState: () => AppRootStateType) => {
         const task = getState().tasks[todolistId].find(task => task.id === taskId)
         if (!task) {
             console.warn('task not found in the state')

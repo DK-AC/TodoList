@@ -17,10 +17,10 @@ export const todolistsApi = {
         return instance.post<{ title: string }, AxiosResponse<TodolistResponseType<{ item: TodolistType }>>>('todo-lists', {title})
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete <any, TodolistResponseType>(`todo-lists/${todolistId}`)
+        return instance.delete <TodolistResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<any, RepeatTodoType, { title: string }>(`todo-lists/${todolistId}`, {title})
+        return instance.put<{ title: string }, RepeatTodoType, { title: string }>(`todo-lists/${todolistId}`, {title})
     }
 }
 

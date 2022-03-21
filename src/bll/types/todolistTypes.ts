@@ -13,7 +13,7 @@ export const CHANGE_TODOLIST_FILTER = 'TODOLIST/CHANGE_TODOLIST_FILTER'
 export const SET_TODOLISTS = 'TODOLIST/SET_TODOLISTS'
 
 
-export type GeneralType =
+export type ActionsTodolistType =
     ReturnType<typeof removeTodolistAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof changeTodolistTitleAC>
