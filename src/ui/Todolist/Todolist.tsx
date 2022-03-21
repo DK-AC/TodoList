@@ -17,7 +17,6 @@ type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
 
 export const Todolist = React.memo(({todoId}: PropsType) => {
-    console.log(todoId)
 
     const dispatch = useDispatch()
 
