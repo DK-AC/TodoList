@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import axios, {AxiosResponse} from "axios";
+import {ModelTaskType, ResponseType, TaskResponseType, TaskType} from "../../bll/types/taskTypes";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -23,35 +24,3 @@ export const tasksApi = {
     },
 }
 
-export type TaskType = {
-    addedDate: string
-    deadline: string
-    description: string
-    id: string
-    order: number
-    priority: number
-    startDate: string
-    status: number
-    title: string
-    todoListId: string
-}
-export type TaskResponseType = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
-}
-export type ModelTaskType = {
-    title: string
-    description: string
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-}
-
-export type ResponseType<D = {}> = {
-    resultCode: number
-    messages: string[]
-    fieldsErrors: string[]
-    data: D
-}

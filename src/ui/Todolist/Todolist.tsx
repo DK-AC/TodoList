@@ -11,7 +11,7 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {TodolistType} from "../../dal/api/todolists-api";
 import {deleteTodolistTC, updateTodolistTC} from "../../bll/thunk/todolistThunk";
 import {createTaskTC, getTasksTC} from "../../bll/thunk/taskThunk";
-import {TaskType} from "../../dal/api/tasks-api";
+import { TaskType } from "../../bll/types/taskTypes";
 
 type PropsType = { todoId: string }
 export type FilterTodolistType = 'all' | 'active' | 'completed'

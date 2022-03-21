@@ -1,5 +1,4 @@
-import {ADD_TASK, GET_TASKS, REMOVE_TASK, UPDATE_TASK} from "../types/taskTypes";
-import {ModelTaskType, TaskType} from "../../dal/api/tasks-api";
+import {ADD_TASK, GET_TASKS, ModelTaskType, REMOVE_TASK, TaskType, UPDATE_TASK} from "../types/taskTypes";
 
 export const removeTaskAC = (todolistId: string, taskId: string) => ({type: REMOVE_TASK, todolistId, taskId} as const)
 

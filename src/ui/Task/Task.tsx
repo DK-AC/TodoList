@@ -3,13 +3,11 @@ import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {TaskType} from "../../dal/api/tasks-api";
 import Checkbox from '@mui/material/Checkbox';
 import {deleteTaskTC, updateTaskTC} from "../../bll/thunk/taskThunk";
+import { TaskType } from '../../bll/types/taskTypes';
 
 type TaskPropsType = { todoId: string, filteredTask: TaskType }
-export type TasksStateType = { [key: string]: Array<TaskType> }
-
 
 export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
 

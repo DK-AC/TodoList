@@ -1,6 +1,5 @@
-import {ActionsTaskType, ADD_TASK, GET_TASKS, REMOVE_TASK, UPDATE_TASK} from "../types/taskTypes";
+import {ActionsTaskType, ADD_TASK, GET_TASKS, REMOVE_TASK, TasksStateType, UPDATE_TASK} from "../types/taskTypes";
 import {ADD_TODOLIST, REMOVE_TODOLIST, SET_TODOLISTS} from "../types/todolistTypes";
-import {TasksStateType} from "../../ui/Task/Task";
 import {TodolistType} from "../../dal/api/todolists-api";
 
 const initialState: TasksStateType = {}

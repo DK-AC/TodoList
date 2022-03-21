@@ -1,7 +1,8 @@
 import {Dispatch} from "redux";
-import {ModelTaskType, tasksApi} from "../../dal/api/tasks-api";
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {AppRootStateType} from "../store";
+import {tasksApi} from "../../dal/api/tasks-api";
+import {ModelTaskType} from "../types/taskTypes";
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     tasksApi.getTasks(todolistId)
