@@ -3,7 +3,7 @@ import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/task
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
 import {ActionsTaskType, ModelTaskType} from "../types/taskTypes";
-import {setStatus} from "../actions/appActions";
+import {setError, setStatus} from "../actions/appActions";
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setStatus("loading"))
@@ -23,6 +23,9 @@ export const createTaskTC = (todoListId: string, title: string) => (dispatch: Di
     dispatch(setStatus("loading"))
     tasksApi.createTask(todoListId, title)
         .then(res => {
+            if (res.data.messages.length > 0) {
+                dispatch(setError(res.data.messages[0]))
+            }
             dispatch(addTaskAC(res.data.data.item))
         })
         .catch(e => {
