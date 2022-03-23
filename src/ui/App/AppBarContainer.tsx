@@ -14,6 +14,7 @@ import {useAppSelector} from "../../bll/store";
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 import {TodolistType} from "../../bll/types/todolistTypes";
 import {TodolistsList} from '../TodolistsList';
+import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 
 
 export const AppBarContainer = () => {
@@ -22,7 +23,6 @@ export const AppBarContainer = () => {
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
     const isLoading = useAppSelector(state => state.app.status)
-    console.log(isLoading)
 
     useEffect(() => {
         dispatch(setTodolistsTC(todolists))
@@ -54,7 +54,12 @@ export const AppBarContainer = () => {
                     <TodolistsList/>
                 </Grid>
             </Container>
+<div>
+    <ErrorSnackbar/>
+
+</div>
         </div>
+
     );
 };
 
