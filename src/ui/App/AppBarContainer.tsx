@@ -23,6 +23,7 @@ export const AppBarContainer = () => {
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
     const isLoading = useAppSelector(state => state.app.status)
+    const error = useAppSelector<string | null>(state => state.app.error)
 
     useEffect(() => {
         dispatch(setTodolistsTC(todolists))
@@ -54,10 +55,9 @@ export const AppBarContainer = () => {
                     <TodolistsList/>
                 </Grid>
             </Container>
-<div>
-    <ErrorSnackbar/>
-
-</div>
+            <div>
+                <ErrorSnackbar/>
+            </div>
         </div>
 
     );

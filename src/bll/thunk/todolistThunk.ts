@@ -2,7 +2,7 @@ import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
 import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
-import {setStatus} from "../actions/appActions";
+import {setError, setStatus} from "../actions/appActions";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
     dispatch(setStatus("loading"))
@@ -22,7 +22,11 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
     dispatch(setStatus("loading"))
     todolistsApi.createTodolist(title)
         .then(res => {
+            if (res.data.messages.length > 0) {
+                dispatch(setError(res.data.messages[0]))
+            }
             dispatch(addTodolistAC(res.data.data.item))
+
         })
         .catch(e => {
             console.log(e)
@@ -33,6 +37,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
         )
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
+    debugger
     dispatch(setStatus("loading"))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
