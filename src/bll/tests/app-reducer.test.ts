@@ -13,6 +13,7 @@ beforeEach(() => {
 test('correct error message should be set', () => {
     let endState = appReducer(startState, setError('error'))
 
+    expect(startState.error).toBeNull()
     expect(endState.error).toBe('error')
 })
 
