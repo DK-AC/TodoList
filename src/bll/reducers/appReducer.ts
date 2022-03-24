@@ -6,7 +6,7 @@ const initialState = {
     error: null as null | string
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 export const appReducer = (state = initialState, action: ActionsAppType): InitialStateType => {
     switch (action.type) {

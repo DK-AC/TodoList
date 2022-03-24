@@ -5,10 +5,7 @@ import {useAppSelector} from "../../bll/store";
 import {useDispatch} from "react-redux";
 import {setError} from "../../bll/actions/appActions";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref,
-) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref,) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
