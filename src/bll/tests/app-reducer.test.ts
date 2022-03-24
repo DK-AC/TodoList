@@ -19,5 +19,6 @@ test('correct error message should be set', () => {
 test('status  should be changed', () => {
     let endState = appReducer(startState, setStatus('succeeded'))
 
+    expect(startState.status).toBe('idle')
     expect(endState.status).toBe('succeeded')
 })
