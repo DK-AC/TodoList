@@ -1,10 +1,11 @@
 import {
+    ActionsTodolistType,
     ADD_TODOLIST,
     CHANGE_TODOLIST_FILTER,
     CHANGE_TODOLIST_TITLE,
-    ActionsTodolistType,
     REMOVE_TODOLIST,
-    SET_TODOLISTS, TodolistType
+    SET_TODOLISTS,
+    TodolistType
 } from "../types/todolistTypes";
 
 const initialState: TodolistType[] = []
@@ -16,13 +17,13 @@ export const todolistReducer = (state = initialState, action: ActionsTodolistTyp
         case REMOVE_TODOLIST:
             return state.filter(todo => todo.id !== action.todolistId)
         case ADD_TODOLIST:
-            return [action.todolist, ...state]
+            return [{...action.todolist, entityStatus: 'idle'}, ...state]
         case CHANGE_TODOLIST_TITLE:
             return state.map(todo => todo.id === action.todolistId ? {...todo, title: action.title} : todo)
         case CHANGE_TODOLIST_FILTER:
             return state.map(todo => todo.id === action.todolistId ? {...todo, filter: action.filter} : todo)
         case SET_TODOLISTS:
-            return action.todolists.map(todo => ({...todo, filter: 'all'}))
+            return action.todolists.map(todo => ({...todo, filter: 'all', entityStatus: 'idle'}))
         default:
             return state
     }

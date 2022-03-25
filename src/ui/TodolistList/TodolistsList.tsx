@@ -1,5 +1,5 @@
-import {useAppSelector} from "../bll/store";
-import {TodolistType} from "../bll/types/todolistTypes";
+import {useAppSelector} from "../../bll/store";
+import {TodolistType} from "../../bll/types/todolistTypes";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";

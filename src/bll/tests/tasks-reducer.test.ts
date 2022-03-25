@@ -57,7 +57,14 @@ test('title of specified task should be changed', () => {
 });
 
 test('new array should be added when new todolist is added', () => {
-    let todolist: TodolistType = {title: 'New Todolist', id: 'any id', addedDate: '', order: 0, filter: 'all'}
+    let todolist: TodolistType = {
+        title: 'New Todolist',
+        id: 'any id',
+        addedDate: '',
+        order: 0,
+        filter: 'all',
+        entityStatus: "idle"
+    }
 
     const endState = tasksReducer(startState, addTodolistAC(todolist))
 
@@ -74,8 +81,8 @@ test('new array should be added when new todolist is added', () => {
 test('empty arrays should be added when we set todolists', () => {
     const endState = tasksReducer(startState, setTodolistsAC(
         [
-            {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0},
-            {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0}
+            {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0,entityStatus:"idle"},
+            {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0,entityStatus:"idle"}
         ]
     ))
     const keys = Object.keys(endState)

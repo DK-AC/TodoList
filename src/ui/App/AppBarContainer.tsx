@@ -13,7 +13,7 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 import {TodolistType} from "../../bll/types/todolistTypes";
-import {TodolistsList} from '../TodolistsList';
+import {TodolistsList} from '../TodolistList/TodolistsList';
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 
 

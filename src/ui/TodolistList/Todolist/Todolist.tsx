@@ -1,17 +1,17 @@
 import React, {useCallback, useEffect} from "react";
-import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
-import {Task} from "../Task/Task";
+import {Task} from "../../Task/Task";
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../bll/store";
-import {changeTodolistFilterAC} from "../../bll/actions/todolistActions";
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import {deleteTodolistTC, updateTodolistTC} from "../../bll/thunk/todolistThunk";
-import {createTaskTC, getTasksTC} from "../../bll/thunk/taskThunk";
-import {TaskType} from "../../bll/types/taskTypes";
-import {TodolistType} from "../../bll/types/todolistTypes";
+import {useAppSelector} from "../../../bll/store";
+import {changeTodolistFilterAC} from "../../../bll/actions/todolistActions";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {deleteTodolistTC, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
+import {createTaskTC, getTasksTC} from "../../../bll/thunk/taskThunk";
+import {TaskType} from "../../../bll/types/taskTypes";
+import {TodolistType} from "../../../bll/types/todolistTypes";
 
 type PropsType = { todoId: string }
 
@@ -63,6 +63,7 @@ export const Todolist = React.memo(({todoId}: PropsType) => {
                 <Button variant={todo.filter === 'all' ? 'outlined' : 'text'}
                         onClick={changeTodolistAllFilterHandler}
                         color={'inherit'}
+                        disabled={todo.entityStatus === 'loading'}
                 >
                     All
                 </Button>

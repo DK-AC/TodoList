@@ -6,6 +6,7 @@ import {
     setTodolistsAC
 } from "../actions/todolistActions";
 import {ActionsAppType} from "./appTypes";
+import {StatusType} from "../actions/appActions";
 
 export const REMOVE_TODOLIST = 'TODOLIST/REMOVE_TODOLIST'
 export const ADD_TODOLIST = 'TODOLIST/ADD_TODOLIST'
@@ -31,6 +32,7 @@ export type TodolistType = {
     order: number
 } & {
     filter: FilterTodolistType
+    entityStatus: StatusType
 }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
 export type TodolistResponseType<T = {}> = {

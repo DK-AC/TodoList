@@ -19,8 +19,8 @@ beforeEach(() => {
     todolistId2 = v1();
 
     startState = [
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: "idle"},
+        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: "idle"}
     ]
 })
 
@@ -33,7 +33,14 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
     const endState = todolistReducer(startState,
-        addTodolistAC({title: 'New Todolist', id: 'any id', addedDate: '', order: 0, filter: 'all'}))
+        addTodolistAC({
+            title: 'New Todolist',
+            id: 'any id',
+            addedDate: '',
+            order: 0,
+            filter: 'all',
+            entityStatus: "idle"
+        }))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe('New Todolist');
@@ -56,8 +63,8 @@ test('correct filter of todolist should be changed', () => {
 
 test('todolist should be set to the state', () => {
     const endState = todolistReducer(startState, setTodolistsAC([
-            {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0},
-            {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0}
+            {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: "idle"},
+            {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: "idle"}
         ]
     ))
 
