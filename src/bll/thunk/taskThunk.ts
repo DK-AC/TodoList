@@ -23,10 +23,17 @@ export const createTaskTC = (todoListId: string, title: string) => (dispatch: Di
     dispatch(setStatus("loading"))
     tasksApi.createTask(todoListId, title)
         .then(res => {
-            if (res.data.messages.length > 0) {
-                dispatch(setError(res.data.messages[0]))
+            if (res.data.resultCode === 0) {
+                dispatch(addTaskAC(res.data.data.item))
+                dispatch(setStatus('succeeded'))
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setError(res.data.messages[0]))
+                } else {
+                    dispatch(setError('some error'))
+                }
+                dispatch(setStatus('failed'))
             }
-            dispatch(addTaskAC(res.data.data.item))
         })
         .catch(e => {
             console.log(e)
