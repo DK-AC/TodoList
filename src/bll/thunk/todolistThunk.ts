@@ -43,7 +43,6 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
         )
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    debugger
     dispatch(setStatus("loading"))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
