@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
@@ -11,8 +11,7 @@ import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
-import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
-import {TodolistType} from "../../bll/types/todolistTypes";
+import {addTodolistTC} from "../../bll/thunk/todolistThunk";
 import {TodolistsList} from '../TodolistList/TodolistsList';
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 
@@ -22,15 +21,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     const dispatch = useDispatch()
 
-    const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
     const isLoading = useAppSelector(state => state.app.status)
-
-    useEffect(() => {
-        if (demo) {
-            return
-        }
-        dispatch(setTodolistsTC(todolists))
-    }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))

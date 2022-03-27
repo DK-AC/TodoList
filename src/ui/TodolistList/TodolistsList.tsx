@@ -4,14 +4,23 @@ import {TodolistType} from "../../bll/types/todolistTypes";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {getTasksTC} from "../../bll/thunk/taskThunk";
+import {useDispatch} from "react-redux";
+import {setTodolistsTC} from "../../bll/thunk/todolistThunk";
 
 type PropsType = { demo?: boolean }
 
 export const TodolistsList = ({demo}: PropsType) => {
 
+    const dispatch = useDispatch()
+
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
 
+    useEffect(() => {
+        if (demo) {
+            return
+        }
+        dispatch(setTodolistsTC(todolists))
+    }, [dispatch])
 
 
     return (
