@@ -1,6 +1,12 @@
 import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
-import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {
+    addTodolistAC,
+    changeEntityStatusAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    setTodolistsAC
+} from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
 import {setError, setStatus} from "../actions/appActions";
 
@@ -44,6 +50,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
     dispatch(setStatus("loading"))
+    dispatch(changeEntityStatusAC(todolistId, "loading"))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
             dispatch(removeTodolistAC(todolistId))
@@ -53,6 +60,8 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
+                dispatch(changeEntityStatusAC(todolistId, "idle"))
+
             }
         )
 }
