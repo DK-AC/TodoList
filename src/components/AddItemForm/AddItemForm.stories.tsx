@@ -20,5 +20,12 @@ const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...
 export const AddItemFormStories = Template.bind({});
 
 AddItemFormStories.args = {
-    callback: action('form is added')
+    callback: action('form is added'),
+};
+
+export const AddItemFormDisabledStories = Template.bind({});
+
+AddItemFormDisabledStories.args = {
+    callback: action('button is disabled'),
+    disabled: true
 };

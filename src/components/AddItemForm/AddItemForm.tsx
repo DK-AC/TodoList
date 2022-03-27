@@ -3,9 +3,12 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
-type AddItemFormPropsType = { callback: (title: string) => void }
+type AddItemFormPropsType = {
+    callback: (title: string) => void
+    disabled?: boolean
+}
 
-export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
+export const AddItemForm = React.memo(({callback, disabled = false}: AddItemFormPropsType) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -47,8 +50,9 @@ export const AddItemForm = React.memo(({callback}: AddItemFormPropsType) => {
                        error={!!error}
                        label='Title'
                        helperText={error}
+                       disabled={disabled}
             />
-            <IconButton color="primary" onClick={addItem} size={"small"}>
+            <IconButton color="primary" onClick={addItem} size={"small"} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

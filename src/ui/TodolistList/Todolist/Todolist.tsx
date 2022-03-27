@@ -49,13 +49,13 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         <div>
             <h3>
                 <EditableSpan title={todo.title} onChange={changeTodolistTitleHandler}/>
-                <IconButton onClick={removeTodolistHandler}>
+                <IconButton onClick={removeTodolistHandler} disabled={todo.entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
             </h3>
 
             <div>
-                <AddItemForm callback={addTaskHandler}/>
+                <AddItemForm callback={addTaskHandler} disabled={todo.entityStatus === 'loading'}/>
                 {tasksForTodolist.map(task => {
                     return <Task key={todo.id + task.id} todoId={todo.id} filteredTask={task}/>
                 })}
@@ -65,7 +65,6 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
                 <Button variant={todo.filter === 'all' ? 'outlined' : 'text'}
                         onClick={changeTodolistAllFilterHandler}
                         color={'inherit'}
-                        disabled={todo.entityStatus === 'loading'}
                 >
                     All
                 </Button>
