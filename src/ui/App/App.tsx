@@ -1,13 +1,8 @@
 import React from 'react';
 import './App.css';
-import { AppBarContainer } from './AppBarContainer';
+import {AppBarContainer} from './AppBarContainer';
 
+type PropsType = { demo?: boolean }
 
-function App() {
+export const App = ({demo = false}: PropsType) => <AppBarContainer demo={demo}/>
 
-    return (
-        <AppBarContainer/>
-    );
-}
-
-export default App

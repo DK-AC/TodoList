@@ -2,12 +2,12 @@ import React from "react";
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
-import {appRootState, composeEnhancers} from "../bll/store";
+import {appRootState, AppRootStateType, composeEnhancers} from "../bll/store";
 
-export const initialGlobalState = {
+export const initialGlobalState: AppRootStateType = {
     todolists: [
-        {id: 'todoListId1', title: "What to learn", filter: "all", addedDate: '', order: 0},
-        {id: 'todoListId2', title: "What to buy", filter: "all", addedDate: '', order: 0}
+        {id: 'todoListId1', title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: 'idle'},
+        {id: 'todoListId2', title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: 'idle'}
     ],
     tasks: {
         ['todoListId1']: [
@@ -86,11 +86,14 @@ export const initialGlobalState = {
                 startDate: ''
             },
         ]
+    },
+    app: {
+        error: null,
+        status: 'idle'
     }
 };
 
-
-export const storyBookStore = createStore(appRootState, composeEnhancers(applyMiddleware(thunk),));
+export const storyBookStore = createStore(appRootState, initialGlobalState, composeEnhancers(applyMiddleware(thunk)));
 
 export const ReduxStoreProviderDecorator = (story: any) => {
     return <Provider store={storyBookStore}>{story()}</Provider>

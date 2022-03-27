@@ -16,8 +16,9 @@ import {TodolistType} from "../../bll/types/todolistTypes";
 import {TodolistsList} from '../TodolistList/TodolistsList';
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 
+type PropsType = { demo?: boolean }
 
-export const AppBarContainer = () => {
+export const AppBarContainer = ({demo}: PropsType) => {
 
     const dispatch = useDispatch()
 
@@ -25,6 +26,9 @@ export const AppBarContainer = () => {
     const isLoading = useAppSelector(state => state.app.status)
 
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(setTodolistsTC(todolists))
     }, [dispatch])
 
@@ -51,7 +55,7 @@ export const AppBarContainer = () => {
                     <AddItemForm callback={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    <TodolistsList/>
+                    <TodolistsList demo={demo}/>
                 </Grid>
             </Container>
             <ErrorSnackbar/>
