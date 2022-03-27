@@ -29,7 +29,7 @@ export const TodolistsList = ({demo}: PropsType) => {
                 return (
                     <Grid key={tl.id} style={{padding: '20px'}}>
                         <Paper style={{padding: '10px'}}>
-                            <Todolist todoId={tl.id} demo={demo}/>
+                            <Todolist todo={tl} demo={demo}/>
                         </Paper>
                     </Grid>)
             })}</>

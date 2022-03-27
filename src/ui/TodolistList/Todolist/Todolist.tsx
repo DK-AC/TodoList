@@ -13,20 +13,19 @@ import {createTaskTC, getTasksTC} from "../../../bll/thunk/taskThunk";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
 
-type PropsType = { todoId: string, demo?: boolean }
+type PropsType = { todo: TodolistType, demo?: boolean }
 
-export const Todolist = React.memo(({todoId, demo = false}: PropsType) => {
+export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
     const dispatch = useDispatch()
 
-    let todo = useAppSelector<TodolistType>(state => state.todolists.filter(todo => todo.id === todoId)[0])
-    let tasks = useAppSelector<TaskType[]>(state => state.tasks[todoId])
+    let tasks = useAppSelector<TaskType[]>(state => state.tasks[todo.id])
 
     useEffect(() => {
         if (demo) {
             return
         }
-        dispatch(getTasksTC(todoId))
+        dispatch(getTasksTC(todo.id))
     }, [])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))
