@@ -27,7 +27,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
                 onChange={onChangeTaskStatus}
                 size={"small"}
             />
-            <EditableSpan title={filteredTask.title} onChange={onChangeTaskTitle}/>
+            <EditableSpan title={filteredTask.title} onChange={onChangeTaskTitle} />
             <IconButton onClick={removeTaskHandler}><Delete/></IconButton>
         </div>
     );

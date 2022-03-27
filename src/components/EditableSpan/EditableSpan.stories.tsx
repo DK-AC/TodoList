@@ -14,8 +14,16 @@ const Template: ComponentStory<typeof EditableSpan> = (args) => <EditableSpan {.
 export const EditableSpanStories = Template.bind({});
 
 EditableSpanStories.args = {
-    title:'test',
+    title: 'test',
     onChange: action('value changed'),
+};
+
+export const EditableSpanDisableStories = Template.bind({});
+
+EditableSpanDisableStories.args = {
+    title: 'test',
+    onChange: action('value changed'),
+    disabled: true
 };
 
 
