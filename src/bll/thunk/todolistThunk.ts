@@ -17,7 +17,7 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
             dispatch(setTodolistsAC(res.data))
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
@@ -41,7 +41,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
             }
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
@@ -56,7 +56,7 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
             dispatch(removeTodolistAC(todolistId))
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
@@ -72,7 +72,7 @@ export const updateTodolistTC = (todolistId: string, title: string) => (dispatch
             dispatch(changeTodolistTitleAC(todolistId, title))
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))

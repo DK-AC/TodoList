@@ -12,7 +12,7 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
             dispatch(getTasksAC(todolistId, res.data.items))
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
@@ -36,7 +36,7 @@ export const createTaskTC = (todoListId: string, title: string) => (dispatch: Di
             }
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
@@ -50,7 +50,7 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
             dispatch(removeTaskAC(todolistId, taskId))
         })
         .catch(e => {
-            console.log(e)
+            dispatch(setError(e.message))
         })
         .finally(() => {
                 dispatch(setStatus('idle'))
@@ -80,7 +80,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<
                 dispatch(updateTaskAC(todolistId, taskId, model))
             })
             .catch(e => {
-                console.log(e)
+                dispatch(setError(e.message))
             })
             .finally(() => {
                     dispatch(setStatus('idle'))
