@@ -2,6 +2,7 @@ import {todolistReducer} from '../reducers/todolistReducer';
 import {v1} from 'uuid';
 import {
     addTodolistAC,
+    changeEntityStatusAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
@@ -71,6 +72,12 @@ test('todolist should be set to the state', () => {
     expect(endState.length).toBe(2)
 })
 
+test('status should be changed', () => {
+    const endState = todolistReducer(startState, changeEntityStatusAC(todolistId1, 'loading'))
+
+    expect(startState[0].entityStatus).toBe('idle')
+    expect(endState[0].entityStatus).toBe('loading')
+})
 
 
 
