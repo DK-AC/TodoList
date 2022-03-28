@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
@@ -7,25 +7,17 @@ import Button from "@mui/material/Button";
 import AppBar from '@mui/material/AppBar';
 import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
-import {addTodolistTC} from "../../bll/thunk/todolistThunk";
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
-import {Routing} from "../Routing/Routing";
+import {Route, Routes} from "react-router-dom";
+import {TodolistsList} from "../TodolistList/TodolistsList";
+import {Login} from "../Login/Login";
 
 type PropsType = { demo?: boolean }
 
 export const AppBarContainer = ({demo}: PropsType) => {
 
-    const dispatch = useDispatch()
-
     const isLoading = useAppSelector(state => state.app.appStatus)
-
-    const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistTC(title))
-    }, [dispatch])
 
     return (
         <div>
@@ -42,12 +34,10 @@ export const AppBarContainer = ({demo}: PropsType) => {
             </AppBar>
             {isLoading === 'loading' && <LinearProgress/>}
             <Container fixed>
-                <Grid container style={{padding: '20px'}}>
-                    <AddItemForm callback={addTodolist}/>
-                </Grid>
-                <Grid container spacing={3}>
-                    <Routing/>
-                </Grid>
+                <Routes>
+                    <Route path='/' element={<TodolistsList demo={demo}/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                </Routes>
             </Container>
             <ErrorSnackbar/>
         </div>
