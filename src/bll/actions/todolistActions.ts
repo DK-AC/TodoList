@@ -8,7 +8,7 @@ import {
     SET_TODOLISTS,
     TodolistType
 } from "../types/todolistTypes";
-import {StatusType} from "./appActions";
+import {StatusType} from "../types/appTypes";
 
 export const removeTodolistAC = (todolistId: string) => ({type: REMOVE_TODOLIST, todolistId} as const)
 

@@ -8,17 +8,14 @@ import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import React from "react"
 import {useFormik} from "formik";
+import {LoginValuesType} from "../../bll/types/authTypes";
 
-type ValidateValuesType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
+
 
 export const Login = () => {
 
-    const validate = (values: ValidateValuesType) => {
-        const errors: Partial<ValidateValuesType> = {};
+    const validate = (values: LoginValuesType) => {
+        const errors: Partial<LoginValuesType> = {};
 
         if (!values.email) {
             errors.email = 'Required';

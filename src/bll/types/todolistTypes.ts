@@ -6,8 +6,7 @@ import {
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
-import {ActionsAppType} from "./appTypes";
-import {StatusType} from "../actions/appActions";
+import {ActionsAppType, StatusType} from "./appTypes";
 
 export const REMOVE_TODOLIST = 'TODOLIST/REMOVE_TODOLIST'
 export const ADD_TODOLIST = 'TODOLIST/ADD_TODOLIST'

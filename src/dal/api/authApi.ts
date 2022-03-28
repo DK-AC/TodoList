@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AuthUserResponseType, UserInfoType} from "../../bll/types/appTypes";
+import {AuthUserResponseType, UserInfoType} from "../../bll/types/authTypes";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -9,8 +9,8 @@ const instance = axios.create({
     }
 })
 
-export const appApi = {
-    authMe() {
+export const authApi = {
+    me() {
         return instance.get<AuthUserResponseType<UserInfoType>>(`/auth/me`)
     },
 }

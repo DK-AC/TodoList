@@ -4,6 +4,7 @@ import {TypedUseSelectorHook, useSelector} from "react-redux";
 import {tasksReducer} from "./reducers/tasksReducer";
 import thunk from "redux-thunk";
 import {appReducer} from "./reducers/appReducer";
+import {authReducer} from "./reducers/authReducer";
 
 declare global {
     interface Window {
@@ -15,7 +16,8 @@ export const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || c
 export const appRootState = combineReducers({
     todolists: todolistReducer,
     tasks: tasksReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
 export const store = createStore(appRootState, composeEnhancers(applyMiddleware(thunk)))

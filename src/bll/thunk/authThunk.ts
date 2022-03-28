@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
-import {appApi} from "../../dal/api/app-api";
-import {setAppStatus, setIsInitializedAC} from "../actions/appActions";
+import {authApi} from "../../dal/api/authApi";
+import {setAppStatus} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {setIsInitializedAC} from "../actions/authActions";
 
 export const isAuthTC = () => (dispatch: Dispatch) => {
-    appApi.authMe()
+    authApi.me()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsInitializedAC(true))
