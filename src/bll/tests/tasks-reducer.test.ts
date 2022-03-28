@@ -81,8 +81,8 @@ test('new array should be added when new todolist is added', () => {
 test('empty arrays should be added when we set todolists', () => {
     const endState = tasksReducer(startState, setTodolistsAC(
         [
-            {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0,status:"idle"},
-            {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0,status:"idle"}
+            {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0, status: "idle"},
+            {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
         ]
     ))
     const keys = Object.keys(endState)

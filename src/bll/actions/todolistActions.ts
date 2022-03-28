@@ -22,8 +22,7 @@ export const changeTodolistFilterAC = (todolistId: string, filter: FilterTodolis
 
 export const setTodolistsAC = (todolists: TodolistType[]) => ({type: SET_TODOLISTS, todolists} as const)
 
-export const changeEntityStatusAC = (todolistId: string, status: StatusType) => (
+export const changeTodolistStatusAC = (todolistId: string, status: StatusType) => (
     {type: CHANGE_TODOLIST_STATUS, todolistId, status} as const
 )
-
 

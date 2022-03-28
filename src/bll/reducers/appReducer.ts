@@ -1,4 +1,4 @@
-import {ActionsAppType, SET_ERROR, SET_APP_STATUS} from "../types/appTypes";
+import {ActionsAppType, SET_APP_ERROR, SET_APP_STATUS} from "../types/appTypes";
 import {StatusType} from "../actions/appActions";
 
 const initialState = {
@@ -12,7 +12,7 @@ export const appReducer = (state = initialState, action: ActionsAppType): Initia
     switch (action.type) {
         case SET_APP_STATUS:
             return {...state, appStatus: action.appStatus}
-        case SET_ERROR:
+        case SET_APP_ERROR:
             return {...state, error: action.error}
         default:
             return state

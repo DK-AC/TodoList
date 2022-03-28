@@ -1,6 +1,6 @@
 import {
     addTodolistAC,
-    changeEntityStatusAC,
+    changeTodolistStatusAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
@@ -23,7 +23,7 @@ export type ActionsTodolistType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof setTodolistsAC>
-    | ReturnType<typeof changeEntityStatusAC>
+    | ReturnType<typeof changeTodolistStatusAC>
     | ActionsAppType
 
 

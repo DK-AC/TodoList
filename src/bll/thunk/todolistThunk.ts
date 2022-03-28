@@ -2,80 +2,80 @@ import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
 import {
     addTodolistAC,
-    changeEntityStatusAC,
+    changeTodolistStatusAC,
     changeTodolistTitleAC,
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
-import {setError, setStatus} from "../actions/appActions";
+import {setAppError, setAppStatus} from "../actions/appActions";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setStatus("loading"))
+    dispatch(setAppStatus("loading"))
     todolistsApi.getTodolists()
         .then(res => {
             dispatch(setTodolistsAC(res.data))
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
+                dispatch(setAppStatus('idle'))
             }
         )
 }
 export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setStatus("loading"))
+    dispatch(setAppStatus("loading"))
     todolistsApi.createTodolist(title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setStatus('succeeded'))
+                dispatch(setAppStatus('succeeded'))
             } else {
                 if (res.data.messages.length) {
-                    dispatch(setError(res.data.messages[0]))
+                    dispatch(setAppError(res.data.messages[0]))
                 } else {
-                    dispatch(setError('some error'))
+                    dispatch(setAppError('some error'))
                 }
-                dispatch(setStatus('failed'))
+                dispatch(setAppStatus('failed'))
             }
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
+                dispatch(setAppStatus('idle'))
             }
         )
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setStatus("loading"))
-    dispatch(changeEntityStatusAC(todolistId, "loading"))
+    dispatch(setAppStatus("loading"))
+    dispatch(changeTodolistStatusAC(todolistId, "loading"))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
             dispatch(removeTodolistAC(todolistId))
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
-                dispatch(changeEntityStatusAC(todolistId, "idle"))
+                dispatch(setAppStatus('idle'))
+                dispatch(changeTodolistStatusAC(todolistId, "idle"))
 
             }
         )
 }
 export const updateTodolistTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setStatus("loading"))
+    dispatch(setAppStatus("loading"))
     todolistsApi.updateTodolist(todolistId, title)
         .then(res => {
             dispatch(changeTodolistTitleAC(todolistId, title))
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
+                dispatch(setAppStatus('idle'))
             }
         )
 }

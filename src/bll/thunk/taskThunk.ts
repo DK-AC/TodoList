@@ -3,57 +3,57 @@ import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/task
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
 import {ActionsTaskType, ModelTaskType} from "../types/taskTypes";
-import {setError, setStatus} from "../actions/appActions";
+import {setAppError, setAppStatus} from "../actions/appActions";
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
-    dispatch(setStatus("loading"))
+    dispatch(setAppStatus("loading"))
     tasksApi.getTasks(todolistId)
         .then(res => {
             dispatch(getTasksAC(todolistId, res.data.items))
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
+                dispatch(setAppStatus('idle'))
             }
         )
 }
 export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsTaskType>) => {
-    dispatch(setStatus("loading"))
+    dispatch(setAppStatus("loading"))
     tasksApi.createTask(todoListId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
-                dispatch(setStatus('succeeded'))
+                dispatch(setAppStatus('succeeded'))
             } else {
                 if (res.data.messages.length) {
-                    dispatch(setError(res.data.messages[0]))
+                    dispatch(setAppError(res.data.messages[0]))
                 } else {
-                    dispatch(setError('some error'))
+                    dispatch(setAppError('some error'))
                 }
-                dispatch(setStatus('failed'))
+                dispatch(setAppStatus('failed'))
             }
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
+                dispatch(setAppStatus('idle'))
             }
         )
 }
 export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsTaskType>) => {
-    dispatch(setStatus("loading"))
+    dispatch(setAppStatus("loading"))
     tasksApi.deleteTask(todolistId, taskId)
         .then(res => {
             dispatch(removeTaskAC(todolistId, taskId))
         })
         .catch(e => {
-            dispatch(setError(e.message))
+            dispatch(setAppError(e.message))
         })
         .finally(() => {
-                dispatch(setStatus('idle'))
+                dispatch(setAppStatus('idle'))
             }
         )
 }
@@ -74,16 +74,16 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<
             status: task.status,
             ...model
         }
-        dispatch(setStatus("loading"))
+        dispatch(setAppStatus("loading"))
         tasksApi.updateTask(todolistId, taskId, apiModel)
             .then(res => {
                 dispatch(updateTaskAC(todolistId, taskId, model))
             })
             .catch(e => {
-                dispatch(setError(e.message))
+                dispatch(setAppError(e.message))
             })
             .finally(() => {
-                    dispatch(setStatus('idle'))
+                    dispatch(setAppStatus('idle'))
                 }
             )
     }
