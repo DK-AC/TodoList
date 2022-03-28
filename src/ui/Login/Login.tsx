@@ -13,7 +13,6 @@ import {useDispatch} from "react-redux";
 import {loginTC} from "../../bll/thunk/authThunk";
 import {useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
-import {setIsInitializedAC} from "../../bll/actions/authActions";
 
 
 export const Login = () => {
@@ -51,13 +50,10 @@ export const Login = () => {
             dispatch(loginTC(values))
         },
     });
-    console.log(isInitialized)
 
     useEffect(() => {
         if (isInitialized) {
             navigate('/')
-        } else {
-            return
         }
     }, [isInitialized])
 
@@ -81,15 +77,11 @@ export const Login = () => {
                                    margin="normal"
                                    {...formik.getFieldProps('email')}
                         />
-                        {formik.touched.email && formik.errors.email
-                            ? (<div style={{color: 'red'}}>{formik.errors.email}</div>) : null}
                         <TextField type="password"
                                    label="password"
                                    margin="normal"
                                    {...formik.getFieldProps('password')}
                         />
-                        {formik.touched.password && formik.errors.password ? (
-                            <div>{formik.errors.password}</div>) : null}
                         <FormControlLabel
                             label={'remember me'}
                             control={<Checkbox/>}
