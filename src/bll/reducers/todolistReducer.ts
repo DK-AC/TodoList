@@ -9,11 +9,11 @@ import {
     TodolistType
 } from "../types/todolistTypes";
 
-const initialState: TodolistType[] = []
+const initialTodolistsState: TodolistType[] = []
 
-type initialStateType = typeof initialState
+type initialTodolistsStateType = typeof initialTodolistsState
 
-export const todolistReducer = (state = initialState, action: ActionsTodolistType): initialStateType => {
+export const todolistReducer = (state = initialTodolistsState, action: ActionsTodolistType): initialTodolistsStateType => {
     switch (action.type) {
         case REMOVE_TODOLIST:
             return state.filter(todo => todo.id !== action.todolistId)

@@ -1,9 +1,9 @@
 import {ActionsTaskType, ADD_TASK, GET_TASKS, REMOVE_TASK, TasksStateType, UPDATE_TASK} from "../types/taskTypes";
 import {ADD_TODOLIST, REMOVE_TODOLIST, SET_TODOLISTS, TodolistType} from "../types/todolistTypes";
 
-const initialState: TasksStateType = {}
+const initialTasksState: TasksStateType = {}
 
-export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialTasksState, action: ActionsTaskType): TasksStateType => {
     switch (action.type) {
         case REMOVE_TASK:
             return {...state, [action.todolistId]: state[action.todolistId].filter(task => task.id !== action.taskId)}
