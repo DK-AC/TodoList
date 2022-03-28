@@ -7,12 +7,15 @@ import {Todolist} from "./Todolist/Todolist";
 import {useDispatch} from "react-redux";
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {useNavigate} from "react-router-dom";
 
 type PropsType = { demo?: boolean }
 
 export const TodolistsList = ({demo}: PropsType) => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -27,6 +30,10 @@ export const TodolistsList = ({demo}: PropsType) => {
         }
         dispatch(setTodolistsTC(todolists))
     }, [dispatch])
+
+    if (!isLoggedIn) {
+        navigate('/login')
+    }
 
 
     return (<>

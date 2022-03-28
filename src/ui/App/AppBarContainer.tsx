@@ -22,22 +22,19 @@ type PropsType = { demo?: boolean }
 export const AppBarContainer = ({demo}: PropsType) => {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const isLoading = useAppSelector(state => state.app.appStatus)
     const isInitialized = useAppSelector(state => state.auth.isInitialized)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-    const handleLogOut = useCallback(() => {
-        dispatch(logOutTC())
-    }, [isInitialized])
 
     useEffect(() => {
         dispatch(isAuthTC())
-        if (!isLoggedIn) {
-            navigate('/login')
-        }
-    }, [isLoggedIn])
+    }, [])
+
+    const handleLogOut = useCallback(() => {
+        dispatch(logOutTC())
+    }, [isInitialized])
 
     if (!isInitialized) {
         return <div className={style.circular}><CircularProgress/></div>
