@@ -92,7 +92,8 @@ export const initialGlobalState: AppRootStateType = {
         appStatus: 'idle',
     },
     auth: {
-        isInitialized: false
+        isInitialized: false,
+        isLoggedIn: false
     }
 };
 

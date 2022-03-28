@@ -55,7 +55,7 @@ export const Login = () => {
         if (isLoggedIn) {
             navigate('/')
         }
-    }, [])
+    }, [isLoggedIn])
 
 
     return <Grid container justifyContent={'center'}>
