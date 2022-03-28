@@ -5,11 +5,13 @@ import {handleNetworkAppError, handleServerAppError} from "../../utils/error-uti
 import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
 import {LoginValuesType} from "../types/authTypes";
 
-export const isAuthTC = () => (dispatch: Dispatch) => {
-    authApi.me()
+export const loginTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
+    dispatch(setAppStatus("loading"))
+    authApi.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsInitializedAC(true))
+                dispatch(setIsLoggedInAC(data))
+                dispatch(setAppStatus('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -22,15 +24,12 @@ export const isAuthTC = () => (dispatch: Dispatch) => {
             }
         )
 }
-export const loginTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatus("loading"))
-    authApi.login(data)
+export const isAuthTC = () => (dispatch: Dispatch) => {
+    authApi.me()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(data))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(setIsInitializedAC(true))
             } else {
-                handleServerAppError(res.data, dispatch)
             }
         })
         .catch(error => {

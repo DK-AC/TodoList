@@ -6,16 +6,22 @@ import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
-import React from "react"
+import React, {useEffect} from "react"
 import {useFormik} from "formik";
 import {LoginValuesType} from "../../bll/types/authTypes";
 import {useDispatch} from "react-redux";
 import {loginTC} from "../../bll/thunk/authThunk";
+import {useAppSelector} from "../../bll/store";
+import {useNavigate} from "react-router-dom";
+import {setIsInitializedAC} from "../../bll/actions/authActions";
 
 
 export const Login = () => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const isInitialized = useAppSelector(state => state.auth.isInitialized)
 
     const validate = (values: LoginValuesType) => {
         const errors: Partial<LoginValuesType> = {};
@@ -45,6 +51,15 @@ export const Login = () => {
             dispatch(loginTC(values))
         },
     });
+    console.log(isInitialized)
+
+    useEffect(() => {
+        if (isInitialized) {
+            navigate('/')
+        } else {
+            return
+        }
+    }, [isInitialized])
 
 
     return <Grid container justifyContent={'center'}>
