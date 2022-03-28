@@ -10,7 +10,7 @@ import React, {useEffect} from "react"
 import {useFormik} from "formik";
 import {LoginValuesType} from "../../bll/types/authTypes";
 import {useDispatch} from "react-redux";
-import {loginTC} from "../../bll/thunk/authThunk";
+import {logInTC} from "../../bll/thunk/authThunk";
 import {useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 
@@ -47,7 +47,7 @@ export const Login = () => {
         },
         validate,
         onSubmit: values => {
-            dispatch(loginTC(values))
+            dispatch(logInTC(values))
         },
     });
 

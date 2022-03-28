@@ -5,13 +5,6 @@ export const SET_IS_INITIALIZED = 'AUTH/SET_IS_INITIALIZED'
 
 export type ActionsLoginType = ReturnType<typeof setIsInitializedAC> | ReturnType<typeof setIsLoggedInAC>
 
-export type AuthUserResponseType<D> = {
-    data: D
-    messages: string[]
-    fieldsErrors: string[]
-    resultCode: number
-}
-
 export type LoginValuesType = {
     email: string
     password: string
