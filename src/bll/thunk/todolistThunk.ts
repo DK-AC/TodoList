@@ -9,6 +9,7 @@ import {
 } from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
 import {setAppError, setAppStatus} from "../actions/appActions";
+import {handleServerAppError} from "../../utils/error-utils/error-utils";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
     dispatch(setAppStatus("loading"))
@@ -18,6 +19,7 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
         })
         .catch(e => {
             dispatch(setAppError(e.message))
+            dispatch(setAppStatus('failed'))
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -32,16 +34,12 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
                 dispatch(addTodolistAC(res.data.data.item))
                 dispatch(setAppStatus('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppError(res.data.messages[0]))
-                } else {
-                    dispatch(setAppError('some error'))
-                }
-                dispatch(setAppStatus('failed'))
+                handleServerAppError(res.data, dispatch)
             }
         })
         .catch(e => {
             dispatch(setAppError(e.message))
+            dispatch(setAppStatus('failed'))
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -57,6 +55,7 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
         })
         .catch(e => {
             dispatch(setAppError(e.message))
+            dispatch(setAppStatus('failed'))
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -73,6 +72,7 @@ export const updateTodolistTC = (todolistId: string, title: string) => (dispatch
         })
         .catch(e => {
             dispatch(setAppError(e.message))
+            dispatch(setAppStatus('failed'))
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
