@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import {Menu} from "@mui/icons-material";
@@ -13,7 +13,8 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 import {TodolistsList} from "../TodolistList/TodolistsList";
 import {Login} from "../Login/Login";
 import {useDispatch} from "react-redux";
-import {isAuthTC} from "../../bll/thunk/authThunk";
+import CircularProgress from '@mui/material/CircularProgress';
+import style from './AppBarContainer.module.css'
 
 type PropsType = { demo?: boolean }
 
@@ -25,14 +26,9 @@ export const AppBarContainer = ({demo}: PropsType) => {
     const isLoading = useAppSelector(state => state.app.appStatus)
     const isInitialized = useAppSelector(state => state.auth.isInitialized)
 
-    useEffect(() => {
-        dispatch(isAuthTC())
-        if (isInitialized) {
-            return
-        } else {
-            navigate('/login')
-        }
-    }, [])
+    if (!isInitialized) {
+        return <div className={style.circular}><CircularProgress/></div>
+    }
 
     return (
         <div>

@@ -10,8 +10,7 @@ export const loginTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(data))
-                dispatch(setIsInitializedAC(true))
+                dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatus('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
@@ -29,9 +28,9 @@ export const isAuthTC = () => (dispatch: Dispatch) => {
     authApi.me()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsInitializedAC(true))
-            } else {
+                dispatch(setIsLoggedInAC(true))
             }
+            dispatch(setIsInitializedAC(true))
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
