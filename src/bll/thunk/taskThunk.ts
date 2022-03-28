@@ -71,9 +71,14 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<
             ...model
         }
         dispatch(setAppStatus("loading"))
+
         tasksApi.updateTask(todolistId, taskId, apiModel)
             .then(res => {
-                dispatch(updateTaskAC(todolistId, taskId, model))
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTaskAC(todolistId, taskId, model))
+                } else {
+                    handleServerAppError(res.data, dispatch)
+                }
             })
             .catch(error => {
                 handleNetworkAppError(error, dispatch)

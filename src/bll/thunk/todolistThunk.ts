@@ -65,7 +65,11 @@ export const updateTodolistTC = (todolistId: string, title: string) => (dispatch
     dispatch(setAppStatus("loading"))
     todolistsApi.updateTodolist(todolistId, title)
         .then(res => {
-            dispatch(changeTodolistTitleAC(todolistId, title))
+            if (res.data.resultCode === 0) {
+                dispatch(changeTodolistTitleAC(todolistId, title))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
