@@ -29,8 +29,6 @@ export const isAuthTC = () => (dispatch: Dispatch) => {
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true))
-            } else {
-                handleServerAppError(res.data, dispatch)
             }
             dispatch(setIsInitializedAC(true))
         })

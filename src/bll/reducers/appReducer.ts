@@ -1,13 +1,13 @@
 import {ActionsAppType, SET_APP_ERROR, SET_APP_STATUS, StatusType} from "../types/appTypes";
 
-const initialState = {
+const initialAppState = {
     appStatus: 'idle' as StatusType,
     error: null as null | string,
 }
 
-export type InitialStateType = typeof initialState
+export type InitialAppStateType = typeof initialAppState
 
-export const appReducer = (state = initialState, action: ActionsAppType): InitialStateType => {
+export const appReducer = (state = initialAppState, action: ActionsAppType): InitialAppStateType => {
     switch (action.type) {
         case SET_APP_STATUS:
             return {...state, appStatus: action.appStatus}

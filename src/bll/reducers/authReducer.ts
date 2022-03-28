@@ -1,14 +1,14 @@
-import {ActionsLoginType, SET_IS_INITIALIZED, SET_IS_LOGGED_IN} from "../types/authTypes";
+import {ActionsAuthType, SET_IS_INITIALIZED, SET_IS_LOGGED_IN} from "../types/authTypes";
 
 
-const initialState = {
+const initialAuthState = {
     isInitialized: false,
     isLoggedIn: false
 }
 
-export type InitialStateType = typeof initialState
+export type InitialAuthStateType = typeof initialAuthState
 
-export const authReducer = (state = initialState, action: ActionsLoginType): InitialStateType => {
+export const authReducer = (state = initialAuthState, action: ActionsAuthType): InitialAuthStateType => {
     switch (action.type) {
         case SET_IS_INITIALIZED:
             return {...state, isInitialized: action.isInitialized}
