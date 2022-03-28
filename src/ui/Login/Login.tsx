@@ -9,10 +9,13 @@ import TextField from "@mui/material/TextField"
 import React from "react"
 import {useFormik} from "formik";
 import {LoginValuesType} from "../../bll/types/authTypes";
-
+import {useDispatch} from "react-redux";
+import {loginTC} from "../../bll/thunk/authThunk";
 
 
 export const Login = () => {
+
+    const dispatch = useDispatch()
 
     const validate = (values: LoginValuesType) => {
         const errors: Partial<LoginValuesType> = {};
@@ -39,7 +42,7 @@ export const Login = () => {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(loginTC(values))
         },
     });
 
@@ -56,13 +59,12 @@ export const Login = () => {
                         </p>
                         <p>or use common test account credentials:</p>
                         <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
+                        <p>Password: zxcnbvasdqwe123</p>
                     </FormLabel>
                     <FormGroup>
                         <TextField label="email"
                                    margin="normal"
                                    {...formik.getFieldProps('email')}
-                                   error={!!formik.errors.email}
                         />
                         {formik.touched.email && formik.errors.email
                             ? (<div style={{color: 'red'}}>{formik.errors.email}</div>) : null}
@@ -70,7 +72,6 @@ export const Login = () => {
                                    label="password"
                                    margin="normal"
                                    {...formik.getFieldProps('password')}
-                                   error={!!formik.errors.password}
                         />
                         {formik.touched.password && formik.errors.password ? (
                             <div>{formik.errors.password}</div>) : null}

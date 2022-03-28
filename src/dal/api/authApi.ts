@@ -1,5 +1,6 @@
-import axios from "axios";
-import {AuthUserResponseType, UserInfoType} from "../../bll/types/authTypes";
+import axios, {AxiosResponse} from "axios";
+import {AuthUserResponseType, LoginValuesType, UserInfoType} from "../../bll/types/authTypes";
+import {ResponseType} from "../../bll/types/taskTypes";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -13,4 +14,7 @@ export const authApi = {
     me() {
         return instance.get<AuthUserResponseType<UserInfoType>>(`/auth/me`)
     },
+    login(data: LoginValuesType) {
+        return instance.post <{ userId: string }, AxiosResponse<ResponseType<{ userId?: number }>>>('/auth/login', data)
+    }
 }
