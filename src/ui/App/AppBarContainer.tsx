@@ -15,7 +15,6 @@ import {Login} from "../Login/Login";
 import {useDispatch} from "react-redux";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
-import {setIsInitializedAC} from "../../bll/actions/authActions";
 import {isAuthTC} from "../../bll/thunk/authThunk";
 
 type PropsType = { demo?: boolean }
@@ -27,9 +26,13 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     const isLoading = useAppSelector(state => state.app.appStatus)
     const isInitialized = useAppSelector(state => state.auth.isInitialized)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     useEffect(() => {
         dispatch(isAuthTC())
+        if (!isLoggedIn) {
+            navigate('/login')
+        }
     }, [])
 
     if (!isInitialized) {

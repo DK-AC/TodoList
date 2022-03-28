@@ -15,19 +15,17 @@ export const TodolistsList = ({demo}: PropsType) => {
     const dispatch = useDispatch()
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
-    const isInitialized = useAppSelector(state => state.auth.isInitialized)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
     }, [dispatch])
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
-        if (!isInitialized) {
-            dispatch(setTodolistsTC(todolists))
-        }
+        dispatch(setTodolistsTC(todolists))
     }, [dispatch])
 
 

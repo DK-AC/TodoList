@@ -20,7 +20,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const isInitialized = useAppSelector(state => state.auth.isInitialized)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const validate = (values: LoginValuesType) => {
         const errors: Partial<LoginValuesType> = {};
@@ -52,10 +52,10 @@ export const Login = () => {
     });
 
     useEffect(() => {
-        if (isInitialized) {
+        if (isLoggedIn) {
             navigate('/')
         }
-    }, [isInitialized])
+    }, [])
 
 
     return <Grid container justifyContent={'center'}>
