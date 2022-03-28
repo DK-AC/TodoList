@@ -12,8 +12,8 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../bll/store";
 import {addTodolistTC} from "../../bll/thunk/todolistThunk";
-import {TodolistsList} from '../TodolistList/TodolistsList';
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
+import {Routing} from "../Routing/Routing";
 
 type PropsType = { demo?: boolean }
 
@@ -46,7 +46,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
                     <AddItemForm callback={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    <TodolistsList demo={demo}/>
+                    <Routing/>
                 </Grid>
             </Container>
             <ErrorSnackbar/>
