@@ -8,11 +8,11 @@ import {
     setTodolistsAC
 } from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
-import {setAppStatus} from "../actions/appActions";
+import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setAppStatus("loading"))
+    dispatch(setAppStatusAC("loading"))
     todolistsApi.getTodolists()
         .then(res => {
             dispatch(setTodolistsAC(res.data))
@@ -21,17 +21,17 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatus('idle'))
+                dispatch(setAppStatusAC('idle'))
             }
         )
 }
 export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setAppStatus("loading"))
+    dispatch(setAppStatusAC("loading"))
     todolistsApi.createTodolist(title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -40,12 +40,12 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatus('idle'))
+                dispatch(setAppStatusAC('idle'))
             }
         )
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setAppStatus("loading"))
+    dispatch(setAppStatusAC("loading"))
     dispatch(changeTodolistStatusAC(todolistId, "loading"))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
@@ -55,14 +55,14 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatus('idle'))
+                dispatch(setAppStatusAC('idle'))
                 dispatch(changeTodolistStatusAC(todolistId, "idle"))
 
             }
         )
 }
 export const updateTodolistTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setAppStatus("loading"))
+    dispatch(setAppStatusAC("loading"))
     todolistsApi.updateTodolist(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
@@ -75,7 +75,7 @@ export const updateTodolistTC = (todolistId: string, title: string) => (dispatch
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatus('idle'))
+                dispatch(setAppStatusAC('idle'))
             }
         )
 }
