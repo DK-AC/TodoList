@@ -6,8 +6,8 @@ import {appRootState, AppRootStateType, composeEnhancers} from "../bll/store";
 
 export const initialGlobalState: AppRootStateType = {
     todolists: [
-        {id: 'todoListId1', title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: 'idle'},
-        {id: 'todoListId2', title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: 'idle'}
+        {id: 'todoListId1', title: "What to learn", filter: "all", addedDate: '', order: 0, status: 'idle'},
+        {id: 'todoListId2', title: "What to buy", filter: "all", addedDate: '', order: 0, status: 'idle'}
     ],
     tasks: {
         ['todoListId1']: [
@@ -89,7 +89,7 @@ export const initialGlobalState: AppRootStateType = {
     },
     app: {
         error: null,
-        status: 'idle'
+        appStatus: 'idle'
     }
 };
 

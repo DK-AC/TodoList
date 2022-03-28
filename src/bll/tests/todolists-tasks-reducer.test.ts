@@ -14,7 +14,7 @@ test('ids should be equals', () => {
             addedDate: '',
             order: 0,
             filter: 'all',
-            entityStatus: "idle"
+            status: "idle"
         })
     ;
 

@@ -1,6 +1,6 @@
 import {
     ADD_TODOLIST,
-    CHANGE_ENTITY_STATUS,
+    CHANGE_TODOLIST_STATUS,
     CHANGE_TODOLIST_FILTER,
     CHANGE_TODOLIST_TITLE,
     FilterTodolistType,
@@ -23,7 +23,7 @@ export const changeTodolistFilterAC = (todolistId: string, filter: FilterTodolis
 export const setTodolistsAC = (todolists: TodolistType[]) => ({type: SET_TODOLISTS, todolists} as const)
 
 export const changeEntityStatusAC = (todolistId: string, status: StatusType) => (
-    {type: CHANGE_ENTITY_STATUS, todolistId, status} as const
+    {type: CHANGE_TODOLIST_STATUS, todolistId, status} as const
 )
 
 

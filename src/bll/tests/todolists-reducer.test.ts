@@ -20,8 +20,8 @@ beforeEach(() => {
     todolistId2 = v1();
 
     startState = [
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: "idle"},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: "idle"}
+        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
+        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
     ]
 })
 
@@ -40,7 +40,7 @@ test('correct todolist should be added', () => {
             addedDate: '',
             order: 0,
             filter: 'all',
-            entityStatus: "idle"
+            status: "idle"
         }))
 
     expect(endState.length).toBe(3);
@@ -64,8 +64,8 @@ test('correct filter of todolist should be changed', () => {
 
 test('todolist should be set to the state', () => {
     const endState = todolistReducer(startState, setTodolistsAC([
-            {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, entityStatus: "idle"},
-            {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, entityStatus: "idle"}
+            {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
+            {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
         ]
     ))
 
@@ -75,8 +75,8 @@ test('todolist should be set to the state', () => {
 test('status should be changed', () => {
     const endState = todolistReducer(startState, changeEntityStatusAC(todolistId1, 'loading'))
 
-    expect(startState[0].entityStatus).toBe('idle')
-    expect(endState[0].entityStatus).toBe('loading')
+    expect(startState[0].status).toBe('idle')
+    expect(endState[0].status).toBe('loading')
 })
 
 

@@ -21,7 +21,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     const dispatch = useDispatch()
 
-    const isLoading = useAppSelector(state => state.app.status)
+    const isLoading = useAppSelector(state => state.app.appStatus)
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
