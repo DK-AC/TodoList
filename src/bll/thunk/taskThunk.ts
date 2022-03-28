@@ -3,7 +3,8 @@ import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/task
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
 import {ActionsTaskType, ModelTaskType} from "../types/taskTypes";
-import {setAppError, setAppStatus} from "../actions/appActions";
+import {setAppStatus} from "../actions/appActions";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatus("loading"))
@@ -11,8 +12,8 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
         .then(res => {
             dispatch(getTasksAC(todolistId, res.data.items))
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -27,16 +28,11 @@ export const createTaskTC = (todoListId: string, title: string) => (dispatch: Di
                 dispatch(addTaskAC(res.data.data.item))
                 dispatch(setAppStatus('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppError(res.data.messages[0]))
-                } else {
-                    dispatch(setAppError('some error'))
-                }
-                dispatch(setAppStatus('failed'))
+                handleServerAppError(res.data, dispatch)
             }
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -49,8 +45,8 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         .then(res => {
             dispatch(removeTaskAC(todolistId, taskId))
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -79,8 +75,8 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<
             .then(res => {
                 dispatch(updateTaskAC(todolistId, taskId, model))
             })
-            .catch(e => {
-                dispatch(setAppError(e.message))
+            .catch(error => {
+                handleNetworkAppError(error, dispatch)
             })
             .finally(() => {
                     dispatch(setAppStatus('idle'))

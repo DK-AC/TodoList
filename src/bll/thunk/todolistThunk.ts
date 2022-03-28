@@ -8,8 +8,8 @@ import {
     setTodolistsAC
 } from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
-import {setAppError, setAppStatus} from "../actions/appActions";
-import {handleServerAppError} from "../../utils/error-utils/error-utils";
+import {setAppStatus} from "../actions/appActions";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
     dispatch(setAppStatus("loading"))
@@ -17,9 +17,8 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
         .then(res => {
             dispatch(setTodolistsAC(res.data))
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
-            dispatch(setAppStatus('failed'))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -37,9 +36,8 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodol
                 handleServerAppError(res.data, dispatch)
             }
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
-            dispatch(setAppStatus('failed'))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -53,9 +51,8 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
         .then(res => {
             dispatch(removeTodolistAC(todolistId))
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
-            dispatch(setAppStatus('failed'))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
@@ -70,9 +67,8 @@ export const updateTodolistTC = (todolistId: string, title: string) => (dispatch
         .then(res => {
             dispatch(changeTodolistTitleAC(todolistId, title))
         })
-        .catch(e => {
-            dispatch(setAppError(e.message))
-            dispatch(setAppStatus('failed'))
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
                 dispatch(setAppStatus('idle'))
