@@ -89,7 +89,8 @@ export const initialGlobalState: AppRootStateType = {
     },
     app: {
         error: null,
-        appStatus: 'idle'
+        appStatus: 'idle',
+        isInitialized: true
     }
 };
 
