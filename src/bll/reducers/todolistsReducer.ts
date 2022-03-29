@@ -10,8 +10,11 @@ export const slice = createSlice({
     initialState: initialTodolistsState,
     reducers: {
         removeTodolistAC(state, action: PayloadAction<{ todolistId: string }>) {
+            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+            if (index !== -1) state.splice(index, 1)
         },
         addTodolistAC(state, action: PayloadAction<{ todolist: TodolistType }>) {
+            state.unshift(action.payload.todolist)
         },
         changeTodolistTitleAC(state, action: PayloadAction<{ todolistId: string, title: string }>) {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)

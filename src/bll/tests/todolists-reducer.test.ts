@@ -1,11 +1,13 @@
 import {
+    addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistStatusAC,
     changeTodolistTitleAC,
+    removeTodolistAC,
     todolistsReducer
 } from '../reducers/todolistsReducer';
 import {v1} from 'uuid';
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {setTodolistsAC} from "../actions/todolistActions";
 import {TodolistType} from "../types/todolistTypes";
 
 let todolistId1: string;
@@ -24,7 +26,7 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-    const endState = todolistsReducer(startState, removeTodolistAC(todolistId1))
+    const endState = todolistsReducer(startState, removeTodolistAC({todolistId: todolistId1}))
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todolistId2);
@@ -33,12 +35,14 @@ test('correct todolist should be removed', () => {
 test('correct todolist should be added', () => {
     const endState = todolistsReducer(startState,
         addTodolistAC({
-            title: 'New Todolist',
-            id: 'any id',
-            addedDate: '',
-            order: 0,
-            filter: 'all',
-            status: "idle"
+            todolist: {
+                title: 'New Todolist',
+                id: 'any id',
+                addedDate: '',
+                order: 0,
+                filter: 'all',
+                status: "idle"
+            }
         }))
 
     expect(endState.length).toBe(3);
