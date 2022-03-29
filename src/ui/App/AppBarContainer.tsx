@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import AppBar from '@mui/material/AppBar';
 import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
-import {useAppSelector} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {TodolistsList} from "../TodolistList/TodolistsList";
@@ -21,7 +21,7 @@ type PropsType = { demo?: boolean }
 
 export const AppBarContainer = ({demo}: PropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const isLoading = useAppSelector(state => state.app.appStatus)
     const isInitialized = useAppSelector(state => state.auth.isInitialized)

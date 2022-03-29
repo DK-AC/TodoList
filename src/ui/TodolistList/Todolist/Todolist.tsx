@@ -4,8 +4,7 @@ import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
-import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../../bll/store";
 import {changeTodolistFilterAC} from "../../../bll/actions/todolistActions";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {deleteTodolistTC, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
@@ -17,7 +16,7 @@ type PropsType = { todo: TodolistType, demo?: boolean }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     let tasks = useAppSelector<TaskType[]>(state => state.tasks[todo.id])
 

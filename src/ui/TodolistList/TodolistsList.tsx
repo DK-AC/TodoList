@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from "react";
-import {useAppSelector} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {TodolistType} from "../../bll/types/todolistTypes";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -13,7 +13,7 @@ type PropsType = { demo?: boolean }
 
 export const TodolistsList = ({demo}: PropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
 

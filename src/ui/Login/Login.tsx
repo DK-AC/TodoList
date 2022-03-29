@@ -11,14 +11,14 @@ import {useFormik} from "formik";
 import {LoginValuesType} from "../../bll/types/authTypes";
 import {useDispatch} from "react-redux";
 import {logInTC} from "../../bll/thunk/authThunk";
-import {useAppSelector} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
 
 
 export const Login = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)

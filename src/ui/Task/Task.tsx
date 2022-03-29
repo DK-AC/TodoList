@@ -6,12 +6,13 @@ import {useDispatch} from "react-redux";
 import Checkbox from '@mui/material/Checkbox';
 import {deleteTaskTC, updateTaskTC} from "../../bll/thunk/taskThunk";
 import {TaskType} from '../../bll/types/taskTypes';
+import {useAppDispatch} from "../../bll/store";
 
 type TaskPropsType = { todoId: string, filteredTask: TaskType }
 
 export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const removeTaskHandler = () => dispatch(deleteTaskTC(todoId, filteredTask.id))
     const onChangeTaskTitle = (title: string) => dispatch(updateTaskTC(todoId, filteredTask.id, {title}))
