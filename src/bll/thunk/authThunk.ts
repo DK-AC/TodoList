@@ -1,17 +1,17 @@
 import {Dispatch} from "redux";
 import {authApi} from "../../dal/api/authApi";
-import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {LoginValuesType} from "../types/authTypes";
 import {setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
+import {setAppStatusAC} from "../reducers/appReducer";
 
 export const logInTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC("loading"))
+    dispatch(setAppStatusAC({appStatus: "loading"}))
     authApi.logIn(data)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({isLoggedIn: true}))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -20,7 +20,7 @@ export const logInTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatusAC('idle'))
+                dispatch(setAppStatusAC({appStatus: "idle"}))
             }
         )
 }
@@ -37,17 +37,17 @@ export const isAuthTC = () => (dispatch: Dispatch) => {
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatusAC('idle'))
+                dispatch(setAppStatusAC({appStatus: "idle"}))
             }
         )
 }
 export const logOutTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC("loading"))
+    dispatch(setAppStatusAC({appStatus: "loading"}))
     authApi.logOut()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({isLoggedIn: true}))
-                dispatch(setAppStatusAC("succeeded"))
+                dispatch(setIsLoggedInAC({isLoggedIn: false}))
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -56,7 +56,7 @@ export const logOutTC = () => (dispatch: Dispatch) => {
             handleNetworkAppError(error, dispatch)
         })
         .finally(() => {
-                dispatch(setAppStatusAC('idle'))
+                dispatch(setAppStatusAC({appStatus: "idle"}))
             }
         )
 }

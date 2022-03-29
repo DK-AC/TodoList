@@ -6,7 +6,7 @@ import {
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
-import {ActionsAppType, StatusType} from "./appTypes";
+import {StatusType} from "./appTypes";
 
 export const REMOVE_TODOLIST = 'TODOLIST/REMOVE_TODOLIST'
 export const ADD_TODOLIST = 'TODOLIST/ADD_TODOLIST'
@@ -23,8 +23,6 @@ export type ActionsTodolistType =
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof changeTodolistStatusAC>
-    | ActionsAppType
-
 
 export type RepeatTodoType = TodolistResponseType<{ item: TodolistType }>
 export type TodolistType = {
