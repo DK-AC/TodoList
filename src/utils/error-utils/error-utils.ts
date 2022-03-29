@@ -12,6 +12,6 @@ export const handleServerAppError = (data: TodolistResponseType, dispatch: Dispa
 }
 
 export const handleNetworkAppError = (error: any, dispatch: Dispatch) => {
-    dispatch(setAppErrorAC(error.message ? error.message : 'Some error occurred'))
+    dispatch(setAppErrorAC({error: error.message ? error.message : 'Some error occurred'}))
     dispatch(setAppStatusAC({appStatus: 'failed'}))
 }
