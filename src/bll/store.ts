@@ -1,5 +1,5 @@
 import {combineReducers} from "redux";
-import {todolistReducer} from "./reducers/todolistReducer";
+import {todolistsReducer} from "./reducers/todolistsReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {tasksReducer} from "./reducers/tasksReducer";
 import thunk from "redux-thunk";
@@ -8,7 +8,7 @@ import {authReducer} from "./reducers/authReducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 export const appRootState = combineReducers({
-    todolists: todolistReducer,
+    todolists: todolistsReducer,
     tasks: tasksReducer,
     app: appReducer,
     auth: authReducer

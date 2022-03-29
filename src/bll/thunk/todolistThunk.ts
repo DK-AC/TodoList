@@ -3,13 +3,13 @@ import {Dispatch} from "redux";
 import {
     addTodolistAC,
     changeTodolistStatusAC,
-    changeTodolistTitleAC,
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
+import {changeTodolistTitleAC} from "../reducers/todolistsReducer";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -66,7 +66,7 @@ export const updateTodolistTC = (todolistId: string, title: string) => (dispatch
     todolistsApi.updateTodolist(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(changeTodolistTitleAC(todolistId, title))
+                dispatch(changeTodolistTitleAC({todolistId, title}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }

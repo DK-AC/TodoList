@@ -1,6 +1,6 @@
 import {addTodolistAC} from "../actions/todolistActions";
 import {tasksReducer} from "../reducers/tasksReducer";
-import {todolistReducer} from "../reducers/todolistReducer";
+import {todolistsReducer} from "../reducers/todolistsReducer";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
 
@@ -19,7 +19,7 @@ test('ids should be equals', () => {
     ;
 
     const endTasksState = tasksReducer(startTasksState, action)
-    const endTodolistsState = todolistReducer(startTodolistsState, action)
+    const endTodolistsState = todolistsReducer(startTodolistsState, action)
 
     const keys = Object.keys(endTasksState);
     const idFromTasks = keys[0];

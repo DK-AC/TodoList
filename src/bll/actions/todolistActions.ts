@@ -2,7 +2,6 @@ import {
     ADD_TODOLIST,
     CHANGE_TODOLIST_STATUS,
     CHANGE_TODOLIST_FILTER,
-    CHANGE_TODOLIST_TITLE,
     FilterTodolistType,
     REMOVE_TODOLIST,
     SET_TODOLISTS,
@@ -13,9 +12,6 @@ import {StatusType} from "../types/appTypes";
 export const removeTodolistAC = (todolistId: string) => ({type: REMOVE_TODOLIST, todolistId} as const)
 
 export const addTodolistAC = (todolist: TodolistType) => ({type: ADD_TODOLIST, todolist} as const)
-
-export const changeTodolistTitleAC = (todolistId: string, title: string) =>
-    ({type: CHANGE_TODOLIST_TITLE, todolistId, title} as const)
 
 export const changeTodolistFilterAC = (todolistId: string, filter: FilterTodolistType) =>
     ({type: CHANGE_TODOLIST_FILTER, todolistId, filter} as const)
