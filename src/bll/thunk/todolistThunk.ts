@@ -1,16 +1,16 @@
 import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {addTodolistAC, removeTodolistAC} from "../actions/todolistActions";
 import {TodolistType} from "../types/todolistTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
-import {changeTodolistStatusAC, changeTodolistTitleAC} from "../reducers/todolistsReducer";
+import {changeTodolistStatusAC, changeTodolistTitleAC, setTodolistsAC} from "../reducers/todolistsReducer";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
     todolistsApi.getTodolists()
         .then(res => {
-            dispatch(setTodolistsAC(res.data))
+            dispatch(setTodolistsAC({todolists: res.data}))
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)

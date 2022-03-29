@@ -4,10 +4,10 @@ import {
     changeTodolistStatusAC,
     changeTodolistTitleAC,
     removeTodolistAC,
+    setTodolistsAC,
     todolistsReducer
 } from '../reducers/todolistsReducer';
 import {v1} from 'uuid';
-import {setTodolistsAC} from "../actions/todolistActions";
 import {TodolistType} from "../types/todolistTypes";
 
 let todolistId1: string;
@@ -68,10 +68,12 @@ test('correct filter of todolist should be changed', () => {
 });
 
 test('todolist should be set to the state', () => {
-    const endState = todolistsReducer(startState, setTodolistsAC([
-            {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
-            {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
-        ]
+    const endState = todolistsReducer(startState, setTodolistsAC({
+            todolists: [
+                {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
+                {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
+            ]
+        }
     ))
 
     expect(endState.length).toBe(2)
@@ -83,8 +85,5 @@ test('status should be changed', () => {
     expect(startState[0].status).toBe('idle')
     expect(endState[0].status).toBe('loading')
 })
-
-
-
 
 

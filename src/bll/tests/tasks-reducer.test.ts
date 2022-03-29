@@ -1,9 +1,10 @@
 import {tasksReducer} from "../reducers/tasksReducer";
 import {addTaskAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
-import {addTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {addTodolistAC} from "../actions/todolistActions";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
+import { setTodolistsAC } from "../reducers/todolistsReducer";
 
 let startState: TasksStateType = {}
 
@@ -79,11 +80,11 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('empty arrays should be added when we set todolists', () => {
-    const endState = tasksReducer(startState, setTodolistsAC(
+    const endState = tasksReducer(startState, setTodolistsAC({todolists:
         [
             {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0, status: "idle"},
             {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
-        ]
+        ]}
     ))
     const keys = Object.keys(endState)
 

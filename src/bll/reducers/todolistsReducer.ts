@@ -25,6 +25,7 @@ export const slice = createSlice({
             if (index !== -1) state[index].filter = action.payload.filter
         },
         setTodolistsAC(state, action: PayloadAction<{ todolists: TodolistType[] }>) {
+            return action.payload.todolists.map(todo => ({...todo, filter: 'all', status: 'idle'}))
         },
         changeTodolistStatusAC(state, action: PayloadAction<{ todolistId: string, status: StatusType }>) {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
@@ -43,5 +44,4 @@ export const {
     changeTodolistStatusAC,
     addTodolistAC
 } = slice.actions
-
 

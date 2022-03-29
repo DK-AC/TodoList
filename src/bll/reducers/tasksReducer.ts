@@ -1,9 +1,10 @@
-import {ActionsTaskType, ADD_TASK, GET_TASKS, REMOVE_TASK, TasksStateType, UPDATE_TASK} from "../types/taskTypes";
-import {ADD_TODOLIST, REMOVE_TODOLIST, SET_TODOLISTS, TodolistType} from "../types/todolistTypes";
+import {ADD_TASK, GET_TASKS, REMOVE_TASK, TasksStateType, UPDATE_TASK} from "../types/taskTypes";
+import {TodolistType} from "../types/todolistTypes";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolistsReducer";
 
 const initialTasksState: TasksStateType = {}
 
-export const tasksReducer = (state: TasksStateType = initialTasksState, action: ActionsTaskType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialTasksState, action: any): TasksStateType => {
     switch (action.type) {
         case REMOVE_TASK:
             return {...state, [action.todolistId]: state[action.todolistId].filter(task => task.id !== action.taskId)}
@@ -14,15 +15,15 @@ export const tasksReducer = (state: TasksStateType = initialTasksState, action: 
                 ...state, [action.todolistId]: state[action.todolistId]
                     .map(task => task.id === action.taskId ? {...task, ...action.model} : task)
             }
-        case ADD_TODOLIST:
-            return {...state, [action.todolist.id]: []}
-        case REMOVE_TODOLIST:
+        case addTodolistAC.type:
+            return {...state, [action.payload.todolist.id]: []}
+        case removeTodolistAC.type:
             const stateCopy = {...state};
-            delete stateCopy[action.todolistId]
+            delete stateCopy[action.payload.todolistId]
             return stateCopy
-        case SET_TODOLISTS: {
+        case setTodolistsAC.type: {
             const stateCopy = {...state}
-            action.todolists.forEach((tl: TodolistType) => stateCopy[tl.id] = [])
+            action.payload.todolists.forEach((tl: TodolistType) => stateCopy[tl.id] = [])
             return stateCopy;
         }
         case GET_TASKS:
