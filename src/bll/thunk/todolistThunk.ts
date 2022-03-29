@@ -1,15 +1,10 @@
 import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
-import {
-    addTodolistAC,
-    changeTodolistStatusAC,
-    removeTodolistAC,
-    setTodolistsAC
-} from "../actions/todolistActions";
-import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {TodolistType} from "../types/todolistTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
-import {changeTodolistTitleAC} from "../reducers/todolistsReducer";
+import {changeTodolistStatusAC, changeTodolistTitleAC} from "../reducers/todolistsReducer";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -46,7 +41,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
 }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
-    dispatch(changeTodolistStatusAC(todolistId, "loading"))
+    dispatch(changeTodolistStatusAC({todolistId, status: "loading"}))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
             dispatch(removeTodolistAC(todolistId))
@@ -56,7 +51,7 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => 
         })
         .finally(() => {
                 dispatch(setAppStatusAC({appStatus: "idle"}))
-                dispatch(changeTodolistStatusAC(todolistId, "idle"))
+                dispatch(changeTodolistStatusAC({todolistId, status: "idle"}))
 
             }
         )

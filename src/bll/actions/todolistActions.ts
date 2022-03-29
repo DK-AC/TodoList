@@ -1,7 +1,5 @@
 import {
     ADD_TODOLIST,
-    CHANGE_TODOLIST_STATUS,
-    FilterTodolistType,
     REMOVE_TODOLIST,
     SET_TODOLISTS,
     TodolistType
@@ -14,7 +12,4 @@ export const addTodolistAC = (todolist: TodolistType) => ({type: ADD_TODOLIST, t
 
 export const setTodolistsAC = (todolists: TodolistType[]) => ({type: SET_TODOLISTS, todolists} as const)
 
-export const changeTodolistStatusAC = (todolistId: string, status: StatusType) => (
-    {type: CHANGE_TODOLIST_STATUS, todolistId, status} as const
-)
 

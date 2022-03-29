@@ -1,6 +1,11 @@
-import {changeTodolistFilterAC, changeTodolistTitleAC, todolistsReducer} from '../reducers/todolistsReducer';
+import {
+    changeTodolistFilterAC,
+    changeTodolistStatusAC,
+    changeTodolistTitleAC,
+    todolistsReducer
+} from '../reducers/todolistsReducer';
 import {v1} from 'uuid';
-import {addTodolistAC, changeTodolistStatusAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "../actions/todolistActions";
 import {TodolistType} from "../types/todolistTypes";
 
 let todolistId1: string;
@@ -69,7 +74,7 @@ test('todolist should be set to the state', () => {
 })
 
 test('status should be changed', () => {
-    const endState = todolistsReducer(startState, changeTodolistStatusAC(todolistId1, 'loading'))
+    const endState = todolistsReducer(startState, changeTodolistStatusAC({todolistId: todolistId1, status: 'loading'}))
 
     expect(startState[0].status).toBe('idle')
     expect(endState[0].status).toBe('loading')

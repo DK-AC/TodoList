@@ -24,6 +24,8 @@ export const slice = createSlice({
         setTodolistsAC(state, action: PayloadAction<{ todolists: TodolistType[] }>) {
         },
         changeTodolistStatusAC(state, action: PayloadAction<{ todolistId: string, status: StatusType }>) {
+            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+            if (index !== -1) state[index].status = action.payload.status
         },
     }
 })
