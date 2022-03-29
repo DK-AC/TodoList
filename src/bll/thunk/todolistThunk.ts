@@ -1,10 +1,15 @@
 import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
-import {addTodolistAC, removeTodolistAC} from "../actions/todolistActions";
 import {TodolistType} from "../types/todolistTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
-import {changeTodolistStatusAC, changeTodolistTitleAC, setTodolistsAC} from "../reducers/todolistsReducer";
+import {
+    addTodolistAC,
+    changeTodolistStatusAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    setTodolistsAC
+} from "../reducers/todolistsReducer";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -25,7 +30,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
     todolistsApi.createTodolist(title)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(addTodolistAC(res.data.data.item))
+                dispatch(addTodolistAC({todolist: res.data.data.item}))
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
             } else {
                 handleServerAppError(res.data, dispatch)
@@ -44,7 +49,7 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => 
     dispatch(changeTodolistStatusAC({todolistId, status: "loading"}))
     todolistsApi.deleteTodolist(todolistId)
         .then(res => {
-            dispatch(removeTodolistAC(todolistId))
+            dispatch(removeTodolistAC({todolistId}))
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
