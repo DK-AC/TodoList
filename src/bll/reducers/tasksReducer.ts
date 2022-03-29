@@ -25,17 +25,17 @@ export const slice = createSlice({
             state[action.payload.todolistId] = action.payload.tasks
         },
     },
-    extraReducers: {
-        [addTodolistAC.type]: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
+    extraReducers: (builder) => {
+        builder.addCase(addTodolistAC, (state, action) => {
             state[action.payload.todolist.id] = []
-        },
-        [removeTodolistAC.type]: (state, action: PayloadAction<{ todolistId: string }>) => {
+        })
+        builder.addCase(removeTodolistAC, (state, action) => {
             delete state[action.payload.todolistId]
-        },
-        [setTodolistsAC.type]: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
+        })
+        builder.addCase(setTodolistsAC, (state, action) => {
             action.payload.todolists.forEach((tl: TodolistType) => state[tl.id] = [])
-        },
-    }
+        })
+    },
 })
 
 export const tasksReducer = slice.reducer
