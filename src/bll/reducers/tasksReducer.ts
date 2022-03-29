@@ -1,6 +1,7 @@
 import {ModelTaskType, TasksStateType, TaskType} from "../types/taskTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolistsReducer";
 
 const initialTasksState: TasksStateType = {}
 
@@ -13,18 +14,31 @@ export const slice = createSlice({
             if (index !== -1) state[action.payload.todolistId].splice(index, 1)
         },
         addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {
+            state[action.payload.task.todoListId].unshift(action.payload.task)
         },
         updateTaskAC(state, action: PayloadAction<{ todolistId: string, taskId: string, model: Partial<ModelTaskType> }>) {
+            return {
+                ...state, [action.payload.todolistId]: state[action.payload.todolistId]
+                    .map(task => task.id === action.payload.taskId ? {...task, ...action.payload.model} : task)
+            }
         },
         getTasksAC(state, action: PayloadAction<{ todolistId: string, tasks: TaskType[] }>) {
+            return {...state, [action.payload.todolistId]: action.payload.tasks}
         },
     },
     extraReducers: {
-        addTodolistAC(state, action: PayloadAction<{ todolist: TodolistType }>) {
+        [addTodolistAC.type]: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
+            return {...state, [action.payload.todolist.id]: []}
         },
-        removeTodolistAC(state, action: PayloadAction<{ todolistId: string }>) {
+        [removeTodolistAC.type]: (state, action: PayloadAction<{ todolistId: string }>) => {
+            const stateCopy = {...state};
+            delete stateCopy[action.payload.todolistId]
+            return stateCopy
         },
-        setTodolistsAC(state, action: PayloadAction<{ todolists: TodolistType[] }>) {
+        [setTodolistsAC.type]: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
+            const stateCopy = {...state}
+            action.payload.todolists.forEach((tl: TodolistType) => stateCopy[tl.id] = [])
+            return stateCopy;
         },
     }
 })

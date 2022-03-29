@@ -1,16 +1,17 @@
 import {Dispatch} from "redux";
-import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ActionsTaskType, ModelTaskType} from "../types/taskTypes";
+import {ModelTaskType} from "../types/taskTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
+import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../reducers/tasksReducer";
+
 
 export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
     tasksApi.getTasks(todolistId)
         .then(res => {
-            dispatch(getTasksAC(todolistId, res.data.items))
+            dispatch(getTasksAC({todolistId, tasks: res.data.items}))
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
@@ -25,7 +26,7 @@ export const createTaskTC = (todoListId: string, title: string) => (dispatch: Di
     tasksApi.createTask(todoListId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(addTaskAC(res.data.data.item))
+                dispatch(addTaskAC({task: res.data.data.item}))
                 dispatch(setAppStatusAC({appStatus: "idle"}))
             } else {
                 handleServerAppError(res.data, dispatch)
@@ -43,7 +44,7 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
     dispatch(setAppStatusAC({appStatus: "loading"}))
     tasksApi.deleteTask(todolistId, taskId)
         .then(res => {
-            dispatch(removeTaskAC(todolistId, taskId))
+            dispatch(removeTaskAC({todolistId, taskId}))
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
@@ -75,7 +76,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<
         tasksApi.updateTask(todolistId, taskId, apiModel)
             .then(res => {
                 if (res.data.resultCode === 0) {
-                    dispatch(updateTaskAC(todolistId, taskId, model))
+                    dispatch(updateTaskAC({todolistId, taskId, model}))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
