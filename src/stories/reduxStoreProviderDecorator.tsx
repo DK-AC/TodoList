@@ -1,8 +1,9 @@
 import React from "react";
 import {Provider} from "react-redux";
-import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
-import {appRootState, AppRootStateType, composeEnhancers} from "../bll/store";
+import {appRootState, AppRootStateType} from "../bll/store";
+import {BrowserRouter} from "react-router-dom";
+import {configureStore} from "@reduxjs/toolkit";
 
 export const initialGlobalState: AppRootStateType = {
     todolists: [
@@ -97,8 +98,12 @@ export const initialGlobalState: AppRootStateType = {
     }
 };
 
-export const storyBookStore = createStore(appRootState, initialGlobalState, composeEnhancers(applyMiddleware(thunk)));
+export const storyBookStore = configureStore({
+    reducer: appRootState,
+    preloadedState: initialGlobalState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk)
+});
 
 export const ReduxStoreProviderDecorator = (story: any) => {
-    return <Provider store={storyBookStore}>{story()}</Provider>
+    return <Provider store={storyBookStore}><BrowserRouter>{story()}</BrowserRouter></Provider>
 }
