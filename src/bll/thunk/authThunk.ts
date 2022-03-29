@@ -2,15 +2,15 @@ import {Dispatch} from "redux";
 import {authApi} from "../../dal/api/authApi";
 import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
-import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
 import {LoginValuesType} from "../types/authTypes";
+import {setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
 
 export const logInTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
     authApi.logIn(data)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true))
+                dispatch(setIsLoggedInAC({isLoggedIn: true}))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)
@@ -28,10 +28,10 @@ export const isAuthTC = () => (dispatch: Dispatch) => {
     authApi.me()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true))
+                dispatch(setIsLoggedInAC({isLoggedIn: true}))
             } else {
             }
-            dispatch(setIsInitializedAC(true))
+            dispatch(setIsInitializedAC({isInitialized: true}))
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
@@ -46,7 +46,7 @@ export const logOutTC = () => (dispatch: Dispatch) => {
     authApi.logOut()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
+                dispatch(setIsLoggedInAC({isLoggedIn: true}))
                 dispatch(setAppStatusAC("succeeded"))
             } else {
                 handleServerAppError(res.data, dispatch)
