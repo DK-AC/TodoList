@@ -33,7 +33,7 @@ export const slice = createSlice({
             delete state[action.payload.todolistId]
         })
         builder.addCase(setTodolistsAC, (state, action) => {
-            action.payload.todolists.forEach((tl: TodolistType) => state[tl.id] = [])
+            action.payload.todolists.forEach((todo: TodolistType) => state[todo.id] = [])
         })
     },
 })

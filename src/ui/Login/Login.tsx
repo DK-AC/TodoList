@@ -8,8 +8,6 @@ import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import React, {useEffect} from "react"
 import {useFormik} from "formik";
-import {LoginValuesType} from "../../bll/types/authTypes";
-import {useDispatch} from "react-redux";
 import {logInTC} from "../../bll/thunk/authThunk";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
@@ -22,23 +20,6 @@ export const Login = () => {
     const navigate = useNavigate()
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-
-    const validate = (values: LoginValuesType) => {
-        const errors: Partial<LoginValuesType> = {};
-
-        if (!values.email) {
-            errors.email = 'Required';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
-        }
-        if (!values.password) {
-            errors.password = 'Required';
-        } else if (values.password.length <= 8) {
-            errors.password = 'Password must be at least 8 characters';
-        }
-
-        return errors;
-    };
 
     const formik = useFormik({
         initialValues: {
