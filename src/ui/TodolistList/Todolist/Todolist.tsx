@@ -5,12 +5,12 @@ import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
 import {useAppDispatch, useAppSelector} from "../../../bll/store";
-import {changeTodolistFilterAC} from "../../../bll/actions/todolistActions";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {deleteTodolistTC, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
 import {createTaskTC, getTasksTC} from "../../../bll/thunk/taskThunk";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
+import {changeTodolistFilterAC} from "../../../bll/reducers/todolistsReducer";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 
@@ -30,9 +30,9 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))
     const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC(todo.id, title))
     const addTaskHandler = useCallback((title: string) => dispatch(createTaskTC(todo.id, title)), [dispatch, todo.id])
-    const changeTodolistAllFilterHandler = () => dispatch(changeTodolistFilterAC(todo.id, 'all'))
-    const changeTodolistActiveFilterHandler = () => dispatch(changeTodolistFilterAC(todo.id, 'active'))
-    const changeTodolistCompletedFilterHandler = () => dispatch(changeTodolistFilterAC(todo.id, 'completed'))
+    const changeTodolistAllFilterHandler = () => dispatch(changeTodolistFilterAC({todolistId: todo.id,filter: 'all'}))
+    const changeTodolistActiveFilterHandler = () => dispatch(changeTodolistFilterAC({todolistId: todo.id, filter:'active'}))
+    const changeTodolistCompletedFilterHandler = () => dispatch(changeTodolistFilterAC({todolistId: todo.id,filter: 'completed'}))
 
     let tasksForTodolist = tasks
 

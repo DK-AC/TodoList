@@ -18,6 +18,8 @@ export const slice = createSlice({
             if (index !== -1) state[index].title = action.payload.title
         },
         changeTodolistFilterAC(state, action: PayloadAction<{ todolistId: string, filter: FilterTodolistType }>) {
+            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+            if (index !== -1) state[index].filter = action.payload.filter
         },
         setTodolistsAC(state, action: PayloadAction<{ todolists: TodolistType[] }>) {
         },

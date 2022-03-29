@@ -1,7 +1,6 @@
 import {
     addTodolistAC,
     changeTodolistStatusAC,
-    changeTodolistFilterAC,
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
@@ -16,7 +15,6 @@ export const CHANGE_TODOLIST_STATUS = 'TODOLIST/CHANGE_TODOLIST_STATUS'
 
 export type ActionsTodolistType =
     ReturnType<typeof removeTodolistAC>
-    | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof changeTodolistStatusAC>
