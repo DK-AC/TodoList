@@ -2,6 +2,7 @@ import {ModelTaskType, TasksStateType, TaskType} from "../types/taskTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolistsReducer";
+import {fetchTasksTC} from "../thunk/taskThunk";
 
 const initialTasksState: TasksStateType = {}
 
@@ -21,9 +22,6 @@ export const slice = createSlice({
             const index = task.findIndex(task => task.id === action.payload.taskId)
             if (index !== -1) task[index] = {...task[index], ...action.payload.model}
         },
-        getTasksAC(state, action: PayloadAction<{ todolistId: string, tasks: TaskType[] }>) {
-            state[action.payload.todolistId] = action.payload.tasks
-        },
     },
     extraReducers: (builder) => {
         builder.addCase(addTodolistAC, (state, action) => {
@@ -35,10 +33,13 @@ export const slice = createSlice({
         builder.addCase(setTodolistsAC, (state, action) => {
             action.payload.todolists.forEach((todo: TodolistType) => state[todo.id] = [])
         })
+        builder.addCase(fetchTasksTC.fulfilled, (state, action) => {
+            state[action.payload.todolistId] = action.payload.tasks
+        })
     },
 })
 
 export const tasksReducer = slice.reducer
 
-export const {getTasksAC, removeTaskAC, updateTaskAC, addTaskAC} = slice.actions
+export const {removeTaskAC, updateTaskAC, addTaskAC} = slice.actions
 
