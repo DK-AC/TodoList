@@ -3,6 +3,7 @@ import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
 import {addTodolistAC, setTodolistsAC} from "../reducers/todolistsReducer";
+import {fetchTasksTC} from "../thunk/taskThunk";
 
 let startState: TasksStateType = {}
 
@@ -101,6 +102,19 @@ test('empty arrays should be added when we set todolists', () => {
     expect(keys.length).toBe(4)
     expect(endState['1']).toStrictEqual([])
     expect(endState['2']).toStrictEqual([])
+})
+
+test('tasks should be added for todolist', () => {
+
+    const action = fetchTasksTC.fulfilled({
+        todolistId: 'todoListId1',
+        tasks: startState['todoListId1']
+    }, '', 'todoListId1')
+
+    const endState = tasksReducer({'todoListId1': [], 'todoListId2': [],}, action)
+
+    expect(endState['todoListId1'].length).toBe(3)
+    expect(endState['todoListId2'].length).toBe(0)
 })
 
 
