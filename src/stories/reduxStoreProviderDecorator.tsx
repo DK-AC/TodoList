@@ -1,8 +1,8 @@
 import React from "react";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
-import {appRootState, AppRootStateType} from "../bll/store";
-import {BrowserRouter} from "react-router-dom";
+import {AppRootStateType, rootReducer} from "../bll/store";
+import {HashRouter} from "react-router-dom";
 import {configureStore} from "@reduxjs/toolkit";
 
 export const initialGlobalState: AppRootStateType = {
@@ -90,20 +90,24 @@ export const initialGlobalState: AppRootStateType = {
     },
     app: {
         error: null,
-        appStatus: 'idle',
+        appStatus: 'succeeded',
     },
     auth: {
-        isInitialized: false,
-        isLoggedIn: false
+        isInitialized: true,
+        isLoggedIn: true
     }
 };
 
 export const storyBookStore = configureStore({
-    reducer: appRootState,
+    reducer: rootReducer,
     preloadedState: initialGlobalState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk)
 });
 
 export const ReduxStoreProviderDecorator = (story: any) => {
-    return <Provider store={storyBookStore}><BrowserRouter>{story()}</BrowserRouter></Provider>
+    return <Provider store={storyBookStore}>{story()}</Provider>
+}
+
+export const HashRouterDecorator = (story: any) => {
+    return <HashRouter>{story()}</HashRouter>
 }

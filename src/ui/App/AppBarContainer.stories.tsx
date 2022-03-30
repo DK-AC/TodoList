@@ -1,13 +1,13 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {AppBarContainer} from "./AppBarContainer";
-import {ReduxStoreProviderDecorator} from "../../stories/reduxStoreProviderDecorator";
+import {HashRouterDecorator, ReduxStoreProviderDecorator} from "../../stories/reduxStoreProviderDecorator";
 import {App} from "./App";
 
 export default {
     title: 'Todolist/App',
     component: AppBarContainer,
-    decorators: [ReduxStoreProviderDecorator]
+    decorators: [ReduxStoreProviderDecorator, HashRouterDecorator]
 } as ComponentMeta<typeof AppBarContainer>;
 
 

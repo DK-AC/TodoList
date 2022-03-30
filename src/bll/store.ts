@@ -7,7 +7,7 @@ import {appReducer} from "./reducers/appReducer";
 import {authReducer} from "./reducers/authReducer";
 import {configureStore} from "@reduxjs/toolkit";
 
-export const appRootState = combineReducers({
+export const rootReducer = combineReducers({
     todolists: todolistsReducer,
     tasks: tasksReducer,
     app: appReducer,
@@ -15,11 +15,11 @@ export const appRootState = combineReducers({
 })
 
 export const store = configureStore({
-    reducer: appRootState,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk)
 })
 
-export type AppRootStateType = ReturnType<typeof appRootState>
+export type AppRootStateType = ReturnType<typeof rootReducer>
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>()

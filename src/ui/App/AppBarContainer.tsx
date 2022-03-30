@@ -9,10 +9,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {TodolistsList} from "../TodolistList/TodolistsList";
 import {Login} from "../Login/Login";
-import {useDispatch} from "react-redux";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
 import {isAuthTC, logOutTC} from "../../bll/thunk/authThunk";
@@ -29,7 +28,9 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
 
     useEffect(() => {
-        dispatch(isAuthTC())
+        if (!demo) {
+            dispatch(isAuthTC())
+        }
     }, [])
 
     const handleLogOut = useCallback(() => {
