@@ -4,7 +4,7 @@ import {tasksApi} from "../../dal/api/tasks-api";
 import {ModelTaskType} from "../types/taskTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
-import {addTaskAC, updateTaskAC} from "../reducers/tasksReducer";
+import {updateTaskAC} from "../reducers/tasksReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
 export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', (todolistId: string, thunkAPI) => {
@@ -16,25 +16,27 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', (todolistId: 
         })
 })
 
-export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
+export const addTaskTC = createAsyncThunk('tasks/addTaskTC', (payload: { todolistId: string, title: string }, {
+    dispatch,
+    rejectWithValue
+}) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
-    tasksApi.createTask(todoListId, title)
+    return tasksApi.createTask(payload.todolistId, payload.title)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(addTaskAC({task: res.data.data.item}))
-                dispatch(setAppStatusAC({appStatus: "idle"}))
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                return res.data.data.item
             } else {
                 handleServerAppError(res.data, dispatch)
+                return rejectWithValue(null)
             }
         })
-        .catch(error => {
+        .catch((error) => {
             handleNetworkAppError(error, dispatch)
+            return rejectWithValue(null)
         })
-        .finally(() => {
-                dispatch(setAppStatusAC({appStatus: "idle"}))
-            }
-        )
-}
+})
+
 export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', (payload: { todolistId: string, taskId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
     return tasksApi.deleteTask(payload.todolistId, payload.taskId)

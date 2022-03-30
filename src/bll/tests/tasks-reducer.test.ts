@@ -1,4 +1,4 @@
-import {addTaskAC, tasksReducer, updateTaskAC} from "../reducers/tasksReducer";
+import {tasksReducer, updateTaskAC} from "../reducers/tasksReducer";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
@@ -10,11 +10,8 @@ let startState: TasksStateType = {}
 beforeEach(() => startState = initialGlobalState.tasks)
 
 test('correct task should be removed', () => {
-
-    const action = removeTaskTC.fulfilled({
-        todolistId: 'todoListId1',
-        taskId: '2',
-    }, 'requestId', {todolistId: 'todoListId1', taskId: '2'})
+    let param = {todolistId: 'todoListId1', taskId: '2'};
+    const action = removeTaskTC.fulfilled(param, 'requestId', param)
 
     let endState = tasksReducer(startState, action)
 
