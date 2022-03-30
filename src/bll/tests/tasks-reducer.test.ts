@@ -1,16 +1,22 @@
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "../reducers/tasksReducer";
+import {addTaskAC, tasksReducer, updateTaskAC} from "../reducers/tasksReducer";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
 import {addTodolistAC, setTodolistsAC} from "../reducers/todolistsReducer";
-import {fetchTasksTC} from "../thunk/taskThunk";
+import {fetchTasksTC, removeTaskTC} from "../thunk/taskThunk";
 
 let startState: TasksStateType = {}
 
 beforeEach(() => startState = initialGlobalState.tasks)
 
 test('correct task should be removed', () => {
-    let endState = tasksReducer(startState, removeTaskAC({todolistId: 'todoListId1', taskId: '2'}))
+
+    const action = removeTaskTC.fulfilled({
+        todolistId: 'todoListId1',
+        taskId: '2',
+    }, 'requestId', {todolistId: 'todoListId1', taskId: '2'})
+
+    let endState = tasksReducer(startState, action)
 
     expect(startState['todoListId1'].length).toBe(3)
     expect(startState['todoListId1'][1].id).toBe('2')

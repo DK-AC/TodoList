@@ -1,8 +1,8 @@
 import {ModelTaskType, TasksStateType, TaskType} from "../types/taskTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolistsReducer";
-import {fetchTasksTC} from "../thunk/taskThunk";
+import {addTodolistAC, setTodolistsAC} from "./todolistsReducer";
+import {fetchTasksTC, removeTaskTC} from "../thunk/taskThunk";
 
 const initialTasksState: TasksStateType = {}
 
@@ -10,10 +10,7 @@ export const slice = createSlice({
     name: 'tasks',
     initialState: initialTasksState,
     reducers: {
-        removeTaskAC(state, action: PayloadAction<{ todolistId: string, taskId: string }>) {
-            const index = state[action.payload.todolistId].findIndex(task => task.id === action.payload.taskId)
-            if (index !== -1) state[action.payload.todolistId].splice(index, 1)
-        },
+
         addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {
             state[action.payload.task.todoListId].unshift(action.payload.task)
         },
@@ -27,8 +24,9 @@ export const slice = createSlice({
         builder.addCase(addTodolistAC, (state, action) => {
             state[action.payload.todolist.id] = []
         })
-        builder.addCase(removeTodolistAC, (state, action) => {
-            delete state[action.payload.todolistId]
+        builder.addCase(removeTaskTC.fulfilled, (state, action) => {
+            const index = state[action.payload.todolistId].findIndex(task => task.id === action.payload.taskId)
+            if (index !== -1) state[action.payload.todolistId].splice(index, 1)
         })
         builder.addCase(setTodolistsAC, (state, action) => {
             action.payload.todolists.forEach((todo: TodolistType) => state[todo.id] = [])
@@ -41,5 +39,5 @@ export const slice = createSlice({
 
 export const tasksReducer = slice.reducer
 
-export const {removeTaskAC, updateTaskAC, addTaskAC} = slice.actions
+export const {updateTaskAC, addTaskAC} = slice.actions
 

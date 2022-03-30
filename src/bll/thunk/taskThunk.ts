@@ -4,14 +4,14 @@ import {tasksApi} from "../../dal/api/tasks-api";
 import {ModelTaskType} from "../types/taskTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
-import {addTaskAC, removeTaskAC, updateTaskAC} from "../reducers/tasksReducer";
+import {addTaskAC, updateTaskAC} from "../reducers/tasksReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', (todolistId: string, thunkApi) => {
-    thunkApi.dispatch(setAppStatusAC({appStatus: "loading"}))
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', (todolistId: string, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
     return tasksApi.getTasks(todolistId)
         .then(res => {
-            thunkApi.dispatch(setAppStatusAC({appStatus: "succeeded"}))
+            thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
             return {todolistId, tasks: res.data.items}
         })
 })
@@ -35,20 +35,14 @@ export const createTaskTC = (todoListId: string, title: string) => (dispatch: Di
             }
         )
 }
-export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({appStatus: "loading"}))
-    tasksApi.deleteTask(todolistId, taskId)
+export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', (payload: { todolistId: string, taskId: string }, thunkAPI) => {
+    thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
+    return tasksApi.deleteTask(payload.todolistId, payload.taskId)
         .then(res => {
-            dispatch(removeTaskAC({todolistId, taskId}))
+            thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
+            return payload
         })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC({appStatus: "idle"}))
-            }
-        )
-}
+})
 export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) =>
     (dispatch: Dispatch, getState: () => AppRootStateType) => {
         const task = getState().tasks[todolistId].find(task => task.id === taskId)
@@ -84,4 +78,3 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<
                 }
             )
     }
-    
