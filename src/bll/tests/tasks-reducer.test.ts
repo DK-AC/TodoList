@@ -109,7 +109,7 @@ test('tasks should be added for todolist', () => {
     const action = fetchTasksTC.fulfilled({
         todolistId: 'todoListId1',
         tasks: startState['todoListId1']
-    }, '', 'todoListId1')
+    }, 'requestId', 'todoListId1')
 
     const endState = tasksReducer({'todoListId1': [], 'todoListId2': [],}, action)
 
