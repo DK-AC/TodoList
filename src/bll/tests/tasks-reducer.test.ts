@@ -3,7 +3,7 @@ import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
 import {addTodolistAC, setTodolistsAC} from "../reducers/todolistsReducer";
-import {fetchTasksTC, removeTaskTC} from "../thunk/taskThunk";
+import {addTaskTC, fetchTasksTC, removeTaskTC} from "../thunk/taskThunk";
 
 let startState: TasksStateType = {}
 
@@ -25,26 +25,28 @@ test('correct task should be removed', () => {
 })
 
 test('add task with the correct title', () => {
-    let endState = tasksReducer(startState, addTaskAC({
-        task: {
-            id: '2',
-            title: '2',
-            status: 0,
-            todoListId: 'todoListId2',
-            addedDate: '',
-            deadline: '',
-            description: '',
-            order: 0,
-            priority: 1,
-            startDate: ''
-        }
+
+    let task = {
+        id: '2',
+        title: '2',
+        status: 0,
+        todoListId: 'todoListId2',
+        addedDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: 1,
+        startDate: ''
+    }
+
+    let endState = tasksReducer(startState, addTaskTC.fulfilled({...task}, 'requestId', {
+        todolistId: 'todoListId2', title: '2'
     }))
 
     expect(startState['todoListId2']).toEqual(initialGlobalState.tasks.todoListId2)
     expect(startState['todoListId2'][0].title).toBe('Rest Api')
     expect(endState['todoListId2'][0].title).toBe('2')
     expect(endState["todoListId2"][0].id).toBeDefined();
-
 })
 
 test('status of specified task should be changed', () => {
