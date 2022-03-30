@@ -7,7 +7,7 @@ import {Task} from "../../Task/Task";
 import {useAppDispatch, useAppSelector} from "../../../bll/store";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {deleteTodolistTC, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
-import {createTaskTC, getTasksTC} from "../../../bll/thunk/taskThunk";
+import {createTaskTC, fetchTasksTC} from "../../../bll/thunk/taskThunk";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
 import {changeTodolistFilterAC} from "../../../bll/reducers/todolistsReducer";
@@ -24,7 +24,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         if (demo) {
             return
         }
-        dispatch(getTasksTC(todo.id))
+        dispatch(fetchTasksTC(todo.id))
     }, [])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))
