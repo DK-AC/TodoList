@@ -42,24 +42,23 @@ export const isAuthTC = createAsyncThunk('auth/isAuthTC',
         }
     })
 
-export const logOutTC = () => createAsyncThunk('auth/logOutTC', async (isLoggedIn, {
-    dispatch,
-    rejectWithValue
-}) => {
-    dispatch(setAppStatusAC({appStatus: "loading"}))
-    try {
-        const res = await authApi.logOut()
-        if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            return {isLoggedIn: false}
-        } else {
-            handleServerAppError(res.data, dispatch)
+export const logOutTC = createAsyncThunk('auth/logOutTC',
+    async (isLoggedIn, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({appStatus: "loading"}))
+        try {
+            const res = await authApi.logOut()
+            if (res.data.resultCode === 0) {
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                return {isLoggedIn: false}
+            } else {
+                handleServerAppError(res.data, dispatch)
+                return rejectWithValue(null)
+            }
+        } catch (err) {
+            handleNetworkAppError(err, dispatch)
             return rejectWithValue(null)
         }
-    } catch (err) {
-        handleNetworkAppError(err, dispatch)
-    }
-})
+    })
 
 
 
