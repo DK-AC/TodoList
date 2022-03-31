@@ -78,7 +78,6 @@ export const Login = () => {
                                    margin="normal"
                                    {...formik.getFieldProps('password')}
                         />
-                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <FormControlLabel
                             label={'remember me'}
                             control={<Checkbox/>}

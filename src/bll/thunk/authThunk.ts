@@ -13,7 +13,6 @@ export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType, {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logIn(payload)
-            console.log(res)
             if (res.data.resultCode === 0) {
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return {isLoggedIn: true}
@@ -25,26 +24,44 @@ export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType, {
             const error: AxiosError = err
             handleNetworkAppError(error, dispatch)
             return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
-
         }
     })
-export const isAuthTC = () => (dispatch: Dispatch) => {
-    authApi.me()
-        .then(res => {
+export const isAuthTC = createAsyncThunk('auth/isAuthTC',
+    async (boolean, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({appStatus: "loading"}))
+        try {
+            const res = await authApi.me()
             if (res.data.resultCode === 0) {
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 dispatch(setIsLoggedInAC({isLoggedIn: true}))
-            } else {
+                return dispatch(setIsInitializedAC({isInitialized: true}))
             }
-            dispatch(setIsInitializedAC({isInitialized: true}))
-        })
-        .catch(error => {
+        } catch (err: any) {
+            const error: AxiosError = err
             handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC({appStatus: "idle"}))
-            }
-        )
-}
+            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+        }
+    })
+
+// export const isAuthTC = createAsyncThunk('auth/isAuthTC',
+//     async (isInitialized: boolean, {dispatch, rejectWithValue}) => {
+//         try {
+//             const res = await authApi.me()
+//             if (res.data.resultCode === 0) {
+//                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
+//                 dispatch(setIsLoggedInAC({isLoggedIn:true }))
+//                 return {isInitialized: true}
+//             } else {
+//                 handleServerAppError(res.data, dispatch)
+//                 return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+//             }
+//         } catch (err: any) {
+//             const error: AxiosError = err
+//             handleNetworkAppError(error, dispatch)
+//             return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+//         }
+//     })
+
 export const logOutTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
     authApi.logOut()
