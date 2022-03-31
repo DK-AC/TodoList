@@ -6,23 +6,24 @@ import {setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const logInTC = createAsyncThunk('auth/logInTC', async (data: LoginValuesType, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({appStatus: "loading"}))
-    try {
-        const res = await authApi.logIn(data)
-        if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            dispatch(setIsLoggedInAC({isLoggedIn: true}))
-        } else {
-            handleServerAppError(res.data, dispatch)
+export const logInTC = createAsyncThunk('auth/logInTC',
+    async (payload: LoginValuesType, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({appStatus: "loading"}))
+        try {
+            const res = await authApi.logIn(payload)
+            if (res.data.resultCode === 0) {
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                return {isLoggedIn: true}
+            } else {
+                handleServerAppError(res.data, dispatch)
+                return rejectWithValue(null)
+            }
+        } catch (error) {
+            handleNetworkAppError(error, dispatch)
             return rejectWithValue(null)
-        }
-    } catch (error) {
-        handleNetworkAppError(error, dispatch)
-        return rejectWithValue(null)
 
-    }
-})
+        }
+    })
 export const isAuthTC = () => (dispatch: Dispatch) => {
     authApi.me()
         .then(res => {
