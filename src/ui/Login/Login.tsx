@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import React, {useEffect} from "react"
 import {FormikHelpers, useFormik} from "formik";
-import {logInTC} from "../../bll/thunk/authThunk";
+import {login} from "../../bll/thunk/authThunk";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
@@ -36,9 +36,9 @@ export const Login = () => {
                 .required('Required'),
         }),
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            const action = await dispatch(logInTC(values))
+            const action = await dispatch(login(values))
 
-            if (logInTC.rejected.match(action)) {
+            if (login.rejected.match(action)) {
                 if (action.payload?.fieldsErrors?.length) {
                     const error = action.payload.fieldsErrors[0]
                     formikHelpers.setFieldError(error.field, error.error)

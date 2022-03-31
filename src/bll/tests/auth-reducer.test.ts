@@ -1,4 +1,5 @@
-import {authReducer, initialAuthState, setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
+import {authReducer, initialAuthState, setIsLoggedInAC} from "../reducers/authReducer";
+import {isAuth} from "../thunk/authThunk";
 
 let startState = initialAuthState
 
@@ -17,7 +18,9 @@ test('user should be logged in', () => {
 })
 
 test('status  should be changed', () => {
-    let endState = authReducer(startState, setIsInitializedAC({isInitialized: true}))
+    const action = isAuth.fulfilled(undefined, 'requestId')
+
+    let endState = authReducer(startState, action)
 
     expect(startState.isInitialized).toBeFalsy()
     expect(endState.isInitialized).toBeTruthy()

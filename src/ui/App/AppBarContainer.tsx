@@ -14,7 +14,7 @@ import {TodolistsList} from "../TodolistList/TodolistsList";
 import {Login} from "../Login/Login";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
-import {isAuthTC, logOutTC} from "../../bll/thunk/authThunk";
+import {isAuth, logout} from "../../bll/thunk/authThunk";
 import {selectors} from "../../bll/selectors";
 
 type PropsType = { demo?: boolean }
@@ -30,12 +30,12 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     useEffect(() => {
         if (!demo) {
-            dispatch(isAuthTC())
+            dispatch(isAuth())
         }
     }, [])
 
     const handleLogOut = useCallback(() => {
-        dispatch(logOutTC())
+        dispatch(logout())
     }, [isInitialized])
 
     if (!isInitialized) {

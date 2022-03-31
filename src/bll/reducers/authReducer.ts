@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {logInTC, logOutTC} from "../thunk/authThunk";
+import {isAuth, login, logout} from "../thunk/authThunk";
 
 export const initialAuthState = {
     isInitialized: false,
@@ -10,24 +10,24 @@ export const slice = createSlice({
     name: 'auth',
     initialState: initialAuthState,
     reducers: {
-        setIsInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
-            state.isInitialized = action.payload.isInitialized
-        },
         setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(logInTC.fulfilled, (state) => {
+        builder.addCase(login.fulfilled, (state) => {
             state.isLoggedIn = true
         })
-        builder.addCase(logOutTC.fulfilled, (state) => {
+        builder.addCase(logout.fulfilled, (state) => {
             state.isLoggedIn = false
+        })
+        builder.addCase(isAuth.fulfilled, (state) => {
+            state.isInitialized = true
         })
     }
 })
 
 export const authReducer = slice.reducer
 
-export const {setIsLoggedInAC, setIsInitializedAC} = slice.actions
+export const {setIsLoggedInAC} = slice.actions
 

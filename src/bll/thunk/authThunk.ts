@@ -1,13 +1,13 @@
 import {authApi} from "../../dal/api/authApi";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {LoginValuesType} from "../types/authTypes";
-import {setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
+import {setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import {FieldErrorType} from "../types/taskTypes";
 
-export const logInTC = createAsyncThunk<undefined, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/logInTC',
+export const login = createAsyncThunk<undefined, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/login',
     async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
@@ -25,15 +25,15 @@ export const logInTC = createAsyncThunk<undefined, LoginValuesType, { rejectValu
             return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
         }
     })
-export const isAuthTC = createAsyncThunk('auth/isAuthTC',
-    async (boolean, {dispatch, rejectWithValue}) => {
+export const isAuth = createAsyncThunk('auth/isAuth',
+    async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.me()
             if (res.data.resultCode === 0) {
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 dispatch(setIsLoggedInAC({isLoggedIn: true}))
-                return dispatch(setIsInitializedAC({isInitialized: true}))
+                return
             }
         } catch (err: any) {
             const error: AxiosError = err
@@ -42,7 +42,7 @@ export const isAuthTC = createAsyncThunk('auth/isAuthTC',
         }
     })
 
-export const logOutTC = createAsyncThunk('auth/logOutTC',
+export const logout = createAsyncThunk('auth/logout',
     async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
