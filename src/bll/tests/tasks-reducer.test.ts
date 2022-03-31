@@ -1,9 +1,9 @@
-import {tasksReducer, updateTaskAC} from "../reducers/tasksReducer";
+import {tasksReducer} from "../reducers/tasksReducer";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
 import {addTodolistAC, setTodolistsAC} from "../reducers/todolistsReducer";
-import {addTask, fetchTasks, removeTask} from "../thunk/taskThunk";
+import {addTask, fetchTasks, removeTask, updateTask} from "../thunk/taskThunk";
 
 let startState: TasksStateType = {}
 
@@ -50,22 +50,26 @@ test('add task with the correct title', () => {
 })
 
 test('status of specified task should be changed', () => {
-    const endState = tasksReducer(startState, updateTaskAC({
-        todolistId: "todoListId2",
-        taskId: "2",
-        model: {status: 1}
-    }))
+
+    const action = updateTask.fulfilled(
+        {todolistId: "todoListId2", taskId: "2", model: {status: 1}},
+        'request id', {todolistId: "todoListId2", taskId: "2", model: {status: 1}}
+    )
+
+    const endState = tasksReducer(startState, action)
 
     expect(startState['todoListId2'][1].status).toBe(0);
     expect(endState['todoListId2'][1].status).toBe(1);
 });
 
 test('title of specified task should be changed', () => {
-    const endState = tasksReducer(startState, updateTaskAC({
-        todolistId: "todoListId1",
-        taskId: "1",
-        model: {title: 'New Title'}
-    }))
+
+    const action = updateTask.fulfilled(
+        {todolistId: "todoListId1", taskId: "1", model: {title: 'New Title'}},
+        'request id', {todolistId: "todoListId1", taskId: "1", model: {title: 'New Title'}}
+    )
+
+    const endState = tasksReducer(startState, action)
 
     expect(startState['todoListId1'][0].title).toBe('HTML');
     expect(endState['todoListId1'][0].title).toBe('New Title');
