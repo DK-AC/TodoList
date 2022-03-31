@@ -7,14 +7,14 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import {FieldErrorType} from "../types/taskTypes";
 
-export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/logInTC',
+export const logInTC = createAsyncThunk<undefined, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/logInTC',
     async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logIn(payload)
             if (res.data.resultCode === 0) {
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
-                return {isLoggedIn: true}
+                return
             } else {
                 handleServerAppError(res.data, dispatch)
                 return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
@@ -43,13 +43,13 @@ export const isAuthTC = createAsyncThunk('auth/isAuthTC',
     })
 
 export const logOutTC = createAsyncThunk('auth/logOutTC',
-    async (isLoggedIn, {dispatch, rejectWithValue}) => {
+    async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logOut()
             if (res.data.resultCode === 0) {
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
-                return {isLoggedIn: false}
+                return
             } else {
                 handleServerAppError(res.data, dispatch)
                 return rejectWithValue(null)
