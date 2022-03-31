@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {authApi} from "../../dal/api/authApi";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {LoginValuesType} from "../types/authTypes";
@@ -43,41 +42,24 @@ export const isAuthTC = createAsyncThunk('auth/isAuthTC',
         }
     })
 
-// export const isAuthTC = createAsyncThunk('auth/isAuthTC',
-//     async (isInitialized: boolean, {dispatch, rejectWithValue}) => {
-//         try {
-//             const res = await authApi.me()
-//             if (res.data.resultCode === 0) {
-//                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
-//                 dispatch(setIsLoggedInAC({isLoggedIn:true }))
-//                 return {isInitialized: true}
-//             } else {
-//                 handleServerAppError(res.data, dispatch)
-//                 return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
-//             }
-//         } catch (err: any) {
-//             const error: AxiosError = err
-//             handleNetworkAppError(error, dispatch)
-//             return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
-//         }
-//     })
-
-export const logOutTC = () => (dispatch: Dispatch) => {
+export const logOutTC = () => createAsyncThunk('auth/logOutTC', async (isLoggedIn, {
+    dispatch,
+    rejectWithValue
+}) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
-    authApi.logOut()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({isLoggedIn: false}))
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC({appStatus: "idle"}))
-            }
-        )
-}
+    try {
+        const res = await authApi.logOut()
+        if (res.data.resultCode === 0) {
+            dispatch(setAppStatusAC({appStatus: "succeeded"}))
+            return {isLoggedIn: false}
+        } else {
+            handleServerAppError(res.data, dispatch)
+            return rejectWithValue(null)
+        }
+    } catch (err) {
+        handleNetworkAppError(err, dispatch)
+    }
+})
+
+
+
