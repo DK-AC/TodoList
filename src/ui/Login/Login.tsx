@@ -12,6 +12,7 @@ import {logInTC} from "../../bll/thunk/authThunk";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
+import {selectIsLoggedIn} from "../../bll/selectors/selectors";
 
 type FormValuesType = { email: string, password: string, rememberMe: boolean }
 
@@ -20,7 +21,7 @@ export const Login = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
     const formik = useFormik({
         initialValues: {

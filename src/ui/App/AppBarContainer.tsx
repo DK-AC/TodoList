@@ -15,6 +15,7 @@ import {Login} from "../Login/Login";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
 import {isAuthTC, logOutTC} from "../../bll/thunk/authThunk";
+import {selectIsInitialized, selectIsLoggedIn, selectStatus} from "../../bll/selectors/selectors";
 
 type PropsType = { demo?: boolean }
 
@@ -22,9 +23,9 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     const dispatch = useAppDispatch()
 
-    const isLoading = useAppSelector(state => state.app.appStatus)
-    const isInitialized = useAppSelector(state => state.auth.isInitialized)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const status = useAppSelector(selectStatus)
+    const isInitialized = useAppSelector(selectIsInitialized)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
 
     useEffect(() => {
@@ -55,7 +56,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
                     {isLoggedIn && <Button color="inherit" onClick={handleLogOut}>Log Out</Button>}
                 </Toolbar>
             </AppBar>
-            {isLoading === 'loading' && <LinearProgress/>}
+            {status === 'loading' && <LinearProgress/>}
             <Container fixed>
                 <Routes>
                     <Route path='/' element={<TodolistsList demo={demo}/>}/>
