@@ -7,12 +7,13 @@ import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import React, {useEffect} from "react"
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {logInTC} from "../../bll/thunk/authThunk";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
 
+type FormValuesType = { email: string, password: string, rememberMe: boolean }
 
 export const Login = () => {
 
@@ -33,9 +34,10 @@ export const Login = () => {
                 .min(8, 'Password must be at least 8 characters')
                 .required('Required'),
         }),
-        onSubmit: values => {
-            dispatch(logInTC(values))
-        },
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const res = await dispatch(logInTC(values))
+            formikHelpers.setFieldError('email', 'error')
+        }
     });
 
     useEffect(() => {
@@ -64,11 +66,13 @@ export const Login = () => {
                                    margin="normal"
                                    {...formik.getFieldProps('email')}
                         />
+                        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                         <TextField type="password"
                                    label="password"
                                    margin="normal"
                                    {...formik.getFieldProps('password')}
                         />
+                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <FormControlLabel
                             label={'remember me'}
                             control={<Checkbox/>}
