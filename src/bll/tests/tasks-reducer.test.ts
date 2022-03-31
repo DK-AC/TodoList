@@ -3,7 +3,7 @@ import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
 import {addTodolistAC, setTodolistsAC} from "../reducers/todolistsReducer";
-import {addTaskTC, fetchTasksTC, removeTaskTC} from "../thunk/taskThunk";
+import {addTask, fetchTasks, removeTask} from "../thunk/taskThunk";
 
 let startState: TasksStateType = {}
 
@@ -11,7 +11,7 @@ beforeEach(() => startState = initialGlobalState.tasks)
 
 test('correct task should be removed', () => {
     let param = {todolistId: 'todoListId1', taskId: '2'};
-    const action = removeTaskTC.fulfilled(param, 'requestId', param)
+    const action = removeTask.fulfilled(param, 'requestId', param)
 
     let endState = tasksReducer(startState, action)
 
@@ -39,7 +39,7 @@ test('add task with the correct title', () => {
         startDate: ''
     }
 
-    let endState = tasksReducer(startState, addTaskTC.fulfilled({...task}, 'requestId', {
+    let endState = tasksReducer(startState, addTask.fulfilled({...task}, 'requestId', {
         todolistId: 'todoListId2', title: '2'
     }))
 
@@ -111,7 +111,7 @@ test('empty arrays should be added when we set todolists', () => {
 
 test('tasks should be added for todolist', () => {
 
-    const action = fetchTasksTC.fulfilled({
+    const action = fetchTasks.fulfilled({
         todolistId: 'todoListId1',
         tasks: startState['todoListId1']
     }, 'requestId', 'todoListId1')
