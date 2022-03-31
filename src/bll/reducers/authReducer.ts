@@ -22,7 +22,6 @@ export const slice = createSlice({
             state.isLoggedIn = action.payload.isLoggedIn
         })
     }
-
 })
 
 export const authReducer = slice.reducer

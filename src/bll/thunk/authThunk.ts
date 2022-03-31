@@ -6,8 +6,9 @@ import {setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
+import {FieldErrorType} from "../types/taskTypes";
 
-export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType>('auth/logInTC',
+export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/logInTC',
     async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
@@ -18,12 +19,12 @@ export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType>('
                 return {isLoggedIn: true}
             } else {
                 handleServerAppError(res.data, dispatch)
-                return rejectWithValue({errors: res.data.messages, fieldsError: res.data.fieldsErrors})
+                return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
             }
         } catch (err: any) {
             const error: AxiosError = err
             handleNetworkAppError(error, dispatch)
-            return rejectWithValue({errors: [error.message], fieldsError: undefined})
+            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
 
         }
     })

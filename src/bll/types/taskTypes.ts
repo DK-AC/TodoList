@@ -24,10 +24,11 @@ export type ModelTaskType = {
     startDate: string
     deadline: string
 }
+export type FieldErrorType = { error: string, field: string };
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: string[]
-    fieldsErrors: [error: string, fieldError: string]
+    fieldsErrors: FieldErrorType[]
     data: D
 }
 

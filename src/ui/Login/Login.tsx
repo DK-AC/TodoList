@@ -35,8 +35,14 @@ export const Login = () => {
                 .required('Required'),
         }),
         onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
-            const res = await dispatch(logInTC(values))
-            formikHelpers.setFieldError('email', 'error')
+            const action = await dispatch(logInTC(values))
+
+            if (logInTC.rejected.match(action)) {
+                if (action.payload?.fieldsErrors?.length) {
+                    const error = action.payload.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            }
         }
     });
 
