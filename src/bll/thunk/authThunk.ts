@@ -5,22 +5,25 @@ import {LoginValuesType} from "../types/authTypes";
 import {setIsInitializedAC, setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
 
 export const logInTC = createAsyncThunk('auth/logInTC',
     async (payload: LoginValuesType, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logIn(payload)
+            console.log(res)
             if (res.data.resultCode === 0) {
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return {isLoggedIn: true}
             } else {
                 handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                return rejectWithValue({errors: res.data.messages, fieldsError: res.data.fieldsErrors})
             }
-        } catch (error) {
+        } catch (err: any) {
+            const error: AxiosError = err
             handleNetworkAppError(error, dispatch)
-            return rejectWithValue(null)
+            return rejectWithValue({errors: [error.message], fieldsError: undefined})
 
         }
     })

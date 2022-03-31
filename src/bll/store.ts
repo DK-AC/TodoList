@@ -21,8 +21,8 @@ export const store = configureStore({
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
-export type AppDispatch = typeof store.dispatch
-export const useAppDispatch = () => useDispatch<AppDispatch>()
+export type AppDispatchType = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatchType>()
 
 
 // @ts-ignore

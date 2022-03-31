@@ -1,6 +1,7 @@
 import {StatusType} from "./appTypes";
+import {ResponseType} from "./taskTypes";
 
-export type RepeatTodoType = TodolistResponseType<{ item: TodolistType }>
+export type RepeatTodoType = ResponseType<{ item: TodolistType }>
 export type TodolistType = {
     id: string
     title: string
@@ -11,9 +12,3 @@ export type TodolistType = {
     status: StatusType
 }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
-export type TodolistResponseType<T = {}> = {
-    data: T
-    fieldsErrors: string[]
-    messages: string[]
-    resultCode: number
-}

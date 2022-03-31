@@ -1,8 +1,8 @@
-import {TodolistResponseType} from "../../bll/types/todolistTypes";
 import {Dispatch} from "redux";
 import {setAppErrorAC, setAppStatusAC} from "../../bll/reducers/appReducer";
+import {ResponseType} from "../../bll/types/taskTypes";
 
-export const handleServerAppError = (data: TodolistResponseType, dispatch: Dispatch) => {
+export const handleServerAppError = (data: ResponseType, dispatch: Dispatch) => {
     if (data.messages.length) {
         dispatch(setAppErrorAC({error: data.messages[0]}))
     } else {

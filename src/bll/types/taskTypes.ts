@@ -1,4 +1,3 @@
-
 export type TaskType = {
     addedDate: string
     deadline: string
@@ -28,7 +27,7 @@ export type ModelTaskType = {
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: string[]
-    fieldsErrors: string[]
+    fieldsErrors: [error: string, fieldError: string]
     data: D
 }
 
