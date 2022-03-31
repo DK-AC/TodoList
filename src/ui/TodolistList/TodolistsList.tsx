@@ -6,7 +6,7 @@ import {Todolist} from "./Todolist/Todolist";
 import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
-import {selectIsLoggedIn, selectTodolists} from "../../bll/selectors/selectors";
+import {selectors} from "../../bll/selectors";
 
 type PropsType = { demo?: boolean }
 
@@ -15,8 +15,8 @@ export const TodolistsList = ({demo}: PropsType) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const todolists = useAppSelector(selectTodolists)
-    const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    const todolists = useAppSelector(selectors.selectTodolists)
+    const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))

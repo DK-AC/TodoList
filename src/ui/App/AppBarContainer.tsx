@@ -15,7 +15,7 @@ import {Login} from "../Login/Login";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
 import {isAuthTC, logOutTC} from "../../bll/thunk/authThunk";
-import {selectIsInitialized, selectIsLoggedIn, selectStatus} from "../../bll/selectors/selectors";
+import {selectors} from "../../bll/selectors";
 
 type PropsType = { demo?: boolean }
 
@@ -23,9 +23,9 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     const dispatch = useAppDispatch()
 
-    const status = useAppSelector(selectStatus)
-    const isInitialized = useAppSelector(selectIsInitialized)
-    const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    const status = useAppSelector(selectors.selectStatus)
+    const isInitialized = useAppSelector(selectors.selectIsInitialized)
+    const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
 
 
     useEffect(() => {
