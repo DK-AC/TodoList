@@ -7,8 +7,8 @@ import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 
-export const logInTC = createAsyncThunk('auth/logInTC',
-    async (payload: LoginValuesType, {dispatch, rejectWithValue}) => {
+export const logInTC = createAsyncThunk<{ isLoggedIn: true }, LoginValuesType>('auth/logInTC',
+    async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logIn(payload)
