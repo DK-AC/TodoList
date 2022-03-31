@@ -40,6 +40,7 @@ export const TodolistsList = ({demo}: PropsType) => {
             </Grid>
             <Grid container spacing={3}>
                 {todolists.map(tl => {
+                    console.log(tl)
                     return (
                         <Grid key={tl.id} style={{padding: '20px'}}>
                             <Paper style={{padding: '10px'}}>

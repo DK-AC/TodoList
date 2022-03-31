@@ -4,12 +4,12 @@ import {TodolistType} from "../types/todolistTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {
-    addTodolistAC,
     changeTodolistStatusAC,
     changeTodolistTitleAC,
     removeTodolistAC,
     setTodolistsAC
 } from "../reducers/todolistsReducer";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 
 export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -25,26 +25,30 @@ export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch
             }
         )
 }
-export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
+export const addTodolistTC = createAsyncThunk('todolist/addTodolist', async (title: string, {
+    dispatch,
+    rejectWithValue
+}) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
-    todolistsApi.createTodolist(title)
-        .then(res => {
-            debugger
-            if (res.data.resultCode === 0) {
-                dispatch(addTodolistAC({todolist: res.data.data.item}))
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC({appStatus: "idle"}))
-            }
-        )
-}
+    const res = await todolistsApi.createTodolist(title)
+    if (res.data.resultCode === 0) {
+        dispatch(setAppStatusAC({appStatus: "succeeded"}))
+        return {todolist: res.data.data.item}
+    } else {
+        handleServerAppError(res.data, dispatch)
+        return rejectWithValue(null)
+    }
+})
+
+
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC({appStatus: "idle"}))
+//             }
+//         )
+// }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
     dispatch(changeTodolistStatusAC({todolistId, status: "loading"}))
