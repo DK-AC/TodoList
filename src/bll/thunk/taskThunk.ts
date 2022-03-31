@@ -7,13 +7,11 @@ import {setAppStatusAC} from "../reducers/appReducer";
 import {updateTaskAC} from "../reducers/tasksReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', (todolistId: string, thunkAPI) => {
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
-    return tasksApi.getTasks(todolistId)
-        .then(res => {
-            thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            return {todolistId, tasks: res.data.items}
-        })
+    const res = await tasksApi.getTasks(todolistId)
+    thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
+    return {todolistId, tasks: res.data.items}
 })
 
 export const addTaskTC = createAsyncThunk('tasks/addTaskTC', (payload: { todolistId: string, title: string }, {
@@ -37,14 +35,13 @@ export const addTaskTC = createAsyncThunk('tasks/addTaskTC', (payload: { todolis
         })
 })
 
-export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', (payload: { todolistId: string, taskId: string }, thunkAPI) => {
+export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', async (payload: { todolistId: string, taskId: string }, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
-    return tasksApi.deleteTask(payload.todolistId, payload.taskId)
-        .then(res => {
-            thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            return payload
-        })
+    await tasksApi.deleteTask(payload.todolistId, payload.taskId)
+    thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
+    return payload
 })
+
 export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) =>
     (dispatch: Dispatch, getState: () => AppRootStateType) => {
         const task = getState().tasks[todolistId].find(task => task.id === taskId)

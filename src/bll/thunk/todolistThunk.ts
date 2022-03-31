@@ -29,6 +29,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
     todolistsApi.createTodolist(title)
         .then(res => {
+            debugger
             if (res.data.resultCode === 0) {
                 dispatch(addTodolistAC({todolist: res.data.data.item}))
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
