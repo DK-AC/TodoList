@@ -1,7 +1,7 @@
 import {FilterTodolistType, TodolistType} from "../types/todolistTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../types/appTypes";
-import {addTodolistTC, fetchTodolists} from "../thunk/todolistThunk";
+import {addTodolistTC, fetchTodolists, removeTodolist} from "../thunk/todolistThunk";
 
 export const initialTodolistsState: TodolistType[] = []
 
@@ -9,10 +9,6 @@ export const slice = createSlice({
     name: 'todolists',
     initialState: initialTodolistsState,
     reducers: {
-        removeTodolistAC(state, action: PayloadAction<{ todolistId: string }>) {
-            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index !== -1) state.splice(index, 1)
-        },
         addTodolistAC(state, action: PayloadAction<{ todolist: TodolistType }>) {
             state.unshift(action.payload.todolist)
         },
@@ -36,13 +32,16 @@ export const slice = createSlice({
         builder.addCase(fetchTodolists.fulfilled, (state, action) => {
             return action.payload.todolists.map(todo => ({...todo, filter: 'all', status: 'idle'}))
         })
+        builder.addCase(removeTodolist.fulfilled, (state, action) => {
+            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+            if (index !== -1) state.splice(index, 1)
+        })
     }
 })
 
 export const todolistsReducer = slice.reducer
 
 export const {
-    removeTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     changeTodolistStatusAC,
