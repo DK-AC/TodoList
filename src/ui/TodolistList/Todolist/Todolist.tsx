@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
 import {useAppDispatch, useAppSelector} from "../../../bll/store";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
-import {removeTodolist, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
+import {removeTodolist, updateTodolistTitle} from "../../../bll/thunk/todolistThunk";
 import {addTask, fetchTasks} from "../../../bll/thunk/taskThunk";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
@@ -28,7 +28,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     }, [])
 
     const removeTodolistHandler = () => dispatch(removeTodolist(todo.id))
-    const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC(todo.id, title))
+    const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTitle({todolistId: todo.id, title}))
     const addTaskHandler = useCallback((title: string) => dispatch(addTask({
         todolistId: todo.id,
         title

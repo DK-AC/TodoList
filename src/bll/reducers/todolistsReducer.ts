@@ -1,7 +1,7 @@
 import {FilterTodolistType, TodolistType} from "../types/todolistTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../types/appTypes";
-import {addTodolistTC, fetchTodolists, removeTodolist} from "../thunk/todolistThunk";
+import {addTodolist, fetchTodolists, removeTodolist, updateTodolistTitle} from "../thunk/todolistThunk";
 
 export const initialTodolistsState: TodolistType[] = []
 
@@ -9,13 +9,6 @@ export const slice = createSlice({
     name: 'todolists',
     initialState: initialTodolistsState,
     reducers: {
-        addTodolistAC(state, action: PayloadAction<{ todolist: TodolistType }>) {
-            state.unshift(action.payload.todolist)
-        },
-        changeTodolistTitleAC(state, action: PayloadAction<{ todolistId: string, title: string }>) {
-            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index !== -1) state[index].title = action.payload.title
-        },
         changeTodolistFilterAC(state, action: PayloadAction<{ todolistId: string, filter: FilterTodolistType }>) {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
             if (index !== -1) state[index].filter = action.payload.filter
@@ -26,8 +19,8 @@ export const slice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(addTodolistTC.fulfilled, (state, action) => {
-            state.unshift(action.payload.todolist)
+        builder.addCase(addTodolist.fulfilled, (state, action) => {
+            state.unshift({...action.payload.todolist, filter: 'all', status: 'idle'})
         })
         builder.addCase(fetchTodolists.fulfilled, (state, action) => {
             return action.payload.todolists.map(todo => ({...todo, filter: 'all', status: 'idle'}))
@@ -36,6 +29,10 @@ export const slice = createSlice({
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
             if (index !== -1) state.splice(index, 1)
         })
+        builder.addCase(updateTodolistTitle.fulfilled, (state, action) => {
+            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+            if (index !== -1) state[index].title = action.payload.title
+        })
     }
 })
 
@@ -43,8 +40,6 @@ export const todolistsReducer = slice.reducer
 
 export const {
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
     changeTodolistStatusAC,
-    addTodolistAC
 } = slice.actions
 

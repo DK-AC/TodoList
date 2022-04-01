@@ -2,9 +2,8 @@ import {tasksReducer} from "../reducers/tasksReducer";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
-import {addTodolistAC} from "../reducers/todolistsReducer";
 import {addTask, fetchTasks, removeTask, updateTask} from "../thunk/taskThunk";
-import {fetchTodolists} from "../thunk/todolistThunk";
+import {addTodolist, fetchTodolists} from "../thunk/todolistThunk";
 
 let startState: TasksStateType = {}
 
@@ -77,7 +76,7 @@ test('title of specified task should be changed', () => {
 });
 
 test('new array should be added when new todolist is added', () => {
-    let todolist: TodolistType = {
+    let payload: TodolistType = {
         title: 'New Todolist',
         id: 'any id',
         addedDate: '',
@@ -86,7 +85,9 @@ test('new array should be added when new todolist is added', () => {
         status: "idle"
     }
 
-    const endState = tasksReducer(startState, addTodolistAC({todolist}))
+    const action = addTodolist.fulfilled({todolist: payload}, 'requestId', payload.title)
+
+    const endState = tasksReducer(startState, action)
 
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todoListId1" && k != "todoListId2");
@@ -105,7 +106,7 @@ test('empty arrays should be added when we set todolists', () => {
         {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
     ]
 
-    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId', )
+    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId',)
 
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState)

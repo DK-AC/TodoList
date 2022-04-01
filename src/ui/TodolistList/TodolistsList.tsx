@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../bll/store";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {addTodolistTC, fetchTodolists} from "../../bll/thunk/todolistThunk";
+import {addTodolist, fetchTodolists} from "../../bll/thunk/todolistThunk";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 import {selectors} from "../../bll/selectors";
@@ -18,8 +18,8 @@ export const TodolistsList = ({demo}: PropsType) => {
     const todolists = useAppSelector(selectors.selectTodolists)
     const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
 
-    const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistTC(title))
+    const addTodolistHandle = useCallback((title: string) => {
+        dispatch(addTodolist(title))
     }, [dispatch])
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const TodolistsList = ({demo}: PropsType) => {
 
     return (<>
             <Grid container style={{padding: '20px'}}>
-                <AddItemForm callback={addTodolist}/>
+                <AddItemForm callback={addTodolistHandle}/>
             </Grid>
             <Grid container spacing={3}>
                 {todolists.map(tl => {
