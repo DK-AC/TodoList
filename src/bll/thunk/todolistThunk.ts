@@ -17,7 +17,7 @@ export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
         }
     })
 
-export const addTodolist = createAsyncThunk('todolist/addTodolist',
+export const addTodolist = createAsyncThunk('todolists/addTodolist',
     async (title: string, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         const res = await todolistsApi.createTodolist(title)

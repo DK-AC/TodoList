@@ -29,7 +29,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
     const removeTodolistHandler = () => dispatch(removeTodolist(todo.id))
     const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTitle({todolistId: todo.id, title}))
-    const addTaskHandler = useCallback((title: string) => dispatch(addTask({
+    const addTaskHandle = useCallback((title: string) => dispatch(addTask({
         todolistId: todo.id,
         title
     })), [dispatch, todo.id])
@@ -63,7 +63,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
             </h3>
 
             <div>
-                <AddItemForm callback={addTaskHandler} disabled={todo.status === 'loading'}/>
+                <AddItemForm callback={addTaskHandle} disabled={todo.status === 'loading'}/>
                 {tasksForTodolist.map(task => {
                     return <Task key={todo.id + task.id} todoId={todo.id} filteredTask={task}/>
                 })}
