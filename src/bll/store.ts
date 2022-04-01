@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import {ActionCreatorsMapObject, bindActionCreators, combineReducers} from "redux";
 import {todolistsReducer} from "./reducers/todolistsReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {tasksReducer} from "./reducers/tasksReducer";
@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import {appReducer} from "./reducers/appReducer";
 import {authReducer} from "./reducers/authReducer";
 import {configureStore} from "@reduxjs/toolkit";
+import {useMemo} from "react";
 
 export const rootReducer = combineReducers({
     todolists: todolistsReducer,
@@ -27,3 +28,13 @@ export const useAppDispatch = () => useDispatch<AppDispatchType>()
 
 // @ts-ignore
 window.store = store
+
+export function useActions<T extends ActionCreatorsMapObject>(actions: T) {
+    const dispatch: AppDispatchType = useAppDispatch();
+
+    const action = useMemo(() => {
+        return bindActionCreators(actions, dispatch);
+    }, []);
+
+    return action;
+}
