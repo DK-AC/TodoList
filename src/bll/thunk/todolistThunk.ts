@@ -2,12 +2,7 @@ import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
-import {
-    changeTodolistStatusAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-    setTodolistsAC
-} from "../reducers/todolistsReducer";
+import {changeTodolistStatusAC, changeTodolistTitleAC, removeTodolistAC} from "../reducers/todolistsReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
 
@@ -17,14 +12,11 @@ export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
         const res = await todolistsApi.getTodolists()
         try {
             dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            dispatch(setTodolistsAC({todolists: res.data}))
-            return payload
-        } catch
-            (err) {
+            return {todolists: res.data}
+        } catch (err) {
             handleNetworkAppError(err, dispatch)
             return rejectWithValue(null)
         }
-
     })
 
 

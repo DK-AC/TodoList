@@ -1,8 +1,8 @@
 import {TasksStateType} from "../types/taskTypes";
 import {createSlice} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
-import {setTodolistsAC} from "./todolistsReducer";
 import {addTask, fetchTasks, removeTask, updateTask} from "../thunk/taskThunk";
+import {fetchTodolists} from "../thunk/todolistThunk";
 
 const initialTasksState: TasksStateType = {}
 
@@ -18,7 +18,7 @@ export const slice = createSlice({
             const index = state[action.payload.todolistId].findIndex(task => task.id === action.payload.taskId)
             if (index !== -1) state[action.payload.todolistId].splice(index, 1)
         })
-        builder.addCase(setTodolistsAC, (state, action) => {
+        builder.addCase(fetchTodolists.fulfilled, (state, action) => {
             action.payload.todolists.forEach((todo: TodolistType) => state[todo.id] = [])
         })
         builder.addCase(fetchTasks.fulfilled, (state, action) => {
