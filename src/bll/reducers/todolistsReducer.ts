@@ -5,7 +5,6 @@ import {addTodolistTC} from "../thunk/todolistThunk";
 
 export const initialTodolistsState: TodolistType[] = []
 
-
 export const slice = createSlice({
     name: 'todolists',
     initialState: initialTodolistsState,

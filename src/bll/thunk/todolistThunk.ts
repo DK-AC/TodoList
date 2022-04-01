@@ -1,6 +1,5 @@
 import {todolistsApi} from "../../dal/api/todolists-api";
 import {Dispatch} from "redux";
-import {TodolistType} from "../types/todolistTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {
@@ -10,21 +9,25 @@ import {
     setTodolistsAC
 } from "../reducers/todolistsReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {TodolistType} from "../types/todolistTypes";
 
-export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({appStatus: "loading"}))
-    todolistsApi.getTodolists()
-        .then(res => {
+export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
+    async (payload: { todolists: TodolistType[] }, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({appStatus: "loading"}))
+        const res = await todolistsApi.getTodolists()
+        try {
+            dispatch(setAppStatusAC({appStatus: "succeeded"}))
             dispatch(setTodolistsAC({todolists: res.data}))
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC({appStatus: "idle"}))
-            }
-        )
-}
+            return payload
+        } catch
+            (err) {
+            handleNetworkAppError(err, dispatch)
+            return rejectWithValue(null)
+        }
+
+    })
+
+
 export const addTodolistTC = createAsyncThunk('todolist/addTodolist', async (title: string, {
     dispatch,
     rejectWithValue

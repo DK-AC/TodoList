@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../bll/store";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
-import {addTodolistTC, setTodolistsTC} from "../../bll/thunk/todolistThunk";
+import {addTodolistTC, fetchTodolists} from "../../bll/thunk/todolistThunk";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 import {selectors} from "../../bll/selectors";
@@ -26,7 +26,7 @@ export const TodolistsList = ({demo}: PropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        dispatch(setTodolistsTC(todolists))
+        dispatch(fetchTodolists({todolists}))
     }, [dispatch])
 
     if (!isLoggedIn) {
@@ -40,7 +40,6 @@ export const TodolistsList = ({demo}: PropsType) => {
             </Grid>
             <Grid container spacing={3}>
                 {todolists.map(tl => {
-                    console.log(tl)
                     return (
                         <Grid key={tl.id} style={{padding: '20px'}}>
                             <Paper style={{padding: '10px'}}>
