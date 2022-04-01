@@ -4,11 +4,11 @@ import {
     changeTodolistStatusAC,
     changeTodolistTitleAC,
     removeTodolistAC,
-    setTodolistsAC,
     todolistsReducer
 } from '../reducers/todolistsReducer';
 import {v1} from 'uuid';
 import {TodolistType} from "../types/todolistTypes";
+import {fetchTodolists} from "../thunk/todolistThunk";
 
 let todolistId1: string;
 let todolistId2: string
@@ -68,13 +68,14 @@ test('correct filter of todolist should be changed', () => {
 });
 
 test('todolist should be set to the state', () => {
-    const endState = todolistsReducer(startState, setTodolistsAC({
-            todolists: [
-                {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
-                {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
-            ]
-        }
-    ))
+
+    let param: TodolistType[] = [
+        {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
+        {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
+    ]
+
+    const action = fetchTodolists.fulfilled({todolists: param}, 'requestId', {todolists: param})
+    const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(2)
 })

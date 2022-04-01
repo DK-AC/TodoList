@@ -2,8 +2,9 @@ import {tasksReducer} from "../reducers/tasksReducer";
 import {initialGlobalState} from "../../stories/reduxStoreProviderDecorator";
 import {TasksStateType} from "../types/taskTypes";
 import {TodolistType} from "../types/todolistTypes";
-import {addTodolistAC, setTodolistsAC} from "../reducers/todolistsReducer";
+import {addTodolistAC} from "../reducers/todolistsReducer";
 import {addTask, fetchTasks, removeTask, updateTask} from "../thunk/taskThunk";
+import {fetchTodolists} from "../thunk/todolistThunk";
 
 let startState: TasksStateType = {}
 
@@ -98,14 +99,15 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('empty arrays should be added when we set todolists', () => {
-    const endState = tasksReducer(startState, setTodolistsAC({
-            todolists:
-                [
-                    {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0, status: "idle"},
-                    {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
-                ]
-        }
-    ))
+
+    let param: TodolistType[] = [
+        {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0, status: "idle"},
+        {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
+    ]
+
+    const action = fetchTodolists.fulfilled({todolists: param}, 'requestId', {todolists: param})
+
+    const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(4)
