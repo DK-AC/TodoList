@@ -30,7 +30,7 @@ export const useAppDispatch = () => useDispatch<AppDispatchType>()
 window.store = store
 
 export function useActions<T extends ActionCreatorsMapObject>(actions: T) {
-    const dispatch: AppDispatchType = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const action = useMemo(() => {
         return bindActionCreators(actions, dispatch);

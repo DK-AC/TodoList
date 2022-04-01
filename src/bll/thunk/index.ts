@@ -1,5 +1,5 @@
-import * as taskActions from './taskThunk'
-import * as todolistActions from './todolistThunk'
+import * as tasksActions from './taskThunk'
+import * as todolistsActions from './todolistThunk'
 import * as authActions from './authThunk'
 
-export {taskActions, todolistActions, authActions}
+export {tasksActions, todolistsActions, authActions}
