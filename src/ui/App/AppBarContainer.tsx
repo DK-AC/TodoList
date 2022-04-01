@@ -7,21 +7,21 @@ import Button from "@mui/material/Button";
 import AppBar from '@mui/material/AppBar';
 import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
-import {useAppDispatch, useAppSelector} from "../../bll/store";
+import {useActions, useAppSelector} from "../../bll/store";
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 import {Route, Routes} from "react-router-dom";
 import {TodolistsList} from "../TodolistList/TodolistsList";
 import {Login} from "../Login/Login";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
-import {isAuth, logout} from "../../bll/thunk/authThunk";
 import {selectors} from "../../bll/selectors";
+import {authActions} from "../../bll/thunk";
 
 type PropsType = { demo?: boolean }
 
 export const AppBarContainer = ({demo}: PropsType) => {
 
-    const dispatch = useAppDispatch()
+    const {logout, isAuth} = useActions(authActions)
 
     const status = useAppSelector(selectors.selectStatus)
     const isInitialized = useAppSelector(selectors.selectIsInitialized)
@@ -29,13 +29,11 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
 
     useEffect(() => {
-        if (!demo) {
-            dispatch(isAuth())
-        }
+        if (!demo) isAuth()
     }, [])
 
     const handleLogOut = useCallback(() => {
-        dispatch(logout())
+        logout()
     }, [isInitialized])
 
     if (!isInitialized) {

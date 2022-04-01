@@ -4,20 +4,17 @@ import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
-import {useActions, useAppDispatch, useAppSelector} from "../../../bll/store";
+import {useActions, useAppSelector} from "../../../bll/store";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
-import {changeTodolistFilterAC} from "../../../bll/reducers/todolistsReducer";
-import {tasksActions, todolistsActions} from "../../../bll/thunk";
+import {tasksActions, todolistsAsyncActions} from "../../../bll/thunk";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
-    const dispatch = useAppDispatch()
-
-    const {updateTodolistTitle, removeTodolist} = useActions(todolistsActions)
+    const {updateTodolistTitle, removeTodolist,changeTodolistFilterAC} = useActions(todolistsAsyncActions)
     const {fetchTasks, addTask} = useActions(tasksActions)
 
     let tasks = useAppSelector<TaskType[]>(state => state.tasks[todo.id])
@@ -38,13 +35,15 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     const addTaskHandle = (title: string) => {
         addTask({todolistId: todo.id, title})
     }
-    const changeTodolistAllFilterHandle = () => dispatch(changeTodolistFilterAC(
-        {todolistId: todo.id, filter: 'all'}))
-    const changeTodolistActiveFilterHandle = () => dispatch(changeTodolistFilterAC(
-        {todolistId: todo.id, filter: 'active'}))
-    const changeTodolistCompletedFilterHandle = () => dispatch(changeTodolistFilterAC(
-        {todolistId: todo.id, filter: 'completed'}))
-
+    const changeTodolistAllFilterHandle = () => {
+        changeTodolistFilterAC({todolistId: todo.id, filter: 'all'})
+    }
+    const changeTodolistActiveFilterHandle = () => {
+        changeTodolistFilterAC({todolistId: todo.id, filter: 'active'})
+    }
+    const changeTodolistCompletedFilterHandle = () => {
+        changeTodolistFilterAC({todolistId: todo.id, filter: 'completed'})
+    }
     let tasksForTodolist = tasks
 
     if (todo.filter === 'active') {

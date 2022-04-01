@@ -1,5 +1,12 @@
 import * as tasksActions from './taskThunk'
 import * as todolistsActions from './todolistThunk'
 import * as authActions from './authThunk'
+import {slice} from "../reducers/todolistsReducer";
 
-export {tasksActions, todolistsActions, authActions}
+
+const todolistsAsyncActions = {
+    ...todolistsActions,
+    ...slice.actions
+}
+
+export {tasksActions, todolistsAsyncActions, authActions}

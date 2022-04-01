@@ -8,18 +8,20 @@ import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import React, {useEffect} from "react"
 import {FormikHelpers, useFormik} from "formik";
-import {login} from "../../bll/thunk/authThunk";
-import {useAppDispatch, useAppSelector} from "../../bll/store";
+import {useActions, useAppDispatch, useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
 import {selectors} from "../../bll/selectors";
+import {authActions} from "../../bll/thunk";
 
 type FormValuesType = { email: string, password: string, rememberMe: boolean }
 
 export const Login = () => {
 
-    const dispatch = useAppDispatch()
+    const dispatch=useAppDispatch()
     const navigate = useNavigate()
+
+    const {login} = useActions(authActions)
 
     const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
 
