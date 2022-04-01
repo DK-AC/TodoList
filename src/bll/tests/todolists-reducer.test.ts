@@ -3,12 +3,11 @@ import {
     changeTodolistFilterAC,
     changeTodolistStatusAC,
     changeTodolistTitleAC,
-    removeTodolistAC,
     todolistsReducer
 } from '../reducers/todolistsReducer';
 import {v1} from 'uuid';
 import {TodolistType} from "../types/todolistTypes";
-import {fetchTodolists} from "../thunk/todolistThunk";
+import {fetchTodolists, removeTodolist} from "../thunk/todolistThunk";
 
 let todolistId1: string;
 let todolistId2: string
@@ -26,7 +25,9 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-    const endState = todolistsReducer(startState, removeTodolistAC({todolistId: todolistId1}))
+    const action = removeTodolist.fulfilled({todolistId: todolistId1}, 'requestId', todolistId2)
+
+    const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todolistId2);
