@@ -69,12 +69,12 @@ test('correct filter of todolist should be changed', () => {
 
 test('todolist should be set to the state', () => {
 
-    let param: TodolistType[] = [
+    let payload: TodolistType[] = [
         {id: todolistId1, title: "What to learn", filter: "all", addedDate: '', order: 0, status: "idle"},
         {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
     ]
 
-    const action = fetchTodolists.fulfilled({todolists: param}, 'requestId', {todolists: param})
+    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId')
     const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(2)

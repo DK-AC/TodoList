@@ -100,12 +100,12 @@ test('new array should be added when new todolist is added', () => {
 
 test('empty arrays should be added when we set todolists', () => {
 
-    let param: TodolistType[] = [
+    let payload: TodolistType[] = [
         {id: '1', title: "title 1", filter: "all", addedDate: '', order: 0, status: "idle"},
         {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
     ]
 
-    const action = fetchTodolists.fulfilled({todolists: param}, 'requestId', {todolists: param})
+    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId', )
 
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState)

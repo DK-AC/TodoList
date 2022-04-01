@@ -4,10 +4,9 @@ import {handleNetworkAppError, handleServerAppError} from "../../utils/error-uti
 import {setAppStatusAC} from "../reducers/appReducer";
 import {changeTodolistStatusAC, changeTodolistTitleAC, removeTodolistAC} from "../reducers/todolistsReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {TodolistType} from "../types/todolistTypes";
 
 export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
-    async (payload: { todolists: TodolistType[] }, {dispatch, rejectWithValue}) => {
+    async (payload, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         const res = await todolistsApi.getTodolists()
         try {
@@ -35,15 +34,6 @@ export const addTodolistTC = createAsyncThunk('todolist/addTodolist', async (tit
     }
 })
 
-
-//         .catch(error => {
-//             handleNetworkAppError(error, dispatch)
-//         })
-//         .finally(() => {
-//                 dispatch(setAppStatusAC({appStatus: "idle"}))
-//             }
-//         )
-// }
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({appStatus: "loading"}))
     dispatch(changeTodolistStatusAC({todolistId, status: "loading"}))

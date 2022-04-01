@@ -26,7 +26,7 @@ export const TodolistsList = ({demo}: PropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        dispatch(fetchTodolists({todolists}))
+        dispatch(fetchTodolists())
     }, [dispatch])
 
     if (!isLoggedIn) {
