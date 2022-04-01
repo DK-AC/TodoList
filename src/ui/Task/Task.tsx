@@ -3,26 +3,28 @@ import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import Checkbox from '@mui/material/Checkbox';
-import {removeTask, updateTask} from "../../bll/thunk/taskThunk";
 import {TaskType} from '../../bll/types/taskTypes';
-import {useAppDispatch} from "../../bll/store";
+import {useActions} from "../../bll/store";
+import {tasksActions} from "../../bll/thunk";
 
-type TaskPropsType = { todoId: string, filteredTask: TaskType }
+type TaskPropsType = { todolistId: string, filteredTask: TaskType }
 
-export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
+export const Task = React.memo(({todolistId, filteredTask}: TaskPropsType) => {
 
-    const dispatch = useAppDispatch()
+    const {removeTask, updateTask} = useActions(tasksActions)
 
-    const removeTaskHandler = () => dispatch(removeTask({todolistId: todoId, taskId: filteredTask.id}))
+    const removeTaskHandle = () => {
+        removeTask({todolistId, taskId: filteredTask.id})
+    }
     const onChangeTaskTitle = (title: string) => {
-        dispatch(updateTask({todolistId: todoId, taskId: filteredTask.id, model: {title}}))
+        updateTask({todolistId, taskId: filteredTask.id, model: {title}})
     }
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateTask({
-            todolistId: todoId,
+        updateTask({
+            todolistId,
             taskId: filteredTask.id,
             model: {status: e.currentTarget.checked ? 1 : 0}
-        }))
+        })
     }
 
     return (
@@ -34,7 +36,7 @@ export const Task = React.memo(({todoId, filteredTask}: TaskPropsType) => {
                 size={"small"}
             />
             <EditableSpan title={filteredTask.title} onChange={onChangeTaskTitle}/>
-            <IconButton onClick={removeTaskHandler}><Delete/></IconButton>
+            <IconButton onClick={removeTaskHandle}><Delete/></IconButton>
         </div>
     );
 })
