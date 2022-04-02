@@ -13,7 +13,7 @@ import {tasksActions, todolistsAsyncActions} from "../../../bll/thunk";
 type PropsType = { todo: TodolistType, demo?: boolean }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
-
+    console.log('learn react')
     const {updateTodolistTitle, removeTodolist,changeTodolistFilterAC} = useActions(todolistsAsyncActions)
     const {fetchTasks, addTask} = useActions(tasksActions)
 
