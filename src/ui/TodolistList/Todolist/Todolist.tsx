@@ -9,6 +9,7 @@ import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {ButtonColorType, FilterTodolistType, TodolistType} from "../../../bll/types/todolistTypes";
 import {tasksActions, todolistsActions} from "../../../bll/thunk";
+import Paper from "@mui/material/Paper";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 
@@ -59,10 +60,11 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
 
     return (
-        <div>
+        <Paper style={{padding: '10px', position: 'relative'}}>
             <h3>
                 <EditableSpan title={todo.title} onChange={changeTodolistTitleHandle}/>
-                <IconButton onClick={removeTodolistHandle} disabled={todo.status === 'loading'}>
+                <IconButton onClick={removeTodolistHandle} disabled={todo.status === 'loading'}
+                            style={{position: 'absolute', top: '5x', right: '5px'}}>
                     <Delete/>
                 </IconButton>
             </h3>
@@ -79,7 +81,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
                 {renderFilterButton(changeTodolistFilterHandle, 'active', 'active', 'primary')}
                 {renderFilterButton(changeTodolistFilterHandle, 'completed', 'completed', 'secondary')}
             </div>
-        </div>
+        </Paper>
     )
 })
 

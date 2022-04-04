@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {useActions, useAppSelector} from "../../bll/store";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 import {selectors} from "../../bll/selectors";
@@ -38,10 +37,10 @@ export const TodolistsList = ({demo}: PropsType) => {
             <Grid container spacing={3} style={{flexWrap: 'nowrap', overflowX: 'scroll'}}>
                 {todolists.map(tl => {
                     return (
-                        <Grid key={tl.id} style={{padding: '10px'}}>
-                            <Paper style={{padding: '10px', width: '300px'}}>
+                        <Grid item key={tl.id} >
+                            <div style={{ width: '300px'}}>
                                 <Todolist todo={tl} demo={demo}/>
-                            </Paper>
+                            </div>
                         </Grid>)
                 })}
             </Grid>
