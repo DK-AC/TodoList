@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof Task> = (args) => <Task {...args}/>
 export const TaskStories = Template.bind({});
 
 TaskStories.args = {
-    filteredTask: {
+    task: {
         id: '1',
         title: 'HTML',
         status: 1,

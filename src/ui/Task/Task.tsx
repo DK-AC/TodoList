@@ -7,35 +7,35 @@ import {TaskType} from '../../bll/types/taskTypes';
 import {useActions} from "../../bll/store";
 import {tasksActions} from "../../bll/thunk";
 
-type TaskPropsType = { todolistId: string, filteredTask: TaskType }
+type TaskPropsType = { todolistId: string, task: TaskType }
 
-export const Task = React.memo(({todolistId, filteredTask}: TaskPropsType) => {
+export const Task = React.memo(({todolistId, task}: TaskPropsType) => {
 
     const {removeTask, updateTask} = useActions(tasksActions)
 
     const removeTaskHandle = () => {
-        removeTask({todolistId, taskId: filteredTask.id})
+        removeTask({todolistId, taskId: task.id})
     }
     const onChangeTaskTitle = (title: string) => {
-        updateTask({todolistId, taskId: filteredTask.id, model: {title}})
+        updateTask({todolistId, taskId: task.id, model: {title}})
     }
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         updateTask({
             todolistId,
-            taskId: filteredTask.id,
+            taskId: task.id,
             model: {status: e.currentTarget.checked ? 1 : 0}
         })
     }
 
     return (
-        <div key={filteredTask.id}>
+        <div key={task.id}>
             <Checkbox
                 color="primary"
-                checked={filteredTask.status !== 0}
+                checked={task.status !== 0}
                 onChange={onChangeTaskStatus}
                 size={"small"}
             />
-            <EditableSpan title={filteredTask.title} onChange={onChangeTaskTitle}/>
+            <EditableSpan title={task.title} onChange={onChangeTaskTitle}/>
             <IconButton onClick={removeTaskHandle}><Delete/></IconButton>
         </div>
     );
