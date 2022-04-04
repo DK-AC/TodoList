@@ -7,12 +7,13 @@ import {Task} from "../../Task/Task";
 import {useActions, useAppSelector} from "../../../bll/store";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {TaskType} from "../../../bll/types/taskTypes";
-import {FilterTodolistType, TodolistType} from "../../../bll/types/todolistTypes";
+import {ButtonColorType, FilterTodolistType, TodolistType} from "../../../bll/types/todolistTypes";
 import {tasksActions, todolistsActions} from "../../../bll/thunk";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
+
     const {updateTodolistTitle, removeTodolist, changeTodolistFilterAC} = useActions(todolistsActions)
     const {fetchTasks, addTask} = useActions(tasksActions)
 
@@ -34,14 +35,8 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     const addTaskHandle = (title: string) => {
         addTask({todolistId: todo.id, title})
     }
-    const changeTodolistAllFilterHandle = () => {
-        changeTodolistFilterAC({todolistId: todo.id, filter: 'all'})
-    }
-    const changeTodolistActiveFilterHandle = () => {
-        changeTodolistFilterAC({todolistId: todo.id, filter: 'active'})
-    }
-    const changeTodolistCompletedFilterHandle = () => {
-        changeTodolistFilterAC({todolistId: todo.id, filter: 'completed'})
+    const changeTodolistFilterHandle = (filter: FilterTodolistType) => {
+        changeTodolistFilterAC({todolistId: todo.id, filter})
     }
     let tasksForTodolist = tasks
 
@@ -52,12 +47,10 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         tasksForTodolist = tasksForTodolist.filter(task => task.status)
     }
 
-    type ButtonColorType = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
-
-    const renderFilterButton = (onClick: () => void, text: string, buttonFilter: FilterTodolistType, color: ButtonColorType) => {
+    const renderFilterButton = (onClick: (filter: FilterTodolistType) => void, text: string, buttonFilter: FilterTodolistType, color: ButtonColorType) => {
         return (
             <Button variant={todo.filter === buttonFilter ? 'outlined' : 'text'}
-                    onClick={onClick}
+                    onClick={() => changeTodolistFilterHandle(buttonFilter)}
                     color={color}
             >
                 {text}
@@ -82,9 +75,9 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
             </div>
             <div style={{paddingTop: '10px'}}>
-                {renderFilterButton(changeTodolistAllFilterHandle, 'all',  'all', 'inherit')}
-                {renderFilterButton(changeTodolistActiveFilterHandle, 'active',  'active', 'primary')}
-                {renderFilterButton(changeTodolistCompletedFilterHandle, 'completed', 'completed', 'secondary')}
+                {renderFilterButton(changeTodolistFilterHandle, 'all', 'all', 'inherit')}
+                {renderFilterButton(changeTodolistFilterHandle, 'active', 'active', 'primary')}
+                {renderFilterButton(changeTodolistFilterHandle, 'completed', 'completed', 'secondary')}
             </div>
         </div>
     )

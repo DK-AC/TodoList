@@ -12,3 +12,6 @@ export type TodolistType = {
     status: StatusType
 }
 export type FilterTodolistType = 'all' | 'active' | 'completed'
+
+export type ButtonColorType = 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+
