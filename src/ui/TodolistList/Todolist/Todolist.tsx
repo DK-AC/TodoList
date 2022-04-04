@@ -8,14 +8,14 @@ import {useActions, useAppSelector} from "../../../bll/store";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
-import {tasksActions, todolistsAsyncActions} from "../../../bll/thunk";
+import {tasksActions, todolistsActions} from "../../../bll/thunk";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     console.log('learn react')
     console.log('learn react hooks')
-    const {updateTodolistTitle, removeTodolist,changeTodolistFilterAC} = useActions(todolistsAsyncActions)
+    const {updateTodolistTitle, removeTodolist,changeTodolistFilterAC} = useActions(todolistsActions)
     const {fetchTasks, addTask} = useActions(tasksActions)
 
     let tasks = useAppSelector<TaskType[]>(state => state.tasks[todo.id])

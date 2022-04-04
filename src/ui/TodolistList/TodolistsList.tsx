@@ -6,7 +6,7 @@ import {Todolist} from "./Todolist/Todolist";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 import {selectors} from "../../bll/selectors";
-import {todolistsAsyncActions} from "../../bll/thunk";
+import {todolistsActions} from "../../bll/thunk";
 
 type PropsType = { demo?: boolean }
 
@@ -14,7 +14,7 @@ export const TodolistsList = ({demo}: PropsType) => {
 
     const navigate = useNavigate()
 
-    const {addTodolist, fetchTodolists} = useActions(todolistsAsyncActions)
+    const {addTodolist, fetchTodolists} = useActions(todolistsActions)
 
     const todolists = useAppSelector(selectors.selectTodolists)
     const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)

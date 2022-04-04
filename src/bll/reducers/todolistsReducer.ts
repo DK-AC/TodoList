@@ -5,7 +5,7 @@ import {addTodolist, fetchTodolists, removeTodolist, updateTodolistTitle} from "
 
 export const initialTodolistsState: TodolistType[] = []
 
-export const slice = createSlice({
+export const todolistSlices = createSlice({
     name: 'todolists',
     initialState: initialTodolistsState,
     reducers: {
@@ -36,7 +36,7 @@ export const slice = createSlice({
     }
 })
 
-export const todolistsReducer = slice.reducer
+export const todolistsReducer = todolistSlices.reducer
 
-export const {changeTodolistFilterAC, changeTodolistStatusAC,} = slice.actions
+export const {changeTodolistFilterAC, changeTodolistStatusAC,} = todolistSlices.actions
 

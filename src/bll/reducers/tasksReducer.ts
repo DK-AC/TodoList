@@ -6,7 +6,7 @@ import {addTodolist, fetchTodolists} from "../thunk/todolistThunk";
 
 const initialTasksState: TasksStateType = {}
 
-export const slice = createSlice({
+export const taskSlices = createSlice({
     name: 'tasks',
     initialState: initialTasksState,
     reducers: {},
@@ -35,4 +35,4 @@ export const slice = createSlice({
     },
 })
 
-export const tasksReducer = slice.reducer
+export const tasksReducer = taskSlices.reducer
