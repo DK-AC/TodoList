@@ -6,7 +6,7 @@ export const initialAppState = {
     error: null as null | string,
 }
 
-export const slice = createSlice({
+export const appSlices = createSlice({
     name: 'app',
     initialState: initialAppState,
     reducers: {
@@ -19,8 +19,8 @@ export const slice = createSlice({
     }
 })
 
-export const appReducer = slice.reducer
+export const appReducer = appSlices.reducer
 
-export const {setAppStatusAC, setAppErrorAC} = slice.actions
+export const {setAppStatusAC, setAppErrorAC} = appSlices.actions
 
 
