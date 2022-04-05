@@ -1,5 +1,9 @@
 import {todolistsApi} from "../../dal/api/todolists-api";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {
+    handleAsyncNetworkError,
+    handleAsyncServerAppError,
+    handleNetworkAppError
+} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {changeTodolistStatusAC} from "../reducers/todolistsReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
@@ -28,8 +32,7 @@ export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, 
                 thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return {todolist: res.data.data.item}
             } else {
-                handleServerAppError(res.data, thunkAPI.dispatch, false)
-                return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+                return handleAsyncServerAppError(res.data, thunkAPI, false)
             }
         } catch (err: any) {
             handleNetworkAppError(err, thunkAPI)
@@ -53,20 +56,18 @@ export const removeTodolist = createAsyncThunk('todolists/removeTodolist',
     })
 
 export const updateTodolistTitle = createAsyncThunk('todolists/updateTodolist',
-    async (payload: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
-        dispatch(setAppStatusAC({appStatus: "loading"}))
-        const res = await todolistsApi.updateTodolist(payload.todolistId, payload.title)
+    async (payload: { todolistId: string, title: string }, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
+            const res = await todolistsApi.updateTodolist(payload.todolistId, payload.title)
             if (res.data.resultCode === 0) {
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return payload
             } else {
-                handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                handleAsyncServerAppError(res.data, thunkAPI)
             }
         } catch (err: any) {
-            handleNetworkAppError(err, dispatch)
-            return rejectWithValue(null)
+            return handleAsyncNetworkError(err, thunkAPI, false)
         }
     })
 

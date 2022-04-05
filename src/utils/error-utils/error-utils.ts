@@ -10,6 +10,14 @@ export const handleServerAppError = (data: ResponseType, dispatch: Dispatch, sho
     dispatch(setAppStatusAC({appStatus: 'failed'}))
 }
 
+export const handleAsyncServerAppError = (data: ResponseType, thunkAPI: any, showError = true) => {
+    if (showError) {
+        thunkAPI.dispatch(setAppErrorAC(data.messages.length ? {error: data.messages[0]} : {error: 'some error'}))
+    }
+    thunkAPI.dispatch(setAppStatusAC({appStatus: 'failed'}))
+    return thunkAPI.rejectWithValue({errors: data.messages, fieldsErrors: data.fieldsErrors})
+}
+
 export const handleNetworkAppError = (error: AxiosError, dispatch: Dispatch, showError = true) => {
     if (showError) {
         dispatch(setAppErrorAC({error: error.message ? error.message : 'Some error occurred'}))

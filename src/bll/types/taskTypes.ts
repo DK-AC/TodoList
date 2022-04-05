@@ -31,5 +31,9 @@ export type ResponseType<D = {}> = {
     fieldsErrors: FieldErrorType[]
     data: D
 }
-
+export type UpdatePayloadTaskType = {
+    todolistId: string,
+    taskId: string,
+    model: Partial<ModelTaskType>
+};
 
