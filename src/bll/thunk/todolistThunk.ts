@@ -4,8 +4,8 @@ import {setAppStatusAC} from "../reducers/appReducer";
 import {changeTodolistStatusAC} from "../reducers/todolistsReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
-import {FieldErrorType} from "../types/taskTypes";
 import {AxiosError} from "axios";
+import {ThunkErrorType} from "../store";
 
 export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
     async (payload, {dispatch, rejectWithValue}) => {
@@ -20,7 +20,7 @@ export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
         }
     })
 
-export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('todolists/addTodolist',
+export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, ThunkErrorType>('todolists/addTodolist',
     async (title, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         const res = await todolistsApi.createTodolist(title)

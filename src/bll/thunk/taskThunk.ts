@@ -1,6 +1,6 @@
-import {AppRootStateType} from "../store";
+import {AppRootStateType, ThunkErrorType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {FieldErrorType, ModelTaskType, TaskType} from "../types/taskTypes";
+import {ModelTaskType, TaskType} from "../types/taskTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
@@ -14,7 +14,7 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks',
         return {todolistId, tasks: res.data.items}
     })
 
-export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: string }, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('tasks/addTask',
+export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: string }, ThunkErrorType>('tasks/addTask',
     async (payload: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
