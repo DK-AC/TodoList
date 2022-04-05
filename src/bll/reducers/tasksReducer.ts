@@ -35,4 +35,3 @@ export const taskSlices = createSlice({
     },
 })
 
-export const tasksReducer = taskSlices.reducer

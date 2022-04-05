@@ -19,8 +19,6 @@ export const appSlices = createSlice({
     }
 })
 
-export const appReducer = appSlices.reducer
-
 export const {setAppStatusAC, setAppErrorAC} = appSlices.actions
 
 

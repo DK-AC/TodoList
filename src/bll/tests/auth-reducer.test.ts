@@ -1,5 +1,6 @@
-import {authReducer, initialAuthState, setIsLoggedInAC} from "../reducers/authReducer";
+import { initialAuthState, setIsLoggedInAC} from "../reducers/authReducer";
 import {isAuth} from "../thunk/authThunk";
+import {authReducer} from "../reducers";
 
 let startState = initialAuthState
 
