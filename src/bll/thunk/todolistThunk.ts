@@ -10,16 +10,15 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {TodolistType} from "../types/todolistTypes";
 import {ThunkErrorType} from "../store";
 
-export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
-    async (payload, {dispatch, rejectWithValue}) => {
-        dispatch(setAppStatusAC({appStatus: "loading"}))
-        const res = await todolistsApi.getTodolists()
+export const fetchTodolists = createAsyncThunk<{ todolists: TodolistType[] }, undefined, ThunkErrorType>('todolists/fetchTodolists',
+    async (payload, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
-            dispatch(setAppStatusAC({appStatus: "succeeded"}))
+            const res = await todolistsApi.getTodolists()
+            thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
             return {todolists: res.data}
         } catch (err: any) {
-            handleNetworkAppError(err, dispatch)
-            return rejectWithValue(null)
+            return handleAsyncNetworkError(err, thunkAPI)
         }
     })
 

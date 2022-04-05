@@ -106,7 +106,7 @@ test('empty arrays should be added when we set todolists', () => {
         {id: '2', title: "title 2", filter: "all", addedDate: '', order: 0, status: "idle"}
     ]
 
-    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId',)
+    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId', undefined)
 
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState)

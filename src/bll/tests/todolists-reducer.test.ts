@@ -73,7 +73,7 @@ test('todolist should be set to the state', () => {
         {id: todolistId2, title: "What to buy", filter: "all", addedDate: '', order: 0, status: "idle"}
     ]
 
-    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId')
+    const action = fetchTodolists.fulfilled({todolists: payload}, 'requestId', undefined)
     const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(2)
