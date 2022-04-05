@@ -14,8 +14,7 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks',
         return {todolistId, tasks: res.data.items}
     })
 
-export const addTask = createAsyncThunk<TaskType,{ todolistId: string, title: string },{ rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }
-    >('tasks/addTask',
+export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: string }, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('tasks/addTask',
     async (payload: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
@@ -24,10 +23,10 @@ export const addTask = createAsyncThunk<TaskType,{ todolistId: string, title: st
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return res.data.data.item
             } else {
-                handleServerAppError(res.data, dispatch)
+                handleServerAppError(res.data, dispatch, false)
                 return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
             }
-        } catch (err:any) {
+        } catch (err: any) {
             const error: AxiosError = err
             handleNetworkAppError(error, dispatch)
             return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
