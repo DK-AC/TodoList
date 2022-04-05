@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react";
-import {useActions, useAppSelector} from "../../bll/store";
+import {useActions, useAppDispatch, useAppSelector} from "../../bll/store";
 import Grid from "@mui/material/Grid";
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {AddItemForm, AddItemFormHelperType} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 import {selectors} from "../../bll/selectors";
 import {todolistsActions} from "../../bll/thunk";
@@ -11,15 +11,29 @@ type PropsType = { demo?: boolean }
 
 export const TodolistsList = ({demo}: PropsType) => {
 
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const {addTodolist, fetchTodolists} = useActions(todolistsActions)
+    const {fetchTodolists} = useActions(todolistsActions)
 
     const todolists = useAppSelector(selectors.selectTodolists)
     const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
 
-    const addTodolistHandle = useCallback(async (title: string) => {
-        addTodolist(title)
+    const addTodolistHandle = useCallback(async (title: string, helper: AddItemFormHelperType) => {
+        let thunk = todolistsActions.addTodolist(title)
+
+        const action = await dispatch(thunk)
+
+        if (todolistsActions.addTodolist.rejected.match(action)) {
+            if (action.payload?.errors?.length) {
+                const error = action.payload.errors[0]
+                helper.setError(error)
+            } else {
+                helper.setError('Some error occurred')
+            }
+        } else {
+            helper.setTitle('')
+        }
     }, [])
 
     useEffect(() => {
@@ -41,8 +55,8 @@ export const TodolistsList = ({demo}: PropsType) => {
             <Grid container spacing={3} style={{flexWrap: 'nowrap', overflowX: 'scroll'}}>
                 {todolists.map(tl => {
                     return (
-                        <Grid item key={tl.id} >
-                            <div style={{ width: '300px'}}>
+                        <Grid item key={tl.id}>
+                            <div style={{width: '300px'}}>
                                 <Todolist todo={tl} demo={demo}/>
                             </div>
                         </Grid>)
