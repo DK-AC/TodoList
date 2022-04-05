@@ -24,7 +24,7 @@ export const fetchTodolists = createAsyncThunk('todolists/fetchTodolists',
     })
 
 export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, ThunkErrorType>('todolists/addTodolist',
-    async (title, thunkAPI: any) => {
+    async (title, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         const res = await todolistsApi.createTodolist(title)
         try {
@@ -35,7 +35,7 @@ export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, 
                 return handleAsyncServerAppError(res.data, thunkAPI, false)
             }
         } catch (err: any) {
-            handleNetworkAppError(err, thunkAPI)
+            handleAsyncNetworkError(err, thunkAPI)
 
         }
     })
