@@ -72,7 +72,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
             <div>
                 <AddItemForm callback={addTaskHandle} disabled={todo.status === 'loading'}/>
                 {tasksForTodolist.map(task => {
-                    return <Task key={todo.id + task.id} todolistId={todo.id} task={task}/>
+                    return <Task key={todo.id + task.id} todolistId={todo.id} task={task} />
                 })}
 
                 {!tasksForTodolist.length && <div style={{padding: '10px', color: "gray"}}>Create your first task</div>}

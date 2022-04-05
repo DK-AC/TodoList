@@ -34,6 +34,8 @@ export const isAuth = createAsyncThunk('auth/isAuth',
                 dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 dispatch(setIsLoggedInAC({isLoggedIn: true}))
                 return
+            } else {
+                dispatch(setAppStatusAC({appStatus: "succeeded"}))
             }
         } catch (err: any) {
             const error: AxiosError = err
