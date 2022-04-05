@@ -28,7 +28,7 @@ export const Task = React.memo(({todolistId, task}: TaskPropsType) => {
     }
 
     return (
-        <div key={task.id}>
+        <div key={task.id} style={{position: 'relative'}}>
             <Checkbox
                 color="primary"
                 checked={task.status !== 0}
@@ -36,7 +36,10 @@ export const Task = React.memo(({todolistId, task}: TaskPropsType) => {
                 size={"small"}
             />
             <EditableSpan title={task.title} onChange={onChangeTaskTitle}/>
-            <IconButton onClick={removeTaskHandle}><Delete/></IconButton>
+            <IconButton onClick={removeTaskHandle}
+                        style={{position: 'absolute', top: '2px', right: '5px'}}>
+                <Delete/>
+            </IconButton>
         </div>
     );
 })
