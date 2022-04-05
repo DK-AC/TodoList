@@ -15,7 +15,6 @@ export const handleAsyncServerAppError = (data: ResponseType, thunkAPI: ThunkAPI
 
     return thunkAPI.rejectWithValue({errors: data.messages, fieldsErrors: data.fieldsErrors})
 }
-
 export const handleAsyncNetworkError = (error: AxiosError, thunkAPI: ThunkAPIType, showError = true) => {
     if (showError) {
         thunkAPI.dispatch(setAppErrorAC({error: error.message ? error.message : 'Some error occurred'}))

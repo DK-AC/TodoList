@@ -1,12 +1,12 @@
-import {authApi} from "../../dal/api/authApi";
 import {LoginValuesType} from "../types/authTypes";
 import {setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {FieldErrorType} from "../types/taskTypes";
 import {handleAsyncNetworkError, handleAsyncServerAppError} from "../../utils/error-utils/error-utils";
+import {ThunkErrorType} from "../store";
+import { authApi } from "../../dal/api";
 
-export const login = createAsyncThunk<undefined, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/login',
+export const login = createAsyncThunk<undefined, LoginValuesType, ThunkErrorType>('auth/login',
     async (payload, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
@@ -29,8 +29,6 @@ export const isAuth = createAsyncThunk('auth/isAuth',
         } else {
         }
     })
-
-
 export const logout = createAsyncThunk('auth/logout',
     async (payload, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))

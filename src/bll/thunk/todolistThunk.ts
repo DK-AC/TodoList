@@ -1,4 +1,4 @@
-import {todolistsApi} from "../../dal/api/todolists-api";
+import {todolistsApi} from "../../dal/api/";
 import {handleAsyncNetworkError, handleAsyncServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {changeTodolistStatusAC} from "../reducers/todolistsReducer";
@@ -17,7 +17,6 @@ export const fetchTodolists = createAsyncThunk<{ todolists: TodolistType[] }, un
             return handleAsyncNetworkError(err, thunkAPI)
         }
     })
-
 export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, ThunkErrorType>('todolists/addTodolist',
     async (title, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -31,10 +30,8 @@ export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, 
             }
         } catch (err: any) {
             return handleAsyncNetworkError(err, thunkAPI, false)
-
         }
     })
-
 export const removeTodolist = createAsyncThunk<{ todolistId: string }, string, ThunkErrorType>('todolists/removeTodolist', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
     thunkAPI.dispatch(changeTodolistStatusAC({todolistId, status: "loading"}))
@@ -42,7 +39,6 @@ export const removeTodolist = createAsyncThunk<{ todolistId: string }, string, T
     thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
     return {todolistId}
 })
-
 export const updateTodolistTitle = createAsyncThunk('todolists/updateTodolistTitle',
     async (payload: { todolistId: string, title: string }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))

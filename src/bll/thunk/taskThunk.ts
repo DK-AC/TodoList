@@ -1,5 +1,5 @@
 import {AppRootStateType, ThunkErrorType} from "../store";
-import {tasksApi} from "../../dal/api/tasks-api";
+import {tasksApi} from "../../dal/api/";
 import {ModelTaskType, TaskType} from "../types/taskTypes";
 import {handleAsyncNetworkError, handleAsyncServerAppError,} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
@@ -16,7 +16,6 @@ export const fetchTasks = createAsyncThunk<{ tasks: TaskType[], todolistId: stri
             return handleAsyncNetworkError(err, thunkAPI)
         }
     })
-
 export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: string }, ThunkErrorType>('tasks/addTask',
     async (payload, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -32,7 +31,6 @@ export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: s
             return handleAsyncNetworkError(err, thunkAPI, false)
         }
     })
-
 export const removeTask = createAsyncThunk<{ taskId: string, todolistId: string }, { taskId: string, todolistId: string }, ThunkErrorType>('tasks/removeTask',
     async (payload, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
@@ -40,7 +38,6 @@ export const removeTask = createAsyncThunk<{ taskId: string, todolistId: string 
         thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
         return payload
     })
-
 export const updateTask = createAsyncThunk('tasks/updateTask',
     async (payload: { todolistId: string, taskId: string, model: Partial<ModelTaskType> },
            thunkAPI) => {
