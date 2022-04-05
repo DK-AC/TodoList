@@ -1,10 +1,13 @@
 import {AppRootStateType, ThunkErrorType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
 import {ModelTaskType, TaskType} from "../types/taskTypes";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {
+    handleAsyncNetworkError,
+    handleNetworkAppError,
+    handleServerAppError
+} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {AxiosError} from "axios";
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks',
     async (todolistId: string, thunkAPI) => {
@@ -15,21 +18,19 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks',
     })
 
 export const addTask = createAsyncThunk<TaskType, { todolistId: string, title: string }, ThunkErrorType>('tasks/addTask',
-    async (payload: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
-        dispatch(setAppStatusAC({appStatus: "loading"}))
+    async (payload: { todolistId: string, title: string }, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await tasksApi.createTask(payload.todolistId, payload.title)
             if (res.data.resultCode === 0) {
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return res.data.data.item
             } else {
-                handleServerAppError(res.data, dispatch, false)
-                return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+                handleServerAppError(res.data, thunkAPI.dispatch, false)
+                return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
             }
         } catch (err: any) {
-            const error: AxiosError = err
-            handleNetworkAppError(error, dispatch)
-            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+            return handleAsyncNetworkError(err, thunkAPI, true)
         }
     })
 
@@ -70,7 +71,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask',
                 handleServerAppError(res.data, dispatch)
                 return rejectWithValue(null)
             }
-        } catch (err) {
+        } catch (err: any) {
             handleNetworkAppError(err, dispatch)
             return rejectWithValue(null)
         }

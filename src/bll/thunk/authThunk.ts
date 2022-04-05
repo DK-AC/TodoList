@@ -56,7 +56,7 @@ export const logout = createAsyncThunk('auth/logout',
                 handleServerAppError(res.data, dispatch)
                 return rejectWithValue(null)
             }
-        } catch (err) {
+        } catch (err:any) {
             handleNetworkAppError(err, dispatch)
             return rejectWithValue(null)
         }
