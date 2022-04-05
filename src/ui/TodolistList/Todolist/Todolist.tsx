@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import Button from "@mui/material/Button";
 import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
-import {useActions, useAppSelector} from "../../../bll/store";
+import {useActions, useAppDispatch, useAppSelector} from "../../../bll/store";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {ButtonColorType, FilterTodolistType, TodolistType} from "../../../bll/types/todolistTypes";
@@ -14,6 +14,8 @@ import Paper from "@mui/material/Paper";
 type PropsType = { todo: TodolistType, demo?: boolean }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
+
+    const dispatch = useAppDispatch()
 
     const {updateTodolistTitle, removeTodolist, changeTodolistFilterAC} = useActions(todolistsActions)
     const {fetchTasks, addTask} = useActions(tasksActions)
@@ -33,9 +35,20 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     const changeTodolistTitleHandle = (title: string) => {
         updateTodolistTitle({todolistId: todo.id, title})
     }
-    const addTaskHandle = (title: string) => {
-        addTask({todolistId: todo.id, title})
-    }
+    const addTaskHandle = useCallback(async (title: string) => {
+        let thunk = tasksActions.addTask({todolistId: todo.id, title})
+
+        const action = await dispatch(thunk)
+
+        if (tasksActions.addTask.rejected.match(action)) {
+            if (action.payload?.errors?.length) {
+                const error = action.payload.errors[0]
+                throw new Error(error)
+            } else {
+                throw new Error('Some error occurred')
+            }
+        }
+    }, [])
     const changeTodolistFilterHandle = (filter: FilterTodolistType) => {
         changeTodolistFilterAC({todolistId: todo.id, filter})
     }
@@ -72,7 +85,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
             <div>
                 <AddItemForm callback={addTaskHandle} disabled={todo.status === 'loading'}/>
                 {tasksForTodolist.map(task => {
-                    return <Task key={todo.id + task.id} todolistId={todo.id} task={task} />
+                    return <Task key={todo.id + task.id} todolistId={todo.id} task={task}/>
                 })}
 
                 {!tasksForTodolist.length && <div style={{padding: '10px', color: "gray"}}>Create your first task</div>}

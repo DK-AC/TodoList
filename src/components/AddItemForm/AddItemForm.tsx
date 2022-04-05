@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type AddItemFormPropsType = {
-    callback: (title: string) => void
+    callback: (title: string) => Promise<any>
     disabled?: boolean
 }
 
@@ -13,10 +13,14 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addItem = () => {
+    const addItem = async () => {
         if (title.trim() !== '') {
-            callback(title)
-            setTitle('')
+            try {
+                await callback(title)
+                setTitle('')
+            } catch (err: any) {
+                setError(err.message)
+            }
         } else {
             setError('Title is required')
         }
@@ -52,7 +56,8 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
                        helperText={error}
                        disabled={disabled}
             />
-            <IconButton color="primary" onClick={addItem} size={"small"} disabled={disabled} style={{marginLeft:'5px'}}>
+            <IconButton color="primary" onClick={addItem} size={"small"} disabled={disabled}
+                        style={{marginLeft: '5px'}}>
                 <AddBox/>
             </IconButton>
         </div>

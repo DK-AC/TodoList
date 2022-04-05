@@ -1,9 +1,10 @@
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ModelTaskType} from "../types/taskTypes";
+import {FieldErrorType, ModelTaskType, TaskType} from "../types/taskTypes";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks',
     async (todolistId: string, thunkAPI) => {
@@ -13,7 +14,8 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks',
         return {todolistId, tasks: res.data.items}
     })
 
-export const addTask = createAsyncThunk('tasks/addTask',
+export const addTask = createAsyncThunk<TaskType,{ todolistId: string, title: string },{ rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }
+    >('tasks/addTask',
     async (payload: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
         dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
@@ -23,11 +25,12 @@ export const addTask = createAsyncThunk('tasks/addTask',
                 return res.data.data.item
             } else {
                 handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
             }
-        } catch (err) {
-            handleNetworkAppError(err, dispatch)
-            return rejectWithValue(null)
+        } catch (err:any) {
+            const error: AxiosError = err
+            handleNetworkAppError(error, dispatch)
+            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
         }
     })
 

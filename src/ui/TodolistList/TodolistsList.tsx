@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {useActions, useAppSelector} from "../../bll/store";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
@@ -18,6 +18,10 @@ export const TodolistsList = ({demo}: PropsType) => {
     const todolists = useAppSelector(selectors.selectTodolists)
     const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
 
+    const addTodolistHandle = useCallback(async (title: string) => {
+        addTodolist(title)
+    }, [])
+
     useEffect(() => {
         if (demo || !isLoggedIn) {
             return
@@ -32,7 +36,7 @@ export const TodolistsList = ({demo}: PropsType) => {
 
     return (<>
             <Grid container style={{padding: '20px'}}>
-                <AddItemForm callback={addTodolist}/>
+                <AddItemForm callback={addTodolistHandle}/>
             </Grid>
             <Grid container spacing={3} style={{flexWrap: 'nowrap', overflowX: 'scroll'}}>
                 {todolists.map(tl => {

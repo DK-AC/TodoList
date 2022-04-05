@@ -19,13 +19,17 @@ const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...
 
 export const AddItemFormStories = Template.bind({});
 
+const asyncCallback = async (...payload: any[]) => {
+    action('Button inside form clicked')(...payload)
+}
+
 AddItemFormStories.args = {
-    callback: action('form is added'),
+    callback: asyncCallback
 };
 
 export const AddItemFormDisabledStories = Template.bind({});
 
 AddItemFormDisabledStories.args = {
-    callback: action('button is disabled'),
+    callback: asyncCallback,
     disabled: true
 };
