@@ -43,16 +43,16 @@ export const removeTodolist = createAsyncThunk<{ todolistId: string }, string, T
     return {todolistId}
 })
 
-export const updateTodolistTitle = createAsyncThunk('todolists/updateTodolist',
+export const updateTodolistTitle = createAsyncThunk('todolists/updateTodolistTitle',
     async (payload: { todolistId: string, title: string }, thunkAPI) => {
         thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await todolistsApi.updateTodolist(payload.todolistId, payload.title)
             if (res.data.resultCode === 0) {
                 thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
-                return payload
+                return {todolistId: payload.todolistId, title: payload.title}
             } else {
-                handleAsyncServerAppError(res.data, thunkAPI)
+                return handleAsyncServerAppError(res.data, thunkAPI)
             }
         } catch (err: any) {
             return handleAsyncNetworkError(err, thunkAPI, false)

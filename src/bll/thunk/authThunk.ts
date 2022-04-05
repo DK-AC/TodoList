@@ -1,64 +1,49 @@
 import {authApi} from "../../dal/api/authApi";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {LoginValuesType} from "../types/authTypes";
 import {setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {AxiosError} from "axios";
 import {FieldErrorType} from "../types/taskTypes";
+import {handleAsyncNetworkError, handleAsyncServerAppError} from "../../utils/error-utils/error-utils";
 
 export const login = createAsyncThunk<undefined, LoginValuesType, { rejectValue: { errors: string[], fieldsErrors?: FieldErrorType[] } }>('auth/login',
-    async (payload, {dispatch, rejectWithValue}) => {
-        dispatch(setAppStatusAC({appStatus: "loading"}))
+    async (payload, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logIn(payload)
             if (res.data.resultCode === 0) {
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return
             } else {
-                handleServerAppError(res.data, dispatch)
-                return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
+                return handleAsyncServerAppError(res.data, thunkAPI)
             }
         } catch (err: any) {
-            const error: AxiosError = err
-            handleNetworkAppError(error, dispatch)
-            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+            return handleAsyncNetworkError(err, thunkAPI)
         }
     })
 export const isAuth = createAsyncThunk('auth/isAuth',
-    async (payload, {dispatch, rejectWithValue}) => {
-        dispatch(setAppStatusAC({appStatus: "loading"}))
-        try {
-            const res = await authApi.me()
-            if (res.data.resultCode === 0) {
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
-                dispatch(setIsLoggedInAC({isLoggedIn: true}))
-                return
-            } else {
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
-            }
-        } catch (err: any) {
-            const error: AxiosError = err
-            handleNetworkAppError(error, dispatch)
-            return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+    async (payload, thunkAPI) => {
+        const res = await authApi.me()
+        if (res.data.resultCode === 0) {
+            thunkAPI.dispatch(setIsLoggedInAC({isLoggedIn: true}))
+        } else {
         }
     })
 
+
 export const logout = createAsyncThunk('auth/logout',
-    async (payload, {dispatch, rejectWithValue}) => {
-        dispatch(setAppStatusAC({appStatus: "loading"}))
+    async (payload, thunkAPI) => {
+        thunkAPI.dispatch(setAppStatusAC({appStatus: "loading"}))
         try {
             const res = await authApi.logOut()
             if (res.data.resultCode === 0) {
-                dispatch(setAppStatusAC({appStatus: "succeeded"}))
+                thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return
             } else {
-                handleServerAppError(res.data, dispatch)
-                return rejectWithValue(null)
+                return handleAsyncServerAppError(res.data, thunkAPI)
             }
-        } catch (err:any) {
-            handleNetworkAppError(err, dispatch)
-            return rejectWithValue(null)
+        } catch (err: any) {
+            return handleAsyncNetworkError(err, thunkAPI)
         }
     })
 
