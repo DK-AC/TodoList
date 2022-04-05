@@ -1,13 +1,10 @@
 import {ActionCreatorsMapObject, bindActionCreators, combineReducers} from "redux";
-import {todolistsReducer} from "./reducers/todolistsReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {tasksReducer} from "./reducers/tasksReducer";
 import thunk from "redux-thunk";
-import {appReducer} from "./reducers/appReducer";
-import {authReducer} from "./reducers/authReducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {useMemo} from "react";
 import {FieldErrorType} from "./types/taskTypes";
+import {appReducer, authReducer, tasksReducer, todolistsReducer} from "./reducers";
 
 export const rootReducer = combineReducers({
     todolists: todolistsReducer,
