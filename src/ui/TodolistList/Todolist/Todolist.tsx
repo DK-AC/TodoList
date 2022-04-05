@@ -5,7 +5,7 @@ import {Delete} from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
 import {useActions, useAppDispatch, useAppSelector} from "../../../bll/store";
-import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {AddItemForm, AddItemFormHelperType} from "../../../components/AddItemForm/AddItemForm";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {ButtonColorType, FilterTodolistType, TodolistType} from "../../../bll/types/todolistTypes";
 import {tasksActions, todolistsActions} from "../../../bll/thunk";
@@ -13,12 +13,13 @@ import Paper from "@mui/material/Paper";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 
+
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
     const dispatch = useAppDispatch()
 
     const {updateTodolistTitle, removeTodolist, changeTodolistFilterAC} = useActions(todolistsActions)
-    const {fetchTasks, addTask} = useActions(tasksActions)
+    const {fetchTasks} = useActions(tasksActions)
 
     let tasks = useAppSelector<TaskType[]>(state => state.tasks[todo.id])
 
@@ -35,7 +36,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
     const changeTodolistTitleHandle = (title: string) => {
         updateTodolistTitle({todolistId: todo.id, title})
     }
-    const addTaskHandle = useCallback(async (title: string) => {
+    const addTaskHandle = useCallback(async (title: string, helper: AddItemFormHelperType) => {
         let thunk = tasksActions.addTask({todolistId: todo.id, title})
 
         const action = await dispatch(thunk)
@@ -43,10 +44,12 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         if (tasksActions.addTask.rejected.match(action)) {
             if (action.payload?.errors?.length) {
                 const error = action.payload.errors[0]
-                throw new Error(error)
+                helper.setError(error)
             } else {
-                throw new Error('Some error occurred')
+                helper.setError('Some error occurred')
             }
+        } else {
+            helper.setTitle('')
         }
     }, [])
     const changeTodolistFilterHandle = (filter: FilterTodolistType) => {

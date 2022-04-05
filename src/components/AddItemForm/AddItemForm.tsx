@@ -3,8 +3,13 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
+export type AddItemFormHelperType = {
+    setTitle: (title: string) => void
+    setError: (error: string) => void
+}
+
 type AddItemFormPropsType = {
-    callback: (title: string) => Promise<any>
+    callback: (title: string, helper: AddItemFormHelperType) => void
     disabled?: boolean
 }
 
@@ -13,14 +18,9 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addItem = async () => {
+    const addItem = () => {
         if (title.trim() !== '') {
-            try {
-                await callback(title)
-                setTitle('')
-            } catch (err: any) {
-                setError(err.message)
-            }
+            callback(title, {setTitle, setError})
         } else {
             setError('Title is required')
         }
