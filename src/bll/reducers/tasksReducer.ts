@@ -1,8 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {TodolistType} from "../types/todolistTypes";
 import {addTask, fetchTasks, removeTask, updateTask} from "../thunk/taskThunk";
 import {addTodolist, fetchTodolists} from "../thunk/todolistThunk";
-import {TasksStateType} from "../../dal/api/types";
+import {TasksStateType, TodolistType} from "../../dal/api/types";
 
 const initialTasksState: TasksStateType = {}
 

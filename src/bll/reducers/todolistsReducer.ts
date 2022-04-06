@@ -1,7 +1,6 @@
-import {FilterTodolistType, TodolistType} from "../types/todolistTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {StatusType} from "../types/appTypes";
 import {addTodolist, fetchTodolists, removeTodolist, updateTodolistTitle} from "../thunk/todolistThunk";
+import {FilterTodolistType, StatusType, TodolistType} from "../../dal/api/types";
 
 export const initialTodolistsState: TodolistType[] = []
 

@@ -6,10 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import {Task} from "../../Task/Task";
 import {useActions, useAppDispatch, useAppSelector} from "../../../bll/store";
 import {AddItemForm, AddItemFormHelperType} from "../../../components/AddItemForm/AddItemForm";
-import {ButtonColorType, FilterTodolistType, TodolistType} from "../../../bll/types/todolistTypes";
 import {tasksActions, todolistsActions} from "../../../bll/thunk";
 import Paper from "@mui/material/Paper";
-import {TaskType} from "../../../dal/api/types";
+import {ButtonColorType, FilterTodolistType, TaskType, TodolistType} from "../../../dal/api/types";
 
 type PropsType = { todo: TodolistType, demo?: boolean }
 

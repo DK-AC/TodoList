@@ -1,5 +1,5 @@
-import {StatusType} from "../types/appTypes";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {StatusType} from "../../dal/api/types";
 
 export const initialAppState = {
     appStatus: 'idle' as StatusType,

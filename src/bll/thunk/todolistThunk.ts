@@ -3,8 +3,8 @@ import {handleAsyncNetworkError, handleAsyncServerAppError} from "../../utils/er
 import {setAppStatusAC} from "../reducers/appReducer";
 import {changeTodolistStatusAC} from "../reducers/todolistsReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {TodolistType} from "../types/todolistTypes";
 import {ThunkErrorType} from "../store";
+import {TodolistType} from "../../dal/api/types";
 
 export const fetchTodolists = createAsyncThunk<{ todolists: TodolistType[] }, undefined, ThunkErrorType>('todolists/fetchTodolists',
     async (payload, thunkAPI) => {
