@@ -26,7 +26,7 @@ export const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, 
                 thunkAPI.dispatch(setAppStatusAC({appStatus: "succeeded"}))
                 return {todolist: res.data.data.item}
             } else {
-                return handleAsyncServerAppError(res.data, thunkAPI, false)
+                return handleAsyncServerAppError(res.data, thunkAPI, true)
             }
         } catch (err: any) {
             return handleAsyncNetworkError(err, thunkAPI, false)
