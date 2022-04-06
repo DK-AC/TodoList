@@ -7,6 +7,8 @@ import {Todolist} from "./Todolist/Todolist";
 import {useActions, useAppDispatch} from "../../utils/redux-utils";
 import {useSelector} from "react-redux";
 import {selectIsLoggedIn, selectTodolists} from "../../bll/selectors";
+import {AppRootStateType} from "../../utils/types";
+import {TasksStateType} from "../../dal/api/types";
 
 type PropsType = { demo?: boolean }
 
@@ -18,6 +20,7 @@ export const TodolistsList = ({demo}: PropsType) => {
     const {fetchTodolists} = useActions(todolistsActions)
 
     const todolists = useSelector(selectTodolists)
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
     const addTodolistHandle = useCallback(async (title: string, helper: AddItemFormHelperType) => {
@@ -55,10 +58,11 @@ export const TodolistsList = ({demo}: PropsType) => {
             </Grid>
             <Grid container spacing={3} style={{flexWrap: 'nowrap', overflowX: 'scroll'}}>
                 {todolists.map(tl => {
+                    let allTodolistTasks = tasks[tl.id]
                     return (
                         <Grid item key={tl.id}>
                             <div style={{width: '300px'}}>
-                                <Todolist todo={tl} demo={demo}/>
+                                <Todolist todo={tl} demo={demo} tasks={allTodolistTasks}/>
                             </div>
                         </Grid>)
                 })}

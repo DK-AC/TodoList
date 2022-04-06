@@ -12,8 +12,7 @@ import {useActions, useAppDispatch} from "../../../utils/redux-utils";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../utils/types";
 
-type PropsType = { todo: TodolistType, demo?: boolean }
-
+type PropsType = { todo: TodolistType, demo?: boolean, tasks: TaskType[] }
 
 export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
 
