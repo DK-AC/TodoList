@@ -18,9 +18,8 @@ import {authActions} from "../../bll/thunk";
 import {useActions} from "../../utils/redux-utils";
 import {useSelector} from "react-redux";
 
-type PropsType = { demo?: boolean }
 
-export const AppBarContainer = ({demo}: PropsType) => {
+export const AppBarContainer = () => {
 
     const {logout, isAuth} = useActions(authActions)
 
@@ -30,7 +29,9 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
 
     useEffect(() => {
-        if (!demo) isAuth()
+        if (!isInitialized) {
+            isAuth()
+        }
     }, [])
 
     const handleLogOut = useCallback(() => {
@@ -58,7 +59,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
             {status === 'loading' && <LinearProgress/>}
             <Container fixed>
                 <Routes>
-                    <Route path='/' element={<TodolistsList demo={demo}/>}/>
+                    <Route path='/' element={<TodolistsList demo={false}/>}/>
                     <Route path='/login' element={<Login/>}/>
                 </Routes>
             </Container>

@@ -27,7 +27,9 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         if (demo) {
             return
         }
-        fetchTasks(todo.id)
+        if (!tasks.length) {
+            fetchTasks(todo.id)
+        }
     }, [])
 
     const removeTodolistHandle = () => {

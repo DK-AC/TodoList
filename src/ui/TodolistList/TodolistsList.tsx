@@ -44,7 +44,9 @@ export const TodolistsList = ({demo}: PropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        fetchTodolists()
+        if (!todolists.length) {
+            fetchTodolists()
+        }
     }, [])
 
     if (!isLoggedIn) {

@@ -11,7 +11,7 @@ export default {
 } as ComponentMeta<typeof AppBarContainer>;
 
 
-const Template: ComponentStory<typeof App> = () => <App demo={true}/>
+const Template: ComponentStory<typeof App> = () => <App/>
 
 
 export const AppBarContainerStories = Template.bind({});
