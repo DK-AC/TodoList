@@ -18,12 +18,12 @@ export const authSlices = createSlice({
         builder.addCase(login.fulfilled, (state) => {
             state.isLoggedIn = true
         })
-        builder.addCase(logout.fulfilled, (state) => {
-            state.isLoggedIn = false
-        })
-        builder.addCase(isAuth.fulfilled, (state) => {
-            state.isInitialized = true
-        })
+            .addCase(logout.fulfilled, (state) => {
+                state.isLoggedIn = false
+            })
+            .addCase(isAuth.fulfilled, (state) => {
+                state.isInitialized = true
+            })
     }
 })
 

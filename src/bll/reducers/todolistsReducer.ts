@@ -21,17 +21,17 @@ export const todolistSlices = createSlice({
         builder.addCase(addTodolist.fulfilled, (state, action) => {
             state.unshift({...action.payload.todolist, filter: 'all', status: 'idle'})
         })
-        builder.addCase(fetchTodolists.fulfilled, (state, action) => {
-            return action.payload.todolists.map(todo => ({...todo, filter: 'all', status: 'idle'}))
-        })
-        builder.addCase(removeTodolist.fulfilled, (state, action) => {
-            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index !== -1) state.splice(index, 1)
-        })
-        builder.addCase(updateTodolistTitle.fulfilled, (state, action) => {
-            const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index !== -1) state[index].title = action.payload.title
-        })
+            .addCase(fetchTodolists.fulfilled, (state, action) => {
+                return action.payload.todolists.map(todo => ({...todo, filter: 'all', status: 'idle'}))
+            })
+            .addCase(removeTodolist.fulfilled, (state, action) => {
+                const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+                if (index !== -1) state.splice(index, 1)
+            })
+            .addCase(updateTodolistTitle.fulfilled, (state, action) => {
+                const index = state.findIndex(todo => todo.id === action.payload.todolistId)
+                if (index !== -1) state[index].title = action.payload.title
+            })
     }
 })
 
