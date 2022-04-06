@@ -1,3 +1,5 @@
 import * as selectors from './selectors'
 
-export {selectors}
+const {selectError, selectStatus, selectIsInitialized, selectIsLoggedIn, selectTodolists} = selectors
+
+export {selectIsInitialized, selectStatus, selectError, selectIsLoggedIn, selectTodolists}

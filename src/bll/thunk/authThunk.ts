@@ -1,10 +1,10 @@
 import {setIsLoggedInAC} from "../reducers/authReducer";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {handleAsyncNetworkError, handleAsyncServerAppError} from "../../utils/error-utils/error-utils";
-import {ThunkErrorType} from "../store";
+import {handleAsyncNetworkError, handleAsyncServerAppError} from "../../utils/error-utils";
 import { authApi } from "../../dal/api";
 import { LoginValuesType } from "../../dal/api/types";
+import {ThunkErrorType} from "../../utils/types";
 
 export const login = createAsyncThunk<undefined, LoginValuesType, ThunkErrorType>('auth/login',
     async (payload, thunkAPI) => {

@@ -1,9 +1,10 @@
 import React from "react";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
-import {AppRootStateType, rootReducer} from "../bll/store";
+import { rootReducer} from "../bll/store";
 import {HashRouter} from "react-router-dom";
 import {configureStore} from "@reduxjs/toolkit";
+import {AppRootStateType} from "../utils/types";
 
 export const initialGlobalState: AppRootStateType = {
     todolists: [

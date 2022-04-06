@@ -1,6 +1,6 @@
-import {setAppErrorAC, setAppStatusAC} from "../../bll/reducers/appReducer";
+import {setAppErrorAC, setAppStatusAC} from "../bll/reducers/appReducer";
 import {AxiosError} from "axios";
-import {ResponseType} from "../../dal/api/types";
+import {ResponseType} from "../dal/api/types";
 
 type ThunkAPIType = {
     dispatch: (action: any) => any

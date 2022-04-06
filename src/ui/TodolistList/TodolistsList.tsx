@@ -1,11 +1,12 @@
 import React, {useCallback, useEffect} from "react";
-import {useActions, useAppDispatch, useAppSelector} from "../../bll/store";
 import Grid from "@mui/material/Grid";
 import {AddItemForm, AddItemFormHelperType} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
-import {selectors} from "../../bll/selectors";
 import {todolistsActions} from "../../bll/thunk";
 import {Todolist} from "./Todolist/Todolist";
+import {useActions, useAppDispatch} from "../../utils/redux-utils";
+import {useSelector} from "react-redux";
+import {selectIsLoggedIn, selectTodolists} from "../../bll/selectors";
 
 type PropsType = { demo?: boolean }
 
@@ -16,8 +17,8 @@ export const TodolistsList = ({demo}: PropsType) => {
 
     const {fetchTodolists} = useActions(todolistsActions)
 
-    const todolists = useAppSelector(selectors.selectTodolists)
-    const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
+    const todolists = useSelector(selectTodolists)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     const addTodolistHandle = useCallback(async (title: string, helper: AddItemFormHelperType) => {
         let thunk = todolistsActions.addTodolist(title)

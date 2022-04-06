@@ -3,9 +3,9 @@ import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import {Delete} from "@mui/icons-material";
 import Checkbox from '@mui/material/Checkbox';
-import {useActions} from "../../bll/store";
 import {tasksActions} from "../../bll/thunk";
 import {TaskType} from "../../dal/api/types";
+import {useActions} from "../../utils/redux-utils";
 
 type TaskPropsType = { todolistId: string, task: TaskType }
 

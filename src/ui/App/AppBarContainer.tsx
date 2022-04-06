@@ -7,15 +7,16 @@ import Button from "@mui/material/Button";
 import AppBar from '@mui/material/AppBar';
 import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
-import {useActions, useAppSelector} from "../../bll/store";
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
 import {Route, Routes} from "react-router-dom";
 import {TodolistsList} from "../TodolistList/TodolistsList";
 import {Login} from "../Login/Login";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
-import {selectors} from "../../bll/selectors";
+import {selectIsInitialized, selectIsLoggedIn, selectStatus} from "../../bll/selectors";
 import {authActions} from "../../bll/thunk";
+import {useActions} from "../../utils/redux-utils";
+import {useSelector} from "react-redux";
 
 type PropsType = { demo?: boolean }
 
@@ -23,9 +24,9 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
     const {logout, isAuth} = useActions(authActions)
 
-    const status = useAppSelector(selectors.selectStatus)
-    const isInitialized = useAppSelector(selectors.selectIsInitialized)
-    const isLoggedIn = useAppSelector(selectors.selectIsLoggedIn)
+    const status = useSelector(selectStatus)
+    const isInitialized = useSelector(selectIsInitialized)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
 
     useEffect(() => {
