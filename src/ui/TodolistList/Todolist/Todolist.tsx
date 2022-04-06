@@ -94,7 +94,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
                     return <Task key={todo.id + task.id} todolistId={todo.id} task={task}/>
                 })}
 
-                {!tasksForTodolist.length && <div style={{padding: '10px', color: "gray"}}>Create your first task</div>}
+                {!tasksForTodolist.length && <div style={{padding: '10px', color: "gray"}}>No task</div>}
 
             </div>
             <div style={{paddingTop: '10px'}}>
