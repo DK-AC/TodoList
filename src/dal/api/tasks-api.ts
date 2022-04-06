@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
-import {ModelTaskType, ResponseType, TaskResponseType, TaskType} from "../../bll/types/taskTypes";
+import {ModelTaskType, TaskResponseType, TaskType} from "../../bll/types/taskTypes";
+import {ResponseType} from "./types";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',

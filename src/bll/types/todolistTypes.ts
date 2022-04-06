@@ -1,5 +1,5 @@
 import {StatusType} from "./appTypes";
-import {ResponseType} from "./taskTypes";
+import {ResponseType} from "../../dal/api/types";
 
 export type RepeatTodoType = ResponseType<{ item: TodolistType }>
 export type TodolistType = {
