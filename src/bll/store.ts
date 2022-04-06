@@ -3,8 +3,8 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import thunk from "redux-thunk";
 import {configureStore} from "@reduxjs/toolkit";
 import {useMemo} from "react";
-import {FieldErrorType} from "./types/taskTypes";
 import {appReducer, authReducer, tasksReducer, todolistsReducer} from "./reducers";
+import {FieldErrorType} from "../dal/api/types";
 
 export const rootReducer = combineReducers({
     todolists: todolistsReducer,

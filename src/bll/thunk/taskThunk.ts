@@ -1,9 +1,9 @@
 import {AppRootStateType, ThunkErrorType} from "../store";
 import {tasksApi} from "../../dal/api/";
-import {ModelTaskType, TaskType} from "../types/taskTypes";
 import {handleAsyncNetworkError, handleAsyncServerAppError,} from "../../utils/error-utils/error-utils";
 import {setAppStatusAC} from "../reducers/appReducer";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {ModelTaskType, TaskType} from "../../dal/api/types";
 
 export const fetchTasks = createAsyncThunk<{ tasks: TaskType[], todolistId: string }, string, ThunkErrorType>('tasks/fetchTasks',
     async (todolistId, thunkAPI) => {
