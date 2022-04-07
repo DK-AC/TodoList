@@ -15,7 +15,7 @@ import {Login} from "../Login/Login";
 import {useDispatch} from "react-redux";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
-import {isAuthTC, logOutTC} from "../../bll/thunk/authThunk";
+import {initializeApp, logOutTC} from "../../bll/thunk/authThunk";
 
 type PropsType = { demo?: boolean }
 
@@ -29,7 +29,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
 
 
     useEffect(() => {
-        dispatch(isAuthTC())
+        dispatch(initializeApp())
     }, [])
 
     const handleLogOut = useCallback(() => {

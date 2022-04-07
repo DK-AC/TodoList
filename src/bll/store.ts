@@ -5,6 +5,9 @@ import {tasksReducer} from "./reducers/tasksReducer";
 import thunk from "redux-thunk";
 import {appReducer} from "./reducers/appReducer";
 import {authReducer} from "./reducers/authReducer";
+import createSagaMiddleware from "redux-saga";
+import {takeEvery} from "redux-saga/effects";
+import {isAuthAppWorkerSaga} from "./thunk/authThunk";
 
 declare global {
     interface Window {
@@ -20,11 +23,22 @@ export const appRootState = combineReducers({
     auth: authReducer
 })
 
-export const store = createStore(appRootState, composeEnhancers(applyMiddleware(thunk)))
+const sagaMiddleware = createSagaMiddleware()
+
+export const store = createStore(appRootState, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)))
 
 export type AppRootStateType = ReturnType<typeof appRootState>
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
+sagaMiddleware.run(rootWatcher)
+
+function* rootWatcher() {
+    yield takeEvery('APP/INITIALIZE-APP', isAuthAppWorkerSaga)
+}
+
 
 // @ts-ignore
 window.store = store
+
+
+
