@@ -8,7 +8,7 @@ import {authReducer} from "./reducers/authReducer";
 import createSagaMiddleware from "redux-saga";
 import {authWatcherSagas} from "./sagas/sagas_auth";
 import {taskWatcherSagas} from "./sagas/sagas_task";
-import {all, takeEvery} from "redux-saga/effects";
+import {all} from "redux-saga/effects";
 
 declare global {
     interface Window {

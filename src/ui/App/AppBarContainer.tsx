@@ -9,13 +9,13 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Container from "@mui/material/Container";
 import {useAppSelector} from "../../bll/store";
 import {ErrorSnackbar} from "../../components/ErrorSnackbar/ErrorSnackbar";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {TodolistsList} from "../TodolistList/TodolistsList";
 import {Login} from "../Login/Login";
 import {useDispatch} from "react-redux";
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './AppBarContainer.module.css'
-import {initializeApp, logOutTC} from "../../bll/sagas/sagas_auth";
+import {initializeApp, logout} from "../../bll/sagas/sagas_auth";
 
 type PropsType = { demo?: boolean }
 
@@ -33,7 +33,7 @@ export const AppBarContainer = ({demo}: PropsType) => {
     }, [])
 
     const handleLogOut = useCallback(() => {
-        dispatch(logOutTC())
+        dispatch(logout())
     }, [isInitialized])
 
     if (!isInitialized) {

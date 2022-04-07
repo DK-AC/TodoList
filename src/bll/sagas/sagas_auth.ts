@@ -1,7 +1,5 @@
-import {Dispatch} from "redux";
 import {authApi} from "../../dal/api/authApi";
 import {setAppStatusAC} from "../actions/appActions";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
 import {LoginValuesType} from "../types/authTypes";
 import {call, put, takeEvery} from 'redux-saga/effects'
@@ -29,14 +27,25 @@ export function* loginAppWorkerSaga(action: ReturnType<typeof login>) {
     }
 }
 
+export function* logoutWorkerSaga() {
+    yield put(setAppStatusAC("loading"))
+    const res: AxiosResponse<ResponseType> = yield call(authApi.logOut)
+    try {
+        yield put(setIsLoggedInAC(false))
+        yield put(setAppStatusAC("succeeded"))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const initializeApp = () => ({type: 'AUTH/INITIALIZE_APP'})
 export const login = (data: LoginValuesType) => ({type: 'AUTH/LOGIN_APP', data})
-
+export const logout = () => ({type: 'AUTH/LOGOUT_APP'})
 
 export function* authWatcherSagas() {
     yield takeEvery('AUTH/INITIALIZE_APP', isAuthAppWorkerSaga)
     yield takeEvery('AUTH/LOGIN_APP', loginAppWorkerSaga)
+    yield takeEvery('AUTH/LOGOUT_APP', logoutWorkerSaga)
 
 }
 
@@ -77,22 +86,22 @@ export function* authWatcherSagas() {
 //             }
 //         )
 // }
-export const logOutTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC("loading"))
-    authApi.logOut()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
-                dispatch(setAppStatusAC("succeeded"))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('idle'))
-            }
-        )
-}
+// export const logOutTC = () => (dispatch: Dispatch) => {
+//     dispatch(setAppStatusAC("loading"))
+//     authApi.logOut()
+//         .then(res => {
+//             if (res.data.resultCode === 0) {
+//                 dispatch(setIsLoggedInAC(false))
+//                 dispatch(setAppStatusAC("succeeded"))
+//             } else {
+//                 handleServerAppError(res.data, dispatch)
+//             }
+//         })
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC('idle'))
+//             }
+//         )
+// }
