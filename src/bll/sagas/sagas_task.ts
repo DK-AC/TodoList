@@ -17,7 +17,7 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
     }
 }
 
-export function* addTaskWorkerSaga(action: any) {
+export function* addTaskWorkerSaga(action: ReturnType<typeof addTask>) {
     yield put(setAppStatusAC("loading"))
     const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.createTask, action.todolistId, action.title)
     try {

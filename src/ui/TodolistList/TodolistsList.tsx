@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
 import {useDispatch} from "react-redux";
-import {addTodolistTC, setTodolistsTC} from "../../bll/sagas/todolistThunk";
+import {addTodolistTC, fetchTodolists} from "../../bll/sagas/sagas_todolist";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 
@@ -15,7 +15,6 @@ export const TodolistsList = ({demo}: PropsType) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
 
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -28,8 +27,8 @@ export const TodolistsList = ({demo}: PropsType) => {
         if (demo || !isLoggedIn) {
             return
         }
-        dispatch(setTodolistsTC(todolists))
-    }, [dispatch])
+        dispatch(fetchTodolists())
+    }, [])
 
     if (!isLoggedIn) {
         navigate('/login')

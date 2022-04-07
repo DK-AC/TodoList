@@ -10,21 +10,43 @@ import {
 import {ActionsTodolistType, TodolistType} from "../types/todolistTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {call, put, takeEvery} from "redux-saga/effects";
+import {ResponseType} from "../types/taskTypes";
 
-export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
-    dispatch(setAppStatusAC("loading"))
-    todolistsApi.getTodolists()
-        .then(res => {
-            dispatch(setTodolistsAC(res.data))
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('idle'))
-            }
-        )
+//sagas
+export function* fetchTodolistsWorkerSaga() {
+    yield put(setAppStatusAC('loading'))
+    const res: ResponseType<TodolistType[]> = yield call(todolistsApi.getTodolists)
+    try {
+        yield put(setTodolistsAC(res.data))
+        yield put(setAppStatusAC('succeeded'))
+    } catch (error) {
+        console.log(error)
+    }
 }
+
+export const fetchTodolists = () => ({type: 'TODOLISTS/FETCH_TODOLISTS'})
+
+export function* todolistWatcherSagas() {
+    yield takeEvery('TODOLISTS/FETCH_TODOLISTS', fetchTodolistsWorkerSaga)
+}
+
+
+//thunks
+// export const setTodolistsTC = (todolists: TodolistType[]) => (dispatch: Dispatch<ActionsTodolistType>) => {
+//     dispatch(setAppStatusAC("loading"))
+//     todolistsApi.getTodolists()
+//         .then(res => {
+//             dispatch(setTodolistsAC(res.data))
+//         })
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC('idle'))
+//             }
+//         )
+// }
 export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsTodolistType>) => {
     dispatch(setAppStatusAC("loading"))
     todolistsApi.createTodolist(title)

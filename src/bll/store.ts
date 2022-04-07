@@ -9,6 +9,7 @@ import createSagaMiddleware from "redux-saga";
 import {authWatcherSagas} from "./sagas/sagas_auth";
 import {taskWatcherSagas} from "./sagas/sagas_task";
 import {all} from "redux-saga/effects";
+import {todolistWatcherSagas} from "./sagas/sagas_todolist";
 
 declare global {
     interface Window {
@@ -34,7 +35,7 @@ export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelecto
 sagaMiddleware.run(rootWatcher)
 
 function* rootWatcher() {
-    yield all([authWatcherSagas(), taskWatcherSagas()])
+    yield all([authWatcherSagas(), taskWatcherSagas(), todolistWatcherSagas()])
 
 }
 
