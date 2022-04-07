@@ -10,10 +10,10 @@ import React, {useEffect} from "react"
 import {useFormik} from "formik";
 import {LoginValuesType} from "../../bll/types/authTypes";
 import {useDispatch} from "react-redux";
-import {logInTC} from "../../bll/thunk/authThunk";
 import {useAppSelector} from "../../bll/store";
 import {useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
+import {login} from "../../bll/sagas/sagas_auth";
 
 
 export const Login = () => {
@@ -53,7 +53,7 @@ export const Login = () => {
                 .required('Required'),
         }),
         onSubmit: values => {
-            dispatch(logInTC(values))
+            dispatch(login(values))
         },
     });
 

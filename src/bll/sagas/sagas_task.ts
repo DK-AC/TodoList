@@ -2,7 +2,7 @@ import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/task
 import {tasksApi} from "../../dal/api/tasks-api";
 import {ModelTaskType, ResponseType, TaskType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
-import {call, put} from "redux-saga/effects";
+import {call, put, takeEvery} from "redux-saga/effects";
 import {AxiosResponse} from "axios";
 
 //sagas
@@ -17,8 +17,6 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
     }
 }
 
-export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', todolistId})
-
 export function* addTaskWorkerSaga(action: any) {
     yield put(setAppStatusAC("loading"))
     const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.createTask, action.todolistId, action.title)
@@ -29,8 +27,6 @@ export function* addTaskWorkerSaga(action: any) {
         console.log(error)
     }
 }
-
-export const addTask = (todolistId: string, title: string) => ({type: 'TASKS/ADD_TASK', todolistId, title})
 
 export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
     yield put(setAppStatusAC("loading"))
@@ -43,30 +39,34 @@ export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
     }
 }
 
-export const removeTask = (todolistId: string, taskId: string) => ({type: 'TASKS/REMOVE_TASK', todolistId, taskId})
-
 export function* updateTaskWorkerSaga(action: ReturnType<typeof updateTask>) {
 
     yield put(setAppStatusAC("loading"))
-    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.updateTask, action.todolistId, action.taskId, {
-
-        title: action.model.title,
-        status: action.model.status,
-    })
+    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.updateTask, action.todolistId, action.taskId,
+        {title: action.model.title, status: action.model.status})
     try {
-        yield put(updateTaskAC(action.todolistId, action.taskId, {
-            ...action.model,
-            title: action.model.title,
-            status: action.model.status,
-        }))
+        yield put(updateTaskAC(action.todolistId, action.taskId,
+            {title: action.model.title, status: action.model.status}))
         yield put(setAppStatusAC("succeeded"))
     } catch (error) {
         console.log(error)
     }
 }
 
+export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', todolistId})
+export const addTask = (todolistId: string, title: string) => ({type: 'TASKS/ADD_TASK', todolistId, title})
+export const removeTask = (todolistId: string, taskId: string) => (
+    {type: 'TASKS/REMOVE_TASK', todolistId, taskId})
 export const updateTask = (todolistId: string, taskId: string, model: ModelTaskType) => (
     {type: 'TASKS/UPDATE_TASK', todolistId, taskId, model})
+
+export function* taskWatcherSagas() {
+    yield takeEvery('TASKS/FETCH_TASKS', fetchTasksWorkerSaga)
+    yield takeEvery('TASKS/ADD_TASK', addTaskWorkerSaga)
+    yield takeEvery('TASKS/REMOVE_TASK', removeTaskWorkerSaga)
+    yield takeEvery('TASKS/UPDATE_TASK', updateTaskWorkerSaga)
+}
+
 
 //thunks
 // export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {

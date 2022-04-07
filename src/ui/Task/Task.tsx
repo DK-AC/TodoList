@@ -5,7 +5,7 @@ import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import Checkbox from '@mui/material/Checkbox';
 import {TaskType} from '../../bll/types/taskTypes';
-import {removeTask, updateTask} from "../../bll/thunk/taskThunk";
+import {removeTask, updateTask} from "../../bll/sagas/sagas_task";
 
 type TaskPropsType = { todoId: string, filteredTask: TaskType }
 

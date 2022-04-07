@@ -8,8 +8,8 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../../bll/store";
 import {changeTodolistFilterAC} from "../../../bll/actions/todolistActions";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
-import {deleteTodolistTC, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
-import {addTask, fetchTasks} from "../../../bll/thunk/taskThunk";
+import {deleteTodolistTC, updateTodolistTC} from "../../../bll/sagas/todolistThunk";
+import {addTask, fetchTasks} from "../../../bll/sagas/sagas_task";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
 

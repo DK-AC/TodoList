@@ -4,10 +4,11 @@ import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
 import {LoginValuesType} from "../types/authTypes";
-import {call, put} from 'redux-saga/effects'
+import {call, put, takeEvery} from 'redux-saga/effects'
 import {AxiosResponse} from "axios";
 import {ResponseType} from "../types/taskTypes";
-//saga
+
+//sagas
 export function* isAuthAppWorkerSaga() {
     const res: AxiosResponse<ResponseType> = yield call(authApi.me)
     if (res.data.resultCode === 0) {
@@ -17,8 +18,29 @@ export function* isAuthAppWorkerSaga() {
     yield put(setIsInitializedAC(true))
 }
 
-export const initializeApp = () => ({type: 'APP/INITIALIZE-APP'})
-//thunk
+export function* loginAppWorkerSaga(action: ReturnType<typeof login>) {
+    yield put(setAppStatusAC("loading"))
+    const res: AxiosResponse<ResponseType<{ userId?: number }>> = yield call(authApi.logIn, action.data)
+    try {
+        yield put(setIsLoggedInAC(true))
+        yield put(setAppStatusAC('succeeded'))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const initializeApp = () => ({type: 'AUTH/INITIALIZE_APP'})
+export const login = (data: LoginValuesType) => ({type: 'AUTH/LOGIN_APP', data})
+
+
+export function* authWatcherSagas() {
+    yield takeEvery('AUTH/INITIALIZE_APP', isAuthAppWorkerSaga)
+    yield takeEvery('AUTH/LOGIN_APP', loginAppWorkerSaga)
+
+}
+
+//thunks
 // export const isAuthTC = () => (dispatch: Dispatch) => {
 //     authApi.me()
 //         .then(res => {
@@ -36,25 +58,25 @@ export const initializeApp = () => ({type: 'APP/INITIALIZE-APP'})
 //             }
 //         )
 // }
-export const logInTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC("loading"))
-    authApi.logIn(data)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('idle'))
-            }
-        )
-}
+// export const logInTC = (data: LoginValuesType) => (dispatch: Dispatch) => {
+//     dispatch(setAppStatusAC("loading"))
+//     authApi.logIn(data)
+//         .then(res => {
+//             if (res.data.resultCode === 0) {
+//                 dispatch(setIsLoggedInAC(true))
+//                 dispatch(setAppStatusAC('succeeded'))
+//             } else {
+//                 handleServerAppError(res.data, dispatch)
+//             }
+//         })
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC('idle'))
+//             }
+//         )
+// }
 export const logOutTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"))
     authApi.logOut()
