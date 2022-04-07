@@ -1,10 +1,7 @@
-import {Dispatch} from "redux";
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
-import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ActionsTaskType, ModelTaskType, ResponseType, TaskType} from "../types/taskTypes";
+import {ModelTaskType, ResponseType, TaskType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
-import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {call, put} from "redux-saga/effects";
 import {AxiosResponse} from "axios";
 
@@ -22,7 +19,6 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
 
 export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', todolistId})
 
-// todoListId: string, title: string
 export function* addTaskWorkerSaga(action: any) {
     yield put(setAppStatusAC("loading"))
     const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.createTask, action.todolistId, action.title)
@@ -48,6 +44,29 @@ export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
 }
 
 export const removeTask = (todolistId: string, taskId: string) => ({type: 'TASKS/REMOVE_TASK', todolistId, taskId})
+
+export function* updateTaskWorkerSaga(action: ReturnType<typeof updateTask>) {
+
+    yield put(setAppStatusAC("loading"))
+    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.updateTask, action.todolistId, action.taskId, {
+
+        title: action.model.title,
+        status: action.model.status,
+    })
+    try {
+        yield put(updateTaskAC(action.todolistId, action.taskId, {
+            ...action.model,
+            title: action.model.title,
+            status: action.model.status,
+        }))
+        yield put(setAppStatusAC("succeeded"))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const updateTask = (todolistId: string, taskId: string, model: ModelTaskType) => (
+    {type: 'TASKS/UPDATE_TASK', todolistId, taskId, model})
 
 //thunks
 // export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
@@ -97,39 +116,39 @@ export const removeTask = (todolistId: string, taskId: string) => ({type: 'TASKS
 //             }
 //         )
 // }
-export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) =>
-    (dispatch: Dispatch<ActionsTaskType>, getState: () => AppRootStateType) => {
-        const task = getState().tasks[todolistId].find(task => task.id === taskId)
-        if (!task) {
-            console.warn('task not found in the state')
-            return
-        }
-
-        const apiModel: ModelTaskType = {
-            deadline: task.deadline,
-            description: task.description,
-            priority: task.priority,
-            startDate: task.startDate,
-            title: task.title,
-            status: task.status,
-            ...model
-        }
-        dispatch(setAppStatusAC("loading"))
-
-        tasksApi.updateTask(todolistId, taskId, apiModel)
-            .then(res => {
-                if (res.data.resultCode === 0) {
-                    dispatch(updateTaskAC(todolistId, taskId, model))
-                } else {
-                    handleServerAppError(res.data, dispatch)
-                }
-            })
-            .catch(error => {
-                handleNetworkAppError(error, dispatch)
-            })
-            .finally(() => {
-                    dispatch(setAppStatusAC('idle'))
-                }
-            )
-    }
+// export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) =>
+//     (dispatch: Dispatch<ActionsTaskType>, getState: () => AppRootStateType) => {
+//         const task = getState().tasks[todolistId].find(task => task.id === taskId)
+//         if (!task) {
+//             console.warn('task not found in the state')
+//             return
+//         }
+//
+//         const apiModel: ModelTaskType = {
+//             deadline: task.deadline,
+//             description: task.description,
+//             priority: task.priority,
+//             startDate: task.startDate,
+//             title: task.title,
+//             status: task.status,
+//             ...model
+//         }
+//         dispatch(setAppStatusAC("loading"))
+//
+//         tasksApi.updateTask(todolistId, taskId, apiModel)
+//             .then(res => {
+//                 if (res.data.resultCode === 0) {
+//                     dispatch(updateTaskAC(todolistId, taskId, model))
+//                 } else {
+//                     handleServerAppError(res.data, dispatch)
+//                 }
+//             })
+//             .catch(error => {
+//                 handleNetworkAppError(error, dispatch)
+//             })
+//             .finally(() => {
+//                     dispatch(setAppStatusAC('idle'))
+//                 }
+//             )
+//     }
     
