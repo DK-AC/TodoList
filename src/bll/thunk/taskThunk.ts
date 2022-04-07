@@ -2,24 +2,41 @@ import {Dispatch} from "redux";
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ActionsTaskType, ModelTaskType} from "../types/taskTypes";
+import {ActionsTaskType, ModelTaskType, TaskType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {call, put} from "redux-saga/effects";
+import {AxiosResponse} from "axios";
 
-export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC("loading"))
-    tasksApi.getTasks(todolistId)
-        .then(res => {
-            dispatch(getTasksAC(todolistId, res.data.items))
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('idle'))
-            }
-        )
+//sagas
+export function* fetchTasksWorkerSaga(action: any) {
+    yield put(setAppStatusAC("loading"))
+    const res: AxiosResponse<{ items: TaskType[] }> = yield call(tasksApi.getTasks, action.todolistId)
+    try {
+        yield put(getTasksAC(action.todolistId, res.data.items))
+        yield put(setAppStatusAC("succeeded"))
+    } catch (error) {
+        console.log(error)
+    }
 }
+
+export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', todolistId})
+
+//thunks
+// export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+//     dispatch(setAppStatusAC("loading"))
+//     tasksApi.getTasks(todolistId)
+//         .then(res => {
+//             dispatch(getTasksAC(todolistId, res.data.items))
+//         })
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC('idle'))
+//             }
+//         )
+// }
 export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsTaskType>) => {
     dispatch(setAppStatusAC("loading"))
     tasksApi.createTask(todoListId, title)

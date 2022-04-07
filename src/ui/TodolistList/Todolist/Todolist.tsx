@@ -9,7 +9,7 @@ import {useAppSelector} from "../../../bll/store";
 import {changeTodolistFilterAC} from "../../../bll/actions/todolistActions";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {deleteTodolistTC, updateTodolistTC} from "../../../bll/thunk/todolistThunk";
-import {createTaskTC, getTasksTC} from "../../../bll/thunk/taskThunk";
+import {createTaskTC, fetchTasks} from "../../../bll/thunk/taskThunk";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
 
@@ -25,7 +25,7 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         if (demo) {
             return
         }
-        dispatch(getTasksTC(todo.id))
+        dispatch(fetchTasks(todo.id))
     }, [])
 
     const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))

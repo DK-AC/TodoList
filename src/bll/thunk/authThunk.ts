@@ -7,7 +7,7 @@ import {LoginValuesType} from "../types/authTypes";
 import {call, put} from 'redux-saga/effects'
 import {AxiosResponse} from "axios";
 import {ResponseType} from "../types/taskTypes";
-
+//saga
 export function* isAuthAppWorkerSaga() {
     const res: AxiosResponse<ResponseType> = yield call(authApi.me)
     if (res.data.resultCode === 0) {
@@ -18,7 +18,7 @@ export function* isAuthAppWorkerSaga() {
 }
 
 export const initializeApp = () => ({type: 'APP/INITIALIZE-APP'})
-
+//thunk
 // export const isAuthTC = () => (dispatch: Dispatch) => {
 //     authApi.me()
 //         .then(res => {
