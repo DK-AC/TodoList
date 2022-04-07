@@ -8,7 +8,7 @@ import {authReducer} from "./reducers/authReducer";
 import createSagaMiddleware from "redux-saga";
 import {takeEvery} from "redux-saga/effects";
 import {isAuthAppWorkerSaga} from "./thunk/authThunk";
-import {addTaskWorkerSaga, fetchTasksWorkerSaga} from "./thunk/taskThunk";
+import {addTaskWorkerSaga, fetchTasksWorkerSaga, removeTaskWorkerSaga} from "./thunk/taskThunk";
 
 declare global {
     interface Window {
@@ -37,6 +37,7 @@ function* rootWatcher() {
     yield takeEvery('APP/INITIALIZE-APP', isAuthAppWorkerSaga)
     yield takeEvery('TASKS/FETCH_TASKS', fetchTasksWorkerSaga)
     yield takeEvery('TASKS/ADD_TASK', addTaskWorkerSaga)
+    yield takeEvery('TASKS/REMOVE_TASK', removeTaskWorkerSaga)
 }
 
 

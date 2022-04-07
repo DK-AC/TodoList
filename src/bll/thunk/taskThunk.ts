@@ -36,6 +36,19 @@ export function* addTaskWorkerSaga(action: any) {
 
 export const addTask = (todolistId: string, title: string) => ({type: 'TASKS/ADD_TASK', todolistId, title})
 
+export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
+    yield put(setAppStatusAC("loading"))
+    const res: AxiosResponse<ResponseType> = yield call(tasksApi.removeTask, action.todolistId, action.taskId)
+    try {
+        yield put(removeTaskAC(action.todolistId, action.taskId))
+        yield put(setAppStatusAC("succeeded"))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const removeTask = (todolistId: string, taskId: string) => ({type: 'TASKS/REMOVE_TASK', todolistId, taskId})
+
 //thunks
 // export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 //     dispatch(setAppStatusAC("loading"))
@@ -70,20 +83,20 @@ export const addTask = (todolistId: string, title: string) => ({type: 'TASKS/ADD
 //             }
 //         )
 // }
-export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsTaskType>) => {
-    dispatch(setAppStatusAC("loading"))
-    tasksApi.deleteTask(todolistId, taskId)
-        .then(res => {
-            dispatch(removeTaskAC(todolistId, taskId))
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('idle'))
-            }
-        )
-}
+// export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsTaskType>) => {
+//     dispatch(setAppStatusAC("loading"))
+//     tasksApi.deleteTask(todolistId, taskId)
+//         .then(res => {
+//             dispatch(removeTaskAC(todolistId, taskId))
+//         })
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC('idle'))
+//             }
+//         )
+// }
 export const updateTaskTC = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) =>
     (dispatch: Dispatch<ActionsTaskType>, getState: () => AppRootStateType) => {
         const task = getState().tasks[todolistId].find(task => task.id === taskId)
