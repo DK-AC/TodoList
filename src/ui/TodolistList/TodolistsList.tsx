@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
 import {useDispatch} from "react-redux";
-import { fetchTodolists} from "../../bll/sagas/sagas_todolist";
+import {addTodolist, fetchTodolists} from "../../bll/sagas/sagas_todolist";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 
@@ -19,8 +19,8 @@ export const TodolistsList = ({demo}: PropsType) => {
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-    const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolist(title))
+    const addTodolistHandle = useCallback((title: string) => {
+        dispatch(addTodolist({ title,order:1,addedDate:'',id:'321',filter:'all',status:'succeeded'}))
     }, [dispatch])
 
     useEffect(() => {
@@ -37,7 +37,7 @@ export const TodolistsList = ({demo}: PropsType) => {
 
     return (<>
             <Grid container style={{padding: '20px'}}>
-                <AddItemForm callback={addTodolist}/>
+                <AddItemForm callback={addTodolistHandle}/>
             </Grid>
             <Grid container spacing={3}>
                 {todolists.map(tl => {
