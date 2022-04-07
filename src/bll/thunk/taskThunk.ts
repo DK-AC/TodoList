@@ -2,14 +2,14 @@ import {Dispatch} from "redux";
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {AppRootStateType} from "../store";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ActionsTaskType, ModelTaskType, TaskType} from "../types/taskTypes";
+import {ActionsTaskType, ModelTaskType, ResponseType, TaskType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 import {call, put} from "redux-saga/effects";
 import {AxiosResponse} from "axios";
 
 //sagas
-export function* fetchTasksWorkerSaga(action: any) {
+export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
     yield put(setAppStatusAC("loading"))
     const res: AxiosResponse<{ items: TaskType[] }> = yield call(tasksApi.getTasks, action.todolistId)
     try {
@@ -21,6 +21,20 @@ export function* fetchTasksWorkerSaga(action: any) {
 }
 
 export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', todolistId})
+
+// todoListId: string, title: string
+export function* addTaskWorkerSaga(action: any) {
+    yield put(setAppStatusAC("loading"))
+    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.createTask, action.todolistId, action.title)
+    try {
+        yield put(addTaskAC(res.data.data.item))
+        yield put(setAppStatusAC('succeeded'))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const addTask = (todolistId: string, title: string) => ({type: 'TASKS/ADD_TASK', todolistId, title})
 
 //thunks
 // export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
@@ -37,25 +51,25 @@ export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', t
 //             }
 //         )
 // }
-export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsTaskType>) => {
-    dispatch(setAppStatusAC("loading"))
-    tasksApi.createTask(todoListId, title)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(addTaskAC(res.data.data.item))
-                dispatch(setAppStatusAC('succeeded'))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch(error => {
-            handleNetworkAppError(error, dispatch)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('idle'))
-            }
-        )
-}
+// export const createTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsTaskType>) => {
+//     dispatch(setAppStatusAC("loading"))
+//     tasksApi.createTask(todoListId, title)
+//         .then(res => {
+//             if (res.data.resultCode === 0) {
+//                 dispatch(addTaskAC(res.data.data.item))
+//                 dispatch(setAppStatusAC('succeeded'))
+//             } else {
+//                 handleServerAppError(res.data, dispatch)
+//             }
+//         })
+//         .catch(error => {
+//             handleNetworkAppError(error, dispatch)
+//         })
+//         .finally(() => {
+//                 dispatch(setAppStatusAC('idle'))
+//             }
+//         )
+// }
 export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsTaskType>) => {
     dispatch(setAppStatusAC("loading"))
     tasksApi.deleteTask(todolistId, taskId)
