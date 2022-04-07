@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
 import {useDispatch} from "react-redux";
-import {addTodolistTC, fetchTodolists} from "../../bll/sagas/sagas_todolist";
+import { fetchTodolists} from "../../bll/sagas/sagas_todolist";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const TodolistsList = ({demo}: PropsType) => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistTC(title))
+        dispatch(addTodolist(title))
     }, [dispatch])
 
     useEffect(() => {

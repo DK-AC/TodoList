@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../../bll/store";
 import {changeTodolistFilterAC} from "../../../bll/actions/todolistActions";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
-import {deleteTodolistTC, updateTodolistTC} from "../../../bll/sagas/sagas_todolist";
+import {removeTodolist, updateTodolist} from "../../../bll/sagas/sagas_todolist";
 import {addTask, fetchTasks} from "../../../bll/sagas/sagas_task";
 import {TaskType} from "../../../bll/types/taskTypes";
 import {TodolistType} from "../../../bll/types/todolistTypes";
@@ -28,8 +28,8 @@ export const Todolist = React.memo(({todo, demo = false}: PropsType) => {
         dispatch(fetchTasks(todo.id))
     }, [])
 
-    const removeTodolistHandler = () => dispatch(deleteTodolistTC(todo.id))
-    const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolistTC(todo.id, title))
+    const removeTodolistHandler = () => dispatch(removeTodolist(todo.id))
+    const changeTodolistTitleHandler = (title: string) => dispatch(updateTodolist(todo.id, title))
     const addTaskHandler = useCallback((title: string) => dispatch(addTask(todo.id, title)), [dispatch, todo.id])
     const changeTodolistAllFilterHandler = () => dispatch(changeTodolistFilterAC(todo.id, 'all'))
     const changeTodolistActiveFilterHandler = () => dispatch(changeTodolistFilterAC(todo.id, 'active'))
