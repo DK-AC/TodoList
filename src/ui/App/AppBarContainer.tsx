@@ -21,7 +21,7 @@ export const AppBarContainer = () => {
     const todolists = useAppSelector<TodolistType[]>(state => state.todolists)
 
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC({title})
+        const action = addTodolistAC({todolist: {title}})
         dispatch(action)
     }, [])
 
