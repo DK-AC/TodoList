@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {ResponseTodolistType, TodolistType} from "../../bll/types/todolistTypes";
 import {ResponseType} from "../../bll/types/taskTypes";
 
@@ -23,7 +23,7 @@ export const todolistsApi = {
         return instance.delete <ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<{ title: string }, AxiosResponse<ResponseTodolistType>, { title: string }>(`todo-lists/${todolistId}`, {title})
+        return instance.put<{ title: string }, ResponseTodolistType, { title: string }>(`todo-lists/${todolistId}`, {title})
     }
 }
 
