@@ -26,4 +26,7 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
     )
 }
 
+//08.04.2022 added sagas on todolists in branch saga_without_toolkit
+// write tests for sagas
+
 
