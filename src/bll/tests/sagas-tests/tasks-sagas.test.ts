@@ -9,7 +9,7 @@ import {
     updateTaskWorkerSaga
 } from "../../sagas/sagas_task";
 import {call, put} from "redux-saga/effects";
-import {setAppStatusAC} from "../../actions/appActions";
+import {setAppErrorAC, setAppStatusAC} from "../../actions/appActions";
 import {tasksApi} from "../../../dal/api/tasks-api";
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../../actions/taskActions";
 import {ResponseItemTaskType, TaskResponseType} from "../../types/taskTypes";
@@ -62,6 +62,16 @@ test('addTaskWorkerSaga task should be added', () => {
     expect(gen.next().value).toEqual(call(tasksApi.createTask, todolistId, 'Saga Task'))
     expect(gen.next(fakeResponseTask).value).toEqual(put(addTaskAC(fakeResponseTask.data.item)))
     expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
+})
+
+test('addTaskWorkerSaga error flow', () => {
+    let title = 'Saga Task';
+    const gen = addTaskWorkerSaga(addTask(todolistId, title))
+
+    expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
+    expect(gen.next().value).toEqual(call(tasksApi.createTask, todolistId, title))
+    expect(gen.throw({message: 'some error'}).value).toEqual(put(setAppErrorAC('some error')))
+    expect(gen.next().value).toEqual(put(setAppStatusAC("failed")))
 })
 
 test('removeTaskWorkerSaga task should be removed', () => {
