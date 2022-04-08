@@ -30,7 +30,7 @@ export function* addTaskWorkerSaga(action: ReturnType<typeof addTask>) {
 
 export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
     yield put(setAppStatusAC("loading"))
-    const res: AxiosResponse<ResponseType> = yield call(tasksApi.removeTask, action.todolistId, action.taskId)
+    const res: ResponseType = yield call(tasksApi.removeTask, action.todolistId, action.taskId)
     try {
         yield put(removeTaskAC(action.todolistId, action.taskId))
         yield put(setAppStatusAC("succeeded"))

@@ -20,7 +20,8 @@ export const tasksApi = {
             .then(res => res.data)
     },
     removeTask(todolistId: string, taskId: string) {
-        return instance.delete<AxiosResponse<ResponseType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+            .then(res => res.data)
     },
     updateTask(todolistId: string, taskId: string, model: Partial<ModelTaskType>) {
         return instance.put<ModelTaskType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
