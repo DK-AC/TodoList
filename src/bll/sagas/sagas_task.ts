@@ -19,9 +19,9 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
 
 export function* addTaskWorkerSaga(action: ReturnType<typeof addTask>) {
     yield put(setAppStatusAC("loading"))
-    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.createTask, action.todolistId, action.title)
+    const data: TaskType = yield call(tasksApi.createTask, action.todolistId, action.title)
     try {
-        yield put(addTaskAC(res.data.data.item))
+        yield put(addTaskAC(data))
         yield put(setAppStatusAC('succeeded'))
     } catch (error) {
         console.log(error)
