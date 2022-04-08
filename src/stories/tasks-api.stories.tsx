@@ -11,7 +11,7 @@ export const GetTasks = () => {
 
     const getTasksHandle = () => {
         tasksApi.getTasks(todolistId)
-            .then(res => setState(res.data))
+            .then(data => setState(data))
     }
     const onChangeValueHandle = (e: ChangeEvent<HTMLInputElement>) => {
         setTodolistId(e.currentTarget.value)
@@ -34,7 +34,7 @@ export const CreateTask = () => {
 
     const createTaskHandle = () => {
         tasksApi.createTask(todolistId, title)
-            .then(res => setState(res.data))
+            .then(res => setState(res))
     }
     const onChangeTodolistIdHandle = (e: ChangeEvent<HTMLInputElement>) => {
         setTodolistId(e.currentTarget.value)

@@ -8,9 +8,9 @@ import {AxiosResponse} from "axios";
 //sagas
 export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
     yield put(setAppStatusAC("loading"))
-    const data: TaskResponseType = yield call(tasksApi.getTasks, action.todolistId)
+    const res: TaskResponseType = yield call(tasksApi.getTasks, action.todolistId)
     try {
-        yield put(getTasksAC(action.todolistId, data.items))
+        yield put(getTasksAC(action.todolistId, res.items))
         yield put(setAppStatusAC("succeeded"))
     } catch (error) {
         console.log(error)
@@ -19,9 +19,9 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
 
 export function* addTaskWorkerSaga(action: ReturnType<typeof addTask>) {
     yield put(setAppStatusAC("loading"))
-    const data: TaskType = yield call(tasksApi.createTask, action.todolistId, action.title)
+    const data: ResponseType<{ item: TaskType }> = yield call(tasksApi.createTask, action.todolistId, action.title)
     try {
-        yield put(addTaskAC(data))
+        yield put(addTaskAC(data.data.item))
         yield put(setAppStatusAC('succeeded'))
     } catch (error) {
         console.log(error)
@@ -40,7 +40,6 @@ export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
 }
 
 export function* updateTaskWorkerSaga(action: ReturnType<typeof updateTask>) {
-
     yield put(setAppStatusAC("loading"))
     const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.updateTask, action.todolistId, action.taskId,
         {title: action.model.title, status: action.model.status})

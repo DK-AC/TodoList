@@ -3,12 +3,12 @@ import {call, put} from "redux-saga/effects";
 import {setAppStatusAC} from "../../actions/appActions";
 import {tasksApi} from "../../../dal/api/tasks-api";
 import {addTaskAC, getTasksAC} from "../../actions/taskActions";
-import {TaskResponseType, TaskType} from "../../types/taskTypes";
+import {ResponseType, TaskResponseType, TaskType} from "../../types/taskTypes";
 
 let todolistId = 'todoListId'
 
 let fakeAPITasks: TaskResponseType
-let task: TaskType
+let fakeResponseTask: ResponseType<{ item: TaskType }>
 
 beforeEach(() => {
 
@@ -21,9 +21,16 @@ beforeEach(() => {
         }]
     }
 
-    task = {
-        addedDate: '', deadline: '', description: '', id: '1', order: 0,
-        priority: 1, startDate: '', status: 0, title: 'Task', todoListId: todolistId
+    fakeResponseTask = {
+        data: {
+            item: {
+                addedDate: '', deadline: '', description: '', id: '1', order: 0,
+                priority: 1, startDate: '', status: 0, title: 'Task', todoListId: todolistId
+            }
+        }, fieldsErrors: [],
+        resultCode: 0,
+        messages: []
+
     }
 })
 
@@ -53,7 +60,7 @@ test('addTaskWorkerSaga tasks should be added', () => {
 
     expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
     expect(gen.next().value).toEqual(call(tasksApi.createTask, todolistId, 'Saga Task'))
-    expect(gen.next(task).value).toEqual(put(addTaskAC(task)))
+    expect(gen.next(fakeResponseTask).value).toEqual(put(addTaskAC(fakeResponseTask.data.item)))
     expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
 
 })
