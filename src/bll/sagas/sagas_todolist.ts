@@ -38,7 +38,7 @@ export function* addTodolistWorkerSaga(action: ReturnType<typeof addTodolist>) {
 export function* removeTodolistWorkerSaga(action: ReturnType<typeof removeTodolist>) {
     yield put(setAppStatusAC("loading"))
     yield put(changeTodolistStatusAC(action.todolistId, "loading"))
-    const res: AxiosResponse<ResponseType> = yield call(todolistsApi.deleteTodolist, action.todolistId)
+    const res: ResponseType = yield call(todolistsApi.deleteTodolist, action.todolistId)
     try {
         yield put(removeTodolistAC(action.todolistId))
         yield put(setAppStatusAC("succeeded"))

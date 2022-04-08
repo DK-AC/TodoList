@@ -1,8 +1,14 @@
-import {addTodolist, addTodolistWorkerSaga, fetchTodolistsWorkerSaga} from "../../sagas/sagas_todolist";
+import {
+    addTodolist,
+    addTodolistWorkerSaga,
+    fetchTodolistsWorkerSaga,
+    removeTodolist,
+    removeTodolistWorkerSaga
+} from "../../sagas/sagas_todolist";
 import {call, put} from "redux-saga/effects";
 import {setAppStatusAC} from "../../actions/appActions";
 import {todolistsApi} from "../../../dal/api/todolists-api";
-import {addTodolistAC, setTodolistsAC} from "../../actions/todolistActions";
+import {addTodolistAC, changeTodolistStatusAC, removeTodolistAC, setTodolistsAC} from "../../actions/todolistActions";
 import {ResponseType} from "../../types/taskTypes";
 import {ResponseTodolistType, TodolistType} from "../../types/todolistTypes";
 
@@ -56,4 +62,14 @@ test('addTodolistWorkerSaga todolist should be added', () => {
     expect(gen.next().value).toEqual(put(setAppStatusAC('loading')))
     expect(gen.next().value).toEqual(call(todolistsApi.createTodolist, 'New Todolist Saga'))
     expect(gen.next(responseTodolist).value).toEqual(put(addTodolistAC(responseTodolist.data.item)))
+})
+
+test('removeTodolistWorkerSaga todolist should be removed', () => {
+    const gen = removeTodolistWorkerSaga(removeTodolist('todolistId1'))
+
+    expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
+    expect(gen.next().value).toEqual(put(changeTodolistStatusAC('todolistId1', "loading")))
+    expect(gen.next().value).toEqual(call(todolistsApi.deleteTodolist, 'todolistId1'))
+    expect(gen.next().value).toEqual(put(removeTodolistAC('todolistId1')))
+    expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
 })
