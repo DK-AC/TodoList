@@ -6,7 +6,7 @@ import {
     removeTodolistAC,
     setTodolistsAC
 } from "../actions/todolistActions";
-import {TodolistType} from "../types/todolistTypes";
+import {ResponseTodolistType, TodolistType} from "../types/todolistTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {ResponseType} from "../types/taskTypes";
@@ -26,9 +26,9 @@ export function* fetchTodolistsWorkerSaga() {
 
 export function* addTodolistWorkerSaga(action: ReturnType<typeof addTodolist>) {
     yield put(setAppStatusAC('loading'))
-    const res: AxiosResponse<ResponseType<{ item: TodolistType }>> = yield call(todolistsApi.createTodolist, action.title)
+    const data: ResponseTodolistType = yield call(todolistsApi.createTodolist, action.title)
     try {
-        yield put(addTodolistAC(res.data.data.item))
+        yield put(addTodolistAC(data.data.item))
         yield put(setAppStatusAC('succeeded'))
     } catch (error) {
         console.log(error)

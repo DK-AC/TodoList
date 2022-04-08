@@ -1,15 +1,17 @@
-import {fetchTodolistsWorkerSaga} from "../../sagas/sagas_todolist";
+import {addTodolist, addTodolistWorkerSaga, fetchTodolistsWorkerSaga} from "../../sagas/sagas_todolist";
 import {call, put} from "redux-saga/effects";
 import {setAppStatusAC} from "../../actions/appActions";
 import {todolistsApi} from "../../../dal/api/todolists-api";
-import {setTodolistsAC} from "../../actions/todolistActions";
-import {ResponseTodolistType} from "../../types/todolistTypes";
+import {addTodolistAC, setTodolistsAC} from "../../actions/todolistActions";
+import {ResponseType} from "../../types/taskTypes";
+import {ResponseTodolistType, TodolistType} from "../../types/todolistTypes";
 
 
+let responseTodolists: ResponseType<{ item: TodolistType[] }>
 let responseTodolist: ResponseTodolistType
 
 beforeEach(() => {
-    responseTodolist = {
+    responseTodolists = {
         data: {
             item: [
                 {
@@ -26,6 +28,18 @@ beforeEach(() => {
         resultCode: 0,
         messages: []
     }
+
+    responseTodolist = {
+        data: {
+            item: {
+                id: 'todolistId1', title: "What to learn", filter: "all", addedDate: '',
+                order: 0, status: "idle"
+            },
+        },
+        fieldsErrors: [],
+        resultCode: 0,
+        messages: []
+    }
 })
 
 test('fetchTodolistsWorkerSaga todolists should be fetch', () => {
@@ -33,5 +47,13 @@ test('fetchTodolistsWorkerSaga todolists should be fetch', () => {
 
     expect(gen.next().value).toEqual(put(setAppStatusAC('loading')))
     expect(gen.next().value).toEqual(call(todolistsApi.getTodolists))
-    expect(gen.next(responseTodolist.data.item).value).toEqual(put(setTodolistsAC(responseTodolist.data.item)))
+    expect(gen.next(responseTodolists.data.item).value).toEqual(put(setTodolistsAC(responseTodolists.data.item)))
+})
+
+test('addTodolistWorkerSaga todolist should be added', () => {
+    const gen = addTodolistWorkerSaga(addTodolist('New Todolist Saga'))
+
+    expect(gen.next().value).toEqual(put(setAppStatusAC('loading')))
+    expect(gen.next().value).toEqual(call(todolistsApi.createTodolist, 'New Todolist Saga'))
+    expect(gen.next(responseTodolist).value).toEqual(put(addTodolistAC(responseTodolist.data.item)))
 })
