@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from "axios";
-import {ModelTaskType, ResponseType, TaskResponseType, TaskType} from "../../bll/types/taskTypes";
+import axios from "axios";
+import {ModelTaskType, ResponseItemTaskType, ResponseType, TaskResponseType} from "../../bll/types/taskTypes";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -16,7 +16,7 @@ export const tasksApi = {
 
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<{ title: string }, ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<{ title: string }, ResponseItemTaskType>(`todo-lists/${todolistId}/tasks`, {title})
             .then(res => res.data)
     },
     removeTask(todolistId: string, taskId: string) {
@@ -24,7 +24,8 @@ export const tasksApi = {
             .then(res => res.data)
     },
     updateTask(todolistId: string, taskId: string, model: Partial<ModelTaskType>) {
-        return instance.put<ModelTaskType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<ModelTaskType, ResponseItemTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+            .then(res => res.data)
     },
 }
 

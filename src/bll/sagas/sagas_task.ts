@@ -1,9 +1,8 @@
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ModelTaskType, ResponseType, TaskResponseType, TaskType} from "../types/taskTypes";
+import {ModelTaskType, ResponseItemTaskType, ResponseType, TaskResponseType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {call, put, takeEvery} from "redux-saga/effects";
-import {AxiosResponse} from "axios";
 
 //sagas
 export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
@@ -19,7 +18,7 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
 
 export function* addTaskWorkerSaga(action: ReturnType<typeof addTask>) {
     yield put(setAppStatusAC("loading"))
-    const data: ResponseType<{ item: TaskType }> = yield call(tasksApi.createTask, action.todolistId, action.title)
+    const data: ResponseItemTaskType = yield call(tasksApi.createTask, action.todolistId, action.title)
     try {
         yield put(addTaskAC(data.data.item))
         yield put(setAppStatusAC('succeeded'))
@@ -41,7 +40,7 @@ export function* removeTaskWorkerSaga(action: ReturnType<typeof removeTask>) {
 
 export function* updateTaskWorkerSaga(action: ReturnType<typeof updateTask>) {
     yield put(setAppStatusAC("loading"))
-    const res: AxiosResponse<ResponseType<{ item: TaskType }>> = yield call(tasksApi.updateTask, action.todolistId, action.taskId,
+    const res: ResponseItemTaskType = yield call(tasksApi.updateTask, action.todolistId, action.taskId,
         {title: action.model.title, status: action.model.status})
     try {
         yield put(updateTaskAC(action.todolistId, action.taskId,
@@ -56,7 +55,7 @@ export const fetchTasks = (todolistId: string) => ({type: 'TASKS/FETCH_TASKS', t
 export const addTask = (todolistId: string, title: string) => ({type: 'TASKS/ADD_TASK', todolistId, title})
 export const removeTask = (todolistId: string, taskId: string) => (
     {type: 'TASKS/REMOVE_TASK', todolistId, taskId})
-export const updateTask = (todolistId: string, taskId: string, model: ModelTaskType) => (
+export const updateTask = (todolistId: string, taskId: string, model: Partial<ModelTaskType>) => (
     {type: 'TASKS/UPDATE_TASK', todolistId, taskId, model})
 
 export function* taskWatcherSagas() {

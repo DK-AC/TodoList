@@ -51,4 +51,6 @@ export type ResponseType<D = {}> = {
     data: D
 }
 
+export type ResponseItemTaskType = ResponseType<{ item: TaskType }>;
+
 

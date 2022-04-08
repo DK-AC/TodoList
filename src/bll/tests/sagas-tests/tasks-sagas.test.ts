@@ -4,18 +4,20 @@ import {
     fetchTasks,
     fetchTasksWorkerSaga,
     removeTask,
-    removeTaskWorkerSaga
+    removeTaskWorkerSaga,
+    updateTask,
+    updateTaskWorkerSaga
 } from "../../sagas/sagas_task";
 import {call, put} from "redux-saga/effects";
 import {setAppStatusAC} from "../../actions/appActions";
 import {tasksApi} from "../../../dal/api/tasks-api";
-import {addTaskAC, getTasksAC, removeTaskAC} from "../../actions/taskActions";
-import {ResponseType, TaskResponseType, TaskType} from "../../types/taskTypes";
+import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../../actions/taskActions";
+import {ResponseItemTaskType, TaskResponseType} from "../../types/taskTypes";
 
 let todolistId = 'todoListId'
 
 let fakeAPITasks: TaskResponseType
-let fakeResponseTask: ResponseType<{ item: TaskType }>
+let fakeResponseTask: ResponseItemTaskType
 
 beforeEach(() => {
 
@@ -24,7 +26,7 @@ beforeEach(() => {
         totalCount: 1,
         items: [{
             addedDate: '', deadline: '', description: '', id: '1', order: 0,
-            priority: 1, startDate: '', status: 0, title: 'Task', todoListId: todolistId
+            priority: 1, startDate: '', status: 1, title: 'Task', todoListId: todolistId
         }]
     }
 
@@ -32,7 +34,7 @@ beforeEach(() => {
         data: {
             item: {
                 addedDate: '', deadline: '', description: '', id: '1', order: 0,
-                priority: 1, startDate: '', status: 0, title: 'Task', todoListId: todolistId
+                priority: 1, startDate: '', status: 1, title: 'Task', todoListId: todolistId
             }
         }, fieldsErrors: [],
         resultCode: 0,
@@ -53,7 +55,7 @@ test('fetchTasksWorkerSaga tasks should be set', () => {
     expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
 })
 
-test('addTaskWorkerSaga tasks should be added', () => {
+test('addTaskWorkerSaga task should be added', () => {
     const gen = addTaskWorkerSaga(addTask(todolistId, 'Saga Task'))
 
     expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
@@ -62,11 +64,21 @@ test('addTaskWorkerSaga tasks should be added', () => {
     expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
 })
 
-test('removeTaskWorkerSaga tasks should be removed', () => {
+test('removeTaskWorkerSaga task should be removed', () => {
     const gen = removeTaskWorkerSaga(removeTask(todolistId, '1'))
 
     expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
     expect(gen.next().value).toEqual(call(tasksApi.removeTask, todolistId, '1'))
     expect(gen.next().value).toEqual(put(removeTaskAC(todolistId, '1')))
+    expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
+})
+
+test('updateTaskWorkerSaga task should be updated', () => {
+    let updateModalTask = {title: 'New Saga Title', status: 1};
+    const gen = updateTaskWorkerSaga(updateTask(todolistId, '1', updateModalTask))
+
+    expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
+    expect(gen.next().value).toEqual(call(tasksApi.updateTask, todolistId, '1', updateModalTask))
+    expect(gen.next().value).toEqual(put(updateTaskAC(todolistId, '1', updateModalTask)))
     expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
 })
