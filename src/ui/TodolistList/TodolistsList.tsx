@@ -20,15 +20,15 @@ export const TodolistsList = ({demo}: PropsType) => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const addTodolistHandle = useCallback((title: string) => {
-        dispatch(addTodolist({ title,order:1,addedDate:'',id:'321',filter:'all',status:'succeeded'}))
-    }, [dispatch])
+        dispatch(addTodolist(title))
+    }, [])
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
             return
         }
         dispatch(fetchTodolists())
-    }, [])
+    }, [dispatch])
 
     if (!isLoggedIn) {
         navigate('/login')

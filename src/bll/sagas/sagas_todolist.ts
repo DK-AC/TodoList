@@ -26,7 +26,7 @@ export function* fetchTodolistsWorkerSaga() {
 
 export function* addTodolistWorkerSaga(action: ReturnType<typeof addTodolist>) {
     yield put(setAppStatusAC('loading'))
-    const res: AxiosResponse<ResponseType<{ item: TodolistType }>> = yield call(todolistsApi.createTodolist, action.todolist.title)
+    const res: AxiosResponse<ResponseType<{ item: TodolistType }>> = yield call(todolistsApi.createTodolist, action.title)
     try {
         yield put(addTodolistAC(res.data.data.item))
         yield put(setAppStatusAC('succeeded'))
@@ -62,7 +62,7 @@ export function* updateTodolistWorkerSaga(action: ReturnType<typeof updateTodoli
 }
 
 export const fetchTodolists = () => ({type: 'TODOLISTS/FETCH_TODOLISTS'})
-export const addTodolist = (todolist: TodolistType) => ({type: 'TODOLISTS/ADD_TODOLIST', todolist})
+export const addTodolist = (title: string) => ({type: 'TODOLISTS/ADD_TODOLIST', title})
 export const removeTodolist = (todolistId: string) => ({type: 'TODOLISTS/REMOVE_TODOLIST', todolistId})
 export const updateTodolist = (todolistId: string, title: string) => (
     {type: 'TODOLISTS/UPDATE_TODOLIST', todolistId, title})
