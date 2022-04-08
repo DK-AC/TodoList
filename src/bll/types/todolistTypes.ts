@@ -27,7 +27,7 @@ export type ActionsTodolistType =
     | ActionsAppType
 
 
-export type RepeatTodoType = ResponseType<{ item: TodolistType }>
+export type ResponseTodolistType = ResponseType<{ item: TodolistType[] }>
 export type TodolistType = {
     id: string
     title: string

@@ -10,7 +10,7 @@ export const GetTodolists = () => {
 
     const getTodolistsHandle = () => {
         todolistsApi.getTodolists()
-            .then(res => setState(res.data))
+            .then(data => setState(data))
     }
 
     return (

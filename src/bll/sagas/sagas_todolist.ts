@@ -15,9 +15,9 @@ import {AxiosResponse} from "axios";
 //sagas
 export function* fetchTodolistsWorkerSaga() {
     yield put(setAppStatusAC('loading'))
-    const res: ResponseType<TodolistType[]> = yield call(todolistsApi.getTodolists)
+    const data: TodolistType[] = yield call(todolistsApi.getTodolists)
     try {
-        yield put(setTodolistsAC(res.data))
+        yield put(setTodolistsAC(data))
         yield put(setAppStatusAC('succeeded'))
     } catch (error) {
         console.log(error)

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {RepeatTodoType, TodolistType} from "../../bll/types/todolistTypes";
+import {ResponseTodolistType, TodolistType} from "../../bll/types/todolistTypes";
 import {ResponseType} from "../../bll/types/taskTypes";
 
 const instance = axios.create({
@@ -13,6 +13,7 @@ const instance = axios.create({
 export const todolistsApi = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists')
+            .then(res => res.data)
     },
     createTodolist(title: string) {
         return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TodolistType }>>>('todo-lists', {title})
@@ -21,7 +22,7 @@ export const todolistsApi = {
         return instance.delete <ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<{ title: string }, AxiosResponse<RepeatTodoType>, { title: string }>(`todo-lists/${todolistId}`, {title})
+        return instance.put<{ title: string }, AxiosResponse<ResponseTodolistType>, { title: string }>(`todo-lists/${todolistId}`, {title})
     }
 }
 
