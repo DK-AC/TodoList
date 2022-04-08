@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {LoginValuesType, UserInfoType} from "../../bll/types/authTypes";
+import {LoginValuesType, MeResponseType} from "../../bll/types/authTypes";
 import {ResponseType} from "../../bll/types/taskTypes";
 
 const instance = axios.create({
@@ -15,7 +15,7 @@ export const authApi = {
         return instance.post <LoginValuesType, AxiosResponse<ResponseType<{ userId?: number }>>>('/auth/login', data)
     },
     me() {
-        return instance.get<ResponseType<UserInfoType>>(`/auth/me`)
+        return instance.get<MeResponseType>(`/auth/me`)
     },
     logOut() {
         return instance.delete<ResponseType>(`/auth/login`)

@@ -1,4 +1,5 @@
 import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
+import {ResponseType} from "./taskTypes";
 
 export const SET_IS_LOGGED_IN = 'AUTH/SET_IS_LOGGED_IN'
 export const SET_IS_INITIALIZED = 'AUTH/SET_IS_INITIALIZED'
@@ -17,3 +18,5 @@ export type UserInfoType = {
     login: string
     email: string
 }
+
+export type MeResponseType = ResponseType<UserInfoType>

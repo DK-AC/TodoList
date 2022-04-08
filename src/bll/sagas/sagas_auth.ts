@@ -1,15 +1,15 @@
 import {authApi} from "../../dal/api/authApi";
 import {setAppStatusAC} from "../actions/appActions";
 import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
-import {LoginValuesType} from "../types/authTypes";
+import {LoginValuesType, MeResponseType} from "../types/authTypes";
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {AxiosResponse} from "axios";
 import {ResponseType} from "../types/taskTypes";
 
 //sagas
 export function* isAuthAppWorkerSaga() {
-    const res: AxiosResponse<ResponseType> = yield call(authApi.me)
-    if (res.data.resultCode === 0) {
+    const data: MeResponseType = yield call(authApi.me)
+    if (data.resultCode === 0) {
         yield put(setIsLoggedInAC(true))
     } else {
     }
