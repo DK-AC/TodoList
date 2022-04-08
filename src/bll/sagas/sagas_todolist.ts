@@ -10,7 +10,8 @@ import {ResponseTodolistType, TodolistType} from "../types/todolistTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {ResponseType} from "../types/taskTypes";
-import {AxiosResponse} from "axios";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {AxiosError} from "axios";
 
 //sagas
 export function* fetchTodolistsWorkerSaga() {
@@ -26,14 +27,20 @@ export function* fetchTodolistsWorkerSaga() {
 
 export function* addTodolistWorkerSaga(action: ReturnType<typeof addTodolist>) {
     yield put(setAppStatusAC('loading'))
-    const data: ResponseTodolistType = yield call(todolistsApi.createTodolist, action.title)
     try {
-        yield put(addTodolistAC(data.data.item))
-        yield put(setAppStatusAC('succeeded'))
+        const data: ResponseTodolistType = yield call(todolistsApi.createTodolist, action.title)
+        if (data.resultCode === 0) {
+            yield put(addTodolistAC(data.data.item))
+            yield put(setAppStatusAC('succeeded'))
+        } else {
+            yield* handleServerAppError(data)
+        }
     } catch (error) {
-        console.log(error)
+        const err = error as AxiosError
+        yield* handleNetworkAppError(err)
     }
 }
+
 
 export function* removeTodolistWorkerSaga(action: ReturnType<typeof removeTodolist>) {
     yield put(setAppStatusAC("loading"))

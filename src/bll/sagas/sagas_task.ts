@@ -3,6 +3,8 @@ import {tasksApi} from "../../dal/api/tasks-api";
 import {ModelTaskType, ResponseItemTaskType, ResponseType, TaskResponseType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {call, put, takeEvery} from "redux-saga/effects";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
+import {AxiosError} from "axios";
 
 //sagas
 export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
@@ -18,12 +20,17 @@ export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
 
 export function* addTaskWorkerSaga(action: ReturnType<typeof addTask>) {
     yield put(setAppStatusAC("loading"))
-    const data: ResponseItemTaskType = yield call(tasksApi.createTask, action.todolistId, action.title)
     try {
-        yield put(addTaskAC(data.data.item))
-        yield put(setAppStatusAC('succeeded'))
+        const data: ResponseItemTaskType = yield call(tasksApi.createTask, action.todolistId, action.title)
+        if (data.resultCode === 0) {
+            yield put(addTaskAC(data.data.item))
+            yield put(setAppStatusAC('succeeded'))
+        } else {
+            yield* handleServerAppError(data)
+        }
     } catch (error) {
-        console.log(error)
+        const err = error as AxiosError
+        yield* handleNetworkAppError(err)
     }
 }
 

@@ -1,18 +1,17 @@
 import {setAppErrorAC, setAppStatusAC} from "../../bll/actions/appActions";
-import {Dispatch} from "redux";
-import {ActionsAppType} from "../../bll/types/appTypes";
 import {ResponseType} from "../../bll/types/taskTypes";
+import {put} from "redux-saga/effects";
 
-export const handleServerAppError = (data: ResponseType, dispatch: Dispatch<ActionsAppType>) => {
+export function* handleServerAppError(data: ResponseType) {
     if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0]))
+        yield put(setAppErrorAC(data.messages[0]))
     } else {
-        dispatch(setAppErrorAC('some error'))
+        yield put(setAppErrorAC('some error'))
     }
-    dispatch(setAppStatusAC('failed'))
+    yield put(setAppStatusAC('failed'))
 }
 
-export const handleNetworkAppError = (error: any, dispatch: Dispatch<ActionsAppType>) => {
-    dispatch(setAppErrorAC(error.message ? error.message : 'Some error occurred'))
-    dispatch(setAppStatusAC('failed'))
+export function* handleNetworkAppError(error: { message: string }) {
+    yield put(setAppErrorAC(error.message ? error.message : 'Some error occurred'))
+    yield put(setAppStatusAC('failed'))
 }
