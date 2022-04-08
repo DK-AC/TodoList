@@ -1,6 +1,6 @@
 import {addTaskAC, getTasksAC, removeTaskAC, updateTaskAC} from "../actions/taskActions";
 import {tasksApi} from "../../dal/api/tasks-api";
-import {ModelTaskType, ResponseType, TaskType} from "../types/taskTypes";
+import {ModelTaskType, ResponseType, TaskResponseType, TaskType} from "../types/taskTypes";
 import {setAppStatusAC} from "../actions/appActions";
 import {call, put, takeEvery} from "redux-saga/effects";
 import {AxiosResponse} from "axios";
@@ -8,9 +8,9 @@ import {AxiosResponse} from "axios";
 //sagas
 export function* fetchTasksWorkerSaga(action: ReturnType<typeof fetchTasks>) {
     yield put(setAppStatusAC("loading"))
-    const res: AxiosResponse<{ items: TaskType[] }> = yield call(tasksApi.getTasks, action.todolistId)
+    const data: TaskResponseType = yield call(tasksApi.getTasks, action.todolistId)
     try {
-        yield put(getTasksAC(action.todolistId, res.data.items))
+        yield put(getTasksAC(action.todolistId, data.items))
         yield put(setAppStatusAC("succeeded"))
     } catch (error) {
         console.log(error)

@@ -1,5 +1,5 @@
-import {authReducer, InitialAuthStateType} from "../reducers/authReducer";
-import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
+import {authReducer, InitialAuthStateType} from "../../reducers/authReducer";
+import {setIsInitializedAC, setIsLoggedInAC} from "../../actions/authActions";
 
 let startState: InitialAuthStateType
 

@@ -1,5 +1,5 @@
-import {appReducer, InitialAppStateType} from "../reducers/appReducer";
-import {setAppErrorAC, setAppStatusAC} from "../actions/appActions";
+import {appReducer, InitialAppStateType} from "../../reducers/appReducer";
+import {setAppErrorAC, setAppStatusAC} from "../../actions/appActions";
 
 let startState: InitialAppStateType
 
