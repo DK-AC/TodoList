@@ -3,7 +3,7 @@ import {authApi} from "../../../dal/api/authApi";
 import {call, put} from "redux-saga/effects";
 import {MeResponseType} from "../../types/authTypes";
 import {setIsInitializedAC, setIsLoggedInAC} from "../../actions/authActions";
-import {setAppStatusAC} from "../../actions/appActions";
+import {setAppErrorAC, setAppStatusAC} from "../../actions/appActions";
 
 let meResponse: MeResponseType
 
@@ -40,8 +40,18 @@ test('loginAppWorkerSaga user login ', () => {
 
     expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
     expect(gen.next().value).toEqual(call(authApi.logIn, actionData))
-    expect(gen.next().value).toEqual(put(setIsLoggedInAC(true)))
-    expect(gen.next().value).toEqual(put(setAppStatusAC("succeeded")))
+
+})
+
+test('loginAppWorkerSaga user login failed', () => {
+
+    let actionData = {email: 'Den@gmail.com', rememberMe: false, password: '1234'}
+    let gen = loginAppWorkerSaga(login(actionData))
+
+    expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
+    expect(gen.next().value).toEqual(call(authApi.logIn, actionData))
+    expect(gen.throw({message: 'some error'}).value).toEqual(put(setAppErrorAC('some error')))
+    expect(gen.next().value).toEqual(put(setAppStatusAC("failed")))
 })
 
 test('logoutWorkerSaga user logout ', () => {

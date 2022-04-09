@@ -3,8 +3,9 @@ import {setAppStatusAC} from "../actions/appActions";
 import {setIsInitializedAC, setIsLoggedInAC} from "../actions/authActions";
 import {LoginValuesType, MeResponseType} from "../types/authTypes";
 import {call, put, takeEvery} from 'redux-saga/effects'
-import {AxiosResponse} from "axios";
+import {AxiosError, AxiosResponse} from "axios";
 import {ResponseType} from "../types/taskTypes";
+import {handleNetworkAppError, handleServerAppError} from "../../utils/error-utils/error-utils";
 
 //sagas
 export function* isAuthAppWorkerSaga() {
@@ -20,21 +21,27 @@ export function* loginAppWorkerSaga(action: ReturnType<typeof login>) {
     yield put(setAppStatusAC("loading"))
     const res: AxiosResponse<ResponseType<{ userId?: number }>> = yield call(authApi.logIn, action.data)
     try {
-        yield put(setIsLoggedInAC(true))
-        yield put(setAppStatusAC('succeeded'))
+        if (res.data.resultCode === 0) {
+            yield put(setIsLoggedInAC(true))
+            yield put(setAppStatusAC('succeeded'))
+        } else {
+            yield* handleServerAppError(res.data)
+        }
     } catch (error) {
-        console.log(error)
+        const err = error as AxiosError
+        yield* handleNetworkAppError(err)
     }
 }
 
 export function* logoutWorkerSaga() {
     yield put(setAppStatusAC("loading"))
-    const res: AxiosResponse<ResponseType> = yield call(authApi.logOut)
     try {
-        yield put(setIsLoggedInAC(false))
-        yield put(setAppStatusAC("succeeded"))
+        const res: ResponseType = yield call(authApi.logOut)
+            yield put(setIsLoggedInAC(false))
+            yield put(setAppStatusAC("succeeded"))
     } catch (error) {
-        console.log(error)
+        const err = error as AxiosError
+        yield* handleNetworkAppError(err)
     }
 }
 

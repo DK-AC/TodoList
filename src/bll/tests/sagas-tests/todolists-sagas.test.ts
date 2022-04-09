@@ -7,7 +7,6 @@ import {
     updateTodolist,
     updateTodolistWorkerSaga
 } from "../../sagas/sagas_todolist";
-import {call, put} from "redux-saga/effects";
 import {setAppErrorAC, setAppStatusAC} from "../../actions/appActions";
 import {todolistsApi} from "../../../dal/api/todolists-api";
 import {
@@ -19,8 +18,7 @@ import {
 } from "../../actions/todolistActions";
 import {ResponseType} from "../../types/taskTypes";
 import {ResponseTodolistType, TodolistType} from "../../types/todolistTypes";
-import {addTask, addTaskWorkerSaga} from "../../sagas/sagas_task";
-import {tasksApi} from "../../../dal/api/tasks-api";
+import {call, put} from "redux-saga/effects";
 
 
 let responseTodolists: ResponseType<{ item: TodolistType[] }>
@@ -79,7 +77,7 @@ test('addTodolistWorkerSaga error flow', () => {
     const gen = addTodolistWorkerSaga(addTodolist(title))
 
     expect(gen.next().value).toEqual(put(setAppStatusAC("loading")))
-    expect(gen.next().value).toEqual(call(todolistsApi.createTodolist,  title))
+    expect(gen.next().value).toEqual(call(todolistsApi.createTodolist, title))
     expect(gen.throw({message: 'some error'}).value).toEqual(put(setAppErrorAC('some error')))
     expect(gen.next().value).toEqual(put(setAppStatusAC("failed")))
 })
