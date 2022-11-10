@@ -14,6 +14,7 @@ import {authActions} from "../../bll/thunk";
 import {useActions, useAppDispatch} from "../../utils/redux-utils";
 import {useSelector} from "react-redux";
 import {selectIsLoggedIn} from "../../bll/selectors";
+import style from './Login.module.css'
 
 type FormValuesType = { email: string, password: string, rememberMe: boolean }
 
@@ -57,7 +58,7 @@ export const Login = () => {
     }, [isLoggedIn])
 
 
-    return <Grid container justifyContent={'center'}>
+    return <Grid className={style.login} container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
@@ -69,9 +70,9 @@ export const Login = () => {
                         </p>
                         <p>or use common test account credentials:</p>
                         <p>Email: free@samuraijs.com</p>
-                        <p>Password: zxcnbvasdqwe123</p>
+                        <p>Password: free</p>
                     </FormLabel>
-                    <FormGroup>
+                    <FormGroup className={style.formControl}>
                         <TextField label="email"
                                    margin="normal"
                                    {...formik.getFieldProps('email')}
