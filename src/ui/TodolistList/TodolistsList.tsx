@@ -59,10 +59,10 @@ export const TodolistsList = ({demo}: PropsType) => {
 
 
     return (<>
-            <Grid style={{padding: '20px'}}>
+            <Grid className={style.addForm}>
                 <AddItemForm callback={addTodolistHandle}/>
             </Grid>
-            <Grid  spacing={3} className={style.container}>
+            <Grid className={style.container}>
                 {todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
                     return (
