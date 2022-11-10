@@ -50,18 +50,20 @@ export const AppBarContainer = () => {
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
-                    <Typography variant="h6">
-                        News
-                    </Typography>
-                    {isLoggedIn && <Button color="inherit" onClick={handleLogOut}>Log Out</Button>}
+                    <Typography variant="h6">Menu</Typography>
+                    {isLoggedIn &&
+                        <Button color="inherit" onClick={handleLogOut}>Log Out</Button>}
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress/>}
             <Container fixed>
-                <Routes>
-                    <Route path='/' element={<TodolistsList demo={false}/>}/>
-                    <Route path='/login' element={<Login/>}/>
-                </Routes>
+                {!isLoggedIn ? <Login/> :
+                    <Routes>
+                        <Route path='/' element={<TodolistsList demo={false}/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                    </Routes>}
+
+
             </Container>
             <ErrorSnackbar/>
         </div>
