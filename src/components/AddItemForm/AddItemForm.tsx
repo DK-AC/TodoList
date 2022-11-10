@@ -1,7 +1,8 @@
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {AddBox} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import style from './AddItemForm.module.css'
 
 export type AddItemFormHelperType = {
     setTitle: (title: string) => void
@@ -13,7 +14,10 @@ type AddItemFormPropsType = {
     disabled?: boolean
 }
 
-export const AddItemForm = React.memo(({callback, disabled = false}: AddItemFormPropsType) => {
+export const AddItemForm = React.memo(({
+                                           callback,
+                                           disabled = false
+                                       }: AddItemFormPropsType) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -45,7 +49,7 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
 
 
     return (
-        <div>
+        <div className={style.row}>
             <TextField variant={"outlined"}
                        value={title}
                        onChange={onChangeValueTasks}
@@ -56,7 +60,8 @@ export const AddItemForm = React.memo(({callback, disabled = false}: AddItemForm
                        helperText={error}
                        disabled={disabled}
             />
-            <IconButton color="primary" onClick={addItem} size={"small"} disabled={disabled}
+            <IconButton color="primary" onClick={addItem} size={"small"}
+                        disabled={disabled}
                         style={{marginLeft: '5px'}}>
                 <AddBox/>
             </IconButton>

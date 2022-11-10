@@ -1,6 +1,9 @@
 import React, {useCallback, useEffect} from "react";
 import Grid from "@mui/material/Grid";
-import {AddItemForm, AddItemFormHelperType} from "../../components/AddItemForm/AddItemForm";
+import {
+    AddItemForm,
+    AddItemFormHelperType
+} from "../../components/AddItemForm/AddItemForm";
 import {useNavigate} from "react-router-dom";
 import {todolistsActions} from "../../bll/thunk";
 import {Todolist} from "./Todolist/Todolist";
@@ -9,6 +12,7 @@ import {useSelector} from "react-redux";
 import {selectIsLoggedIn, selectTodolists} from "../../bll/selectors";
 import {AppRootStateType} from "../../utils/types";
 import {TasksStateType} from "../../dal/api/types";
+import style from './TodolistsList.module.css'
 
 type PropsType = { demo?: boolean }
 
@@ -55,15 +59,15 @@ export const TodolistsList = ({demo}: PropsType) => {
 
 
     return (<>
-            <Grid container style={{padding: '20px'}}>
+            <Grid style={{padding: '20px'}}>
                 <AddItemForm callback={addTodolistHandle}/>
             </Grid>
-            <Grid container spacing={3} style={{flexWrap: 'nowrap', overflowX: 'scroll'}}>
+            <Grid  spacing={3} className={style.container}>
                 {todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
                     return (
-                        <Grid item key={tl.id}>
-                            <div style={{width: '300px'}}>
+                        <Grid item xs="auto" key={tl.id}>
+                            <div className={style.todolist}>
                                 <Todolist todo={tl} demo={demo} tasks={allTodolistTasks}/>
                             </div>
                         </Grid>)

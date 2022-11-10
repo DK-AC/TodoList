@@ -43,11 +43,12 @@ export const AppBarContainer = () => {
     return (
         <div>
             <AppBar position="static">
-                <Toolbar   className={style.header}>
+                <Toolbar className={style.header}>
                     <div className={style.title}>Todolist</div>
                     {isLoggedIn &&
-                        <div >
-                            <Button variant={"outlined"} color="inherit" onClick={handleLogOut}>
+                        <div>
+                            <Button variant={"outlined"}
+                                    color="inherit" onClick={handleLogOut}>
                                 Log Out
                             </Button>
                         </div>
@@ -55,14 +56,12 @@ export const AppBarContainer = () => {
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress/>}
-            <Container fixed>
+            <Container>
                 {!isLoggedIn ? <Login/> :
                     <Routes>
                         <Route path='/' element={<TodolistsList demo={false}/>}/>
                         <Route path='/login' element={<Login/>}/>
                     </Routes>}
-
-
             </Container>
             <ErrorSnackbar/>
         </div>
