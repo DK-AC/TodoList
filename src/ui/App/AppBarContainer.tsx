@@ -1,8 +1,4 @@
 import React, {useCallback, useEffect} from 'react';
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import {Menu} from "@mui/icons-material";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AppBar from '@mui/material/AppBar';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -17,6 +13,7 @@ import {selectIsInitialized, selectIsLoggedIn, selectStatus} from "../../bll/sel
 import {authActions} from "../../bll/thunk";
 import {useActions} from "../../utils/redux-utils";
 import {useSelector} from "react-redux";
+import {Toolbar} from "@mui/material";
 
 
 export const AppBarContainer = () => {
@@ -46,16 +43,14 @@ export const AppBarContainer = () => {
     return (
         <div>
             <AppBar position="static">
-                <Toolbar>
+                <Toolbar   className={style.header}>
+                    <div className={style.title}>Todolist</div>
                     {isLoggedIn &&
-                        <>
-                            <IconButton edge="start" color="inherit" aria-label="menu">
-                                <Menu/>
-                            </IconButton>
-                            <Typography variant="h6">Menu</Typography>
-                            <Button color="inherit" onClick={handleLogOut}>
+                        <div >
+                            <Button variant={"outlined"} color="inherit" onClick={handleLogOut}>
                                 Log Out
-                            </Button></>
+                            </Button>
+                        </div>
                     }
                 </Toolbar>
             </AppBar>
