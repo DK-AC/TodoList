@@ -57,7 +57,7 @@ export const AppBarContainer = () => {
             <Container>
                 {!isLoggedIn ? <Login/> :
                     <Routes>
-                        <Route path='/' element={<TodolistsList demo={false}/>}/>
+                        <Route path='/Todolist' element={<TodolistsList demo={false}/>}/>
                         <Route path='/login' element={<Login/>}/>
                     </Routes>}
             </Container>
