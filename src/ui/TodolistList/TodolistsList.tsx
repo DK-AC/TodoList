@@ -17,7 +17,6 @@ import style from './TodolistsList.module.css'
 type PropsType = { demo?: boolean }
 
 export const TodolistsList = ({demo}: PropsType) => {
-
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 

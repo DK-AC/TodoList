@@ -24,7 +24,6 @@ export const AppBarContainer = () => {
     const isInitialized = useSelector(selectIsInitialized)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
-
     useEffect(() => {
         if (!isInitialized) {
             isAuth()
@@ -38,7 +37,6 @@ export const AppBarContainer = () => {
     if (!isInitialized) {
         return <div className={style.circular}><CircularProgress/></div>
     }
-
 
     return (
         <div>

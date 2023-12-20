@@ -8,7 +8,6 @@ const todolistsActions = {
     ...todolistsAsyncActions,
     ...todolistSlices.actions
 }
-
 const authActions = {
     ...authAsyncActions,
     ...authSlices.actions
