@@ -52,7 +52,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/Todolist')
+      navigate('/TodoList')
     }
   }, [isLoggedIn])
 
